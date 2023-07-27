@@ -1,0 +1,19 @@
+{
+    "editor.formatOnSave": true,
+    "indentRainbow.indicatorStyle": "light",
+    "indentRainbow.colors": [
+        "grey",
+        "yellow",
+        "orange",
+        "red"
+    ],
+    "[csharp]": {
+        "editor.rulers": [
+            80
+        ]
+    },
+    "terminal.integrated.fontFamily": "monospace",
+    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.lineHeight": 1,
+    "dotnet.defaultSolution": "ECommerce-ASP-NET-API.sln",
+}
