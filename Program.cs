@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ECommerce_ASP_NET_API.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 #region @Service
@@ -8,6 +11,14 @@ builder.Services.AddSwaggerGen();
 
 
 #region @Database
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    var host = builder.Configuration.GetConnectionString("DefaultConnection");
+
+    options.UseMySql(
+        connectionString: host,
+        serverVersion: ServerVersion.AutoDetect(host));
+});
 #endregion
 
 
