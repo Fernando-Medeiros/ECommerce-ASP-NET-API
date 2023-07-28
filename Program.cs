@@ -19,6 +19,8 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
         connectionString: host,
         serverVersion: ServerVersion.AutoDetect(host));
 });
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 #endregion
 
 

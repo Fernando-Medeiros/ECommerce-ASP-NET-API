@@ -27,14 +27,113 @@ public class DatabaseContext : DbContext
     #endregion
 
     #region Private ModelBuilder -> Tables
-    private static void BCart(ModelBuilder _) { }
+    private static void BCart(ModelBuilder _)
+    {
+        _.Entity<Cart>().HasKey(c => c.Id);
 
-    private static void BCategory(ModelBuilder _) { }
+        _.Entity<Cart>()
+        .Property(c => c.ProductId)
+        .HasMaxLength(36)
+        .IsRequired();
 
-    private static void BCustomer(ModelBuilder _) { }
+        _.Entity<Cart>()
+        .HasOne(c => c.Customer)
+        .WithMany(c => c.Carts)
+        .OnDelete(DeleteBehavior.SetNull)
+        .IsRequired();
+    }
 
-    private static void BProduct(ModelBuilder _) { }
+    private static void BCategory(ModelBuilder _)
+    {
+        _.Entity<Category>().HasKey(c => c.Id);
 
-    private static void BSales(ModelBuilder _) { }
+        _.Entity<Category>()
+        .Property(c => c.Name)
+        .HasMaxLength(100)
+        .IsRequired();
+
+        _.Entity<Category>()
+        .HasMany(c => c.Products)
+        .WithOne(c => c.Category)
+        .OnDelete(DeleteBehavior.Restrict)
+        .IsRequired();
+    }
+
+    private static void BCustomer(ModelBuilder _)
+    {
+        _.Entity<Customer>().HasKey(c => c.Id);
+
+        _.Entity<Customer>()
+        .Property(c => c.Id)
+        .HasMaxLength(36);
+
+        _.Entity<Customer>()
+        .Property(c => c.Name)
+        .HasMaxLength(50)
+        .IsRequired();
+
+        _.Entity<Customer>()
+        .Property(c => c.FirstName)
+        .HasMaxLength(50)
+        .IsRequired();
+
+        _.Entity<Customer>()
+        .Property(c => c.LastName)
+        .HasMaxLength(50)
+        .IsRequired();
+
+        _.Entity<Customer>()
+        .Property(c => c.Email)
+        .HasMaxLength(150)
+        .IsRequired();
+
+        _.Entity<Customer>()
+        .Property(c => c.Password)
+        .HasMaxLength(255)
+        .IsRequired();
+    }
+
+    private static void BProduct(ModelBuilder _)
+    {
+        _.Entity<Product>().HasKey(c => c.Id);
+
+        _.Entity<Product>()
+        .Property(c => c.Name)
+        .HasMaxLength(100)
+        .IsRequired();
+
+        _.Entity<Product>()
+        .Property(c => c.Description)
+        .HasMaxLength(255)
+        .IsRequired();
+
+        _.Entity<Product>()
+        .Property(c => c.ImageURL)
+        .HasMaxLength(255)
+        .IsRequired();
+
+        _.Entity<Product>()
+        .Property(c => c.Price)
+        .HasPrecision(12, 2);
+    }
+
+    private static void BSales(ModelBuilder _)
+    {
+        _.Entity<Sales>().HasKey(c => c.Id);
+
+        _.Entity<Sales>()
+        .Property(c => c.CustomerId)
+        .HasMaxLength(36)
+        .IsRequired();
+
+        _.Entity<Sales>()
+        .Property(c => c.ProductId)
+        .HasMaxLength(36)
+        .IsRequired();
+
+        _.Entity<Sales>()
+       .Property(c => c.Price)
+       .HasPrecision(12, 2);
+    }
     #endregion
 }
