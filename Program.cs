@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ECommerce_ASP_NET_API.Context;
+using ECommerce_ASP_NET_API.Modules.Customer;
+using ECommerce_ASP_NET_API.Modules.Customer.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 #region @Injectable
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 #endregion
 
 
