@@ -39,7 +39,7 @@ public class DatabaseContext : DbContext
         _.Entity<Cart>()
         .HasOne(c => c.Customer)
         .WithMany(c => c.Carts)
-        .OnDelete(DeleteBehavior.SetNull)
+        .OnDelete(DeleteBehavior.NoAction)
         .IsRequired();
     }
 
@@ -132,8 +132,8 @@ public class DatabaseContext : DbContext
         .IsRequired();
 
         _.Entity<Sales>()
-       .Property(c => c.Price)
-       .HasPrecision(12, 2);
+        .Property(c => c.Price)
+        .HasPrecision(12, 2);
     }
     #endregion
 }
