@@ -6,9 +6,6 @@ using System.ComponentModel.DataAnnotations;
 public class CategoryQueryDTO
 {
     [DefaultValue(false)]
-    public bool Id { get; set; }
-
-    [DefaultValue(false)]
     public bool Name { get; set; }
 
     [DefaultValue(10)]

@@ -41,11 +41,15 @@ public class CategoryController : ControllerBase
     public async Task<ActionResult> Update(
             int id, [FromBody] CategoryUpdateDTO categoryDto)
     {
-        if (categoryDto is null) return BadRequest("Data is required");
+        if (categoryDto?.Name is null) return BadRequest("Data is Required");
 
-        categoryDto.Id = id;
+        var currentCategoryDto = await _service.FindOne(id);
 
-        await _service.Update(categoryDto);
+        if (currentCategoryDto is null) return NotFound("Category Not Found");
+
+        currentCategoryDto.Name = categoryDto.Name;
+
+        await _service.Update(currentCategoryDto);
 
         return NoContent();
     }
