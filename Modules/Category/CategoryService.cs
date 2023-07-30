@@ -18,17 +18,14 @@ public class CategoryService : ICategoryService
 
     public async Task<IEnumerable<CategoryDTO>> FindMany(CategoryQueryDTO query)
     {
-        IQueryable<Category> queryBuilder = _repository.Find();
-
-        if (query.Id) queryBuilder.OrderBy(c => c.Id);
-
-        else if (query.Name) queryBuilder.OrderBy(c => c.Name);
-
         var categoryEntities = await _repository
             .Find()
             .AsNoTracking()
             .Take(query.Limit)
             .ToListAsync();
+
+        if (query.Name)
+            categoryEntities = categoryEntities.OrderBy(c => c.Name).ToList();
 
         return _mapper.Map<IEnumerable<CategoryDTO>>(categoryEntities);
     }
@@ -56,13 +53,7 @@ public class CategoryService : ICategoryService
 
     public async Task Update(CategoryDTO categoryDto)
     {
-        var currentCategory = await FindOne((int)categoryDto.Id!);
-
-        currentCategory.Name = String.IsNullOrEmpty(categoryDto.Name)
-            ? currentCategory.Name
-            : categoryDto.Name;
-
-        var categoryEntity = _mapper.Map<Category>(currentCategory);
+        var categoryEntity = _mapper.Map<Category>(categoryDto);
 
         await _repository.Update(categoryEntity);
     }
