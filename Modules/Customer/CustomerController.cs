@@ -1,23 +1,23 @@
 namespace ECommerce_ASP_NET_API.Modules.Customer;
 
+using ECommerce_ASP_NET_API.Exceptions;
 using ECommerce_ASP_NET_API.Modules.Customer.Contracts;
 using ECommerce_ASP_NET_API.Modules.Customer.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/[controller]", Name = "customer")]
+[Route("api/customers", Name = "Customer")]
 public class CustomerController : ControllerBase
 {
     private readonly ICustomerService _service;
     public CustomerController(ICustomerService service) => _service = service;
 
     [HttpGet]
-    public async Task<ActionResult<CustomerDTO>> Get(
+    public async Task<ActionResult<CustomerDTO>> Find(
         [FromQuery] CustomerQueryDTO query)
     {
-        var customer = await _service.FindById(query.Id!);
-
-        if (customer is null) return NotFound("Id Not Found");
+        var customer = await _service.FindById(query.Id!)
+            ?? throw new NotFoundError("Customer Not Found");
 
         return Ok(customer);
     }
@@ -28,7 +28,7 @@ public class CustomerController : ControllerBase
     {
         var customer = await _service.Register(customerDto);
 
-        return Created(nameof(Get), customer);
+        return Created(nameof(Find), customer);
     }
 
     [HttpPatch]
@@ -36,7 +36,7 @@ public class CustomerController : ControllerBase
         [FromQuery] CustomerQueryDTO query,
         [FromBody] CustomerUpdateDTO customerDto)
     {
-        if (customerDto is null) return BadRequest("Data is required");
+        if (customerDto is null) throw new BadRequestError("Data is required");
 
         customerDto.Id = query.Id;
 
@@ -48,9 +48,8 @@ public class CustomerController : ControllerBase
     [HttpDelete]
     public async Task<ActionResult> Remove([FromQuery] CustomerQueryDTO query)
     {
-        var customer = await _service.FindById(query.Id!);
-
-        if (customer is null) return NotFound("Id Not Found");
+        var customer = await _service.FindById(query.Id!)
+            ?? throw new NotFoundError("Customer Not Found");
 
         await _service.Remove(customer);
 
