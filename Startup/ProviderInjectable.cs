@@ -1,5 +1,4 @@
 using ECommerce_ASP_NET_API.Modules.Category;
-using ECommerce_ASP_NET_API.Modules.Category.Contracts;
 using ECommerce_ASP_NET_API.Modules.Customer;
 using ECommerce_ASP_NET_API.Modules.Customer.Contracts;
 
