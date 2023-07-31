@@ -1,7 +1,6 @@
 namespace ECommerce_ASP_NET_API.Modules.Category;
 
-using ECommerce_ASP_NET_API.Modules.Category.Contracts;
-using ECommerce_ASP_NET_API.Modules.Category.DTOs;
+using ECommerce_ASP_NET_API.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -11,7 +10,7 @@ public class CategoryController : ControllerBase
     private readonly ICategoryService _service;
     public CategoryController(ICategoryService service) => _service = service;
 
-    [HttpGet()]
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<CategoryDTO>>> FindMany(
         [FromQuery] CategoryQueryDTO query)
     {
@@ -21,9 +20,8 @@ public class CategoryController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<CategoryDTO>> FindOne(int id)
     {
-        var category = await _service.FindOne(id);
-
-        if (category is null) return NotFound("Category Not Found");
+        var category = await _service.FindOne(id)
+            ?? throw new NotFoundError("Category Not Found");
 
         return Ok(category);
     }
@@ -32,24 +30,18 @@ public class CategoryController : ControllerBase
     public async Task<ActionResult<CategoryDTO>> Register(
             [FromBody] CategoryCreateDTO categoryDto)
     {
-        var newCategory = await _service.Register(categoryDto);
+        var category = await _service.Register(categoryDto);
 
-        return Ok(newCategory);
+        return Ok(category);
     }
 
     [HttpPatch("{id:int}")]
     public async Task<ActionResult> Update(
             int id, [FromBody] CategoryUpdateDTO categoryDto)
     {
-        if (categoryDto?.Name is null) return BadRequest("Data is Required");
+        categoryDto.Id = id;
 
-        var currentCategoryDto = await _service.FindOne(id);
-
-        if (currentCategoryDto is null) return NotFound("Category Not Found");
-
-        currentCategoryDto.Name = categoryDto.Name;
-
-        await _service.Update(currentCategoryDto);
+        await _service.Update(categoryDto);
 
         return NoContent();
     }
@@ -57,9 +49,8 @@ public class CategoryController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Remove(int id)
     {
-        var category = await _service.FindOne(id);
-
-        if (category is null) return NotFound("Category Not Found");
+        var category = await _service.FindOne(id)
+            ?? throw new NotFoundError("Category Not Found");
 
         await _service.Remove(category);
 
