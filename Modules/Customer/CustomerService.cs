@@ -19,13 +19,16 @@ public class CustomerService : ICustomerService
 
     public async Task<CustomerDTO> FindById(string id)
     {
-        var customerEntity = await _repository.FindById(id);
+        var customerEntity = await _repository.Find(id);
 
         return _mapper.Map<CustomerDTO>(customerEntity);
     }
 
     public async Task<CustomerDTO> Register(CustomerDTO customerDto)
     {
+        if (await _repository.Find(email: customerDto.Email) != null)
+            throw new BadRequestError("Email is already in use");
+
         customerDto.Id = Guid.NewGuid().ToString();
 
         customerDto.CreatedAt = DateTime.UtcNow;
@@ -35,8 +38,6 @@ public class CustomerService : ICustomerService
         var customerEntity = _mapper.Map<Customer>(customerDto);
 
         await _repository.Create(customerEntity);
-
-        customerDto.Id = customerEntity.Id;
 
         return customerDto;
     }

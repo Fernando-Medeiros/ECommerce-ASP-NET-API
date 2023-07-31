@@ -4,7 +4,7 @@ using ECommerce_ASP_NET_API.Models;
 
 public interface ICustomerRepository
 {
-    public Task<Customer?> FindById(string id);
+    public Task<Customer?> Find(string? id = null, string? email = null);
 
     public Task<Customer> Create(Customer customer);
 
