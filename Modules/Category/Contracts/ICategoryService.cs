@@ -1,6 +1,4 @@
-namespace ECommerce_ASP_NET_API.Modules.Category.Contracts;
-
-using ECommerce_ASP_NET_API.Modules.Category.DTOs;
+namespace ECommerce_ASP_NET_API.Modules.Category;
 
 public interface ICategoryService
 {

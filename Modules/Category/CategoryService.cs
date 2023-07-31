@@ -1,10 +1,8 @@
 namespace ECommerce_ASP_NET_API.Modules.Category;
 
 using AutoMapper;
+using ECommerce_ASP_NET_API.Exceptions;
 using ECommerce_ASP_NET_API.Models;
-using ECommerce_ASP_NET_API.Modules.Category.Contracts;
-using ECommerce_ASP_NET_API.Modules.Category.DTOs;
-using Microsoft.EntityFrameworkCore;
 
 public class CategoryService : ICategoryService
 {
@@ -18,30 +16,23 @@ public class CategoryService : ICategoryService
 
     public async Task<IEnumerable<CategoryDTO>> FindMany(CategoryQueryDTO query)
     {
-        var categoryEntities = await _repository
-            .Find()
-            .AsNoTracking()
-            .Take(query.Limit)
-            .ToListAsync();
-
-        if (query.Name)
-            categoryEntities = categoryEntities.OrderBy(c => c.Name).ToList();
+        var categoryEntities = await _repository.FindMany(query);
 
         return _mapper.Map<IEnumerable<CategoryDTO>>(categoryEntities);
     }
 
     public async Task<CategoryDTO> FindOne(int id)
     {
-        var categoryEntity = await _repository
-            .Find()
-            .AsNoTracking()
-            .SingleOrDefaultAsync(c => c.Id == id);
+        var categoryEntity = await _repository.FindOne(id);
 
         return _mapper.Map<CategoryDTO>(categoryEntity);
     }
 
     public async Task<CategoryDTO> Register(CategoryDTO categoryDto)
     {
+        if (await CategoryExists(name: categoryDto.Name))
+            throw new BadRequestError("Category is already exist");
+
         categoryDto.CreatedAt = DateTime.UtcNow;
 
         var categoryEntity = _mapper.Map<Category>(categoryDto);
@@ -53,9 +44,15 @@ public class CategoryService : ICategoryService
 
     public async Task Update(CategoryDTO categoryDto)
     {
-        var categoryEntity = _mapper.Map<Category>(categoryDto);
+        if (await CategoryExists(name: categoryDto.Name))
+            throw new BadRequestError("Category is already exist");
 
-        await _repository.Update(categoryEntity);
+        var currentCategoryEntity = await _repository.FindOne(id: categoryDto.Id)
+            ?? throw new NotFoundError("Category Not Found");
+
+        currentCategoryEntity.Name = categoryDto.Name;
+
+        await _repository.Update(currentCategoryEntity);
     }
 
     public async Task Remove(CategoryDTO categoryDto)
@@ -63,5 +60,10 @@ public class CategoryService : ICategoryService
         var categoryEntity = _mapper.Map<Category>(categoryDto);
 
         await _repository.Remove(categoryEntity);
+    }
+
+    private async Task<bool> CategoryExists(int? id = null, string? name = null)
+    {
+        return await _repository.FindOne(id, name) != null;
     }
 }
