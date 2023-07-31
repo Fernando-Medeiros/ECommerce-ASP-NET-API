@@ -5,7 +5,7 @@ using BCrypt.Net;
 using ECommerce_ASP_NET_API.Modules.Customer.Contracts;
 using ECommerce_ASP_NET_API.Modules.Customer.DTOs;
 using ECommerce_ASP_NET_API.Models;
-
+using ECommerce_ASP_NET_API.Exceptions;
 
 public class CustomerService : ICustomerService
 {
@@ -19,13 +19,16 @@ public class CustomerService : ICustomerService
 
     public async Task<CustomerDTO> FindById(string id)
     {
-        var customerEntity = await _repository.FindById(id);
+        var customerEntity = await _repository.Find(id);
 
         return _mapper.Map<CustomerDTO>(customerEntity);
     }
 
     public async Task<CustomerDTO> Register(CustomerDTO customerDto)
     {
+        if (await _repository.Find(email: customerDto.Email) != null)
+            throw new BadRequestError("Email is already in use");
+
         customerDto.Id = Guid.NewGuid().ToString();
 
         customerDto.CreatedAt = DateTime.UtcNow;
@@ -41,7 +44,8 @@ public class CustomerService : ICustomerService
 
     public async Task Update(CustomerDTO customerDto)
     {
-        var customer = await FindById(customerDto.Id!);
+        var customer = await FindById(customerDto.Id!)
+            ?? throw new NotFoundError("Customer Not Found"); ;
 
         customer.Name = String.IsNullOrEmpty(customerDto.Name)
             ? customer.Name

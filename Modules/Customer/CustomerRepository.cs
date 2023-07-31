@@ -11,11 +11,16 @@ public class CustomerRepository : ICustomerRepository
     private readonly DatabaseContext _context;
     public CustomerRepository(DatabaseContext context) => _context = context;
 
-    public async Task<Customer?> FindById(string id)
+    public async Task<Customer?> Find(string? id, string? email)
     {
+        if (id != null)
+            return await _context.Customers
+                .AsNoTracking()
+                .SingleOrDefaultAsync(c => c.Id == id);
+
         return await _context.Customers
             .AsNoTracking()
-            .SingleOrDefaultAsync(c => c.Id == id);
+            .FirstOrDefaultAsync(c => c.Email == email);
     }
 
     public async Task<Customer> Create(Customer customer)
