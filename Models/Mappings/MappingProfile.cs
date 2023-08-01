@@ -1,5 +1,5 @@
 using AutoMapper;
-using ECommerce_ASP_NET_API.Modules.Cart.DTOs;
+using ECommerce_ASP_NET_API.Modules.Cart;
 using ECommerce_ASP_NET_API.Modules.Category;
 using ECommerce_ASP_NET_API.Modules.Customer.DTOs;
 using ECommerce_ASP_NET_API.Modules.Product;
