@@ -3,6 +3,7 @@ namespace ECommerce_ASP_NET_API.Modules.Category;
 using AutoMapper;
 using ECommerce_ASP_NET_API.Exceptions;
 using ECommerce_ASP_NET_API.Models;
+using ECommerce_ASP_NET_API.Modules.Product;
 
 public class CategoryService : ICategoryService
 {
@@ -19,6 +20,13 @@ public class CategoryService : ICategoryService
         var categoryEntities = await _repository.FindMany(query);
 
         return _mapper.Map<IEnumerable<CategoryDTO>>(categoryEntities);
+    }
+
+    public async Task<IEnumerable<ProductDTO>> FindProducts(int id)
+    {
+        var products = await _repository.FindProducts(id);
+
+        return _mapper.Map<IEnumerable<ProductDTO>>(products);
     }
 
     public async Task<CategoryDTO> FindOne(int id)

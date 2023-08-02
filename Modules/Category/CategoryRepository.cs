@@ -24,6 +24,15 @@ public class CategoryRepository : ICategoryRepository
         return categoryEntities;
     }
 
+    public async Task<ICollection<Product>?> FindProducts(int id)
+    {
+        var category = await _context.Categories
+            .Include(c => c.Products)
+            .SingleOrDefaultAsync(c => c.Id == id);
+
+        return category?.Products;
+    }
+
     public async Task<Category?> FindOne(int? id, string? name)
     {
         if (id != null)
