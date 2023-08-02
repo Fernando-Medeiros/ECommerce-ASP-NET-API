@@ -14,12 +14,23 @@ public class CategoryRepository : ICategoryRepository
         var categoryEntities = await _context.Categories
             .AsNoTracking()
             .Take(query.Limit)
+            .OrderBy(c => c.Id)
+            .Skip(query.Skip > 0 ? query.Skip : 0)
             .ToListAsync();
 
         if (query.Name)
             categoryEntities = categoryEntities.OrderBy(c => c.Name).ToList();
 
         return categoryEntities;
+    }
+
+    public async Task<ICollection<Product>?> FindProducts(int id)
+    {
+        var category = await _context.Categories
+            .Include(c => c.Products)
+            .SingleOrDefaultAsync(c => c.Id == id);
+
+        return category?.Products;
     }
 
     public async Task<Category?> FindOne(int? id, string? name)
@@ -37,30 +48,24 @@ public class CategoryRepository : ICategoryRepository
         return null;
     }
 
-    public async Task<Category> Create(Category category)
+    public async Task Create(Category category)
     {
         _context.Categories.Add(category);
 
         await _context.SaveChangesAsync();
-
-        return category;
     }
 
-    public async Task<Category> Update(Category category)
+    public async Task Update(Category category)
     {
         _context.Categories.Entry(category).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
-
-        return category;
     }
 
-    public async Task<Category> Remove(Category category)
+    public async Task Remove(Category category)
     {
         _context.Categories.Remove(category);
 
         await _context.SaveChangesAsync();
-
-        return category;
     }
 }

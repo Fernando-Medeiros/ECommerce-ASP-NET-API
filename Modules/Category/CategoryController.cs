@@ -1,6 +1,7 @@
 namespace ECommerce_ASP_NET_API.Modules.Category;
 
 using ECommerce_ASP_NET_API.Exceptions;
+using ECommerce_ASP_NET_API.Modules.Product;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -15,6 +16,12 @@ public class CategoryController : ControllerBase
         [FromQuery] CategoryQueryDTO query)
     {
         return Ok(await _service.FindMany(query));
+    }
+
+    [HttpGet("{id:int}/products")]
+    public async Task<ActionResult<IEnumerable<ProductDTO>>> FindProducts(int id)
+    {
+        return Ok(await _service.FindProducts(id));
     }
 
     [HttpGet("{id:int}")]
@@ -49,10 +56,7 @@ public class CategoryController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Remove(int id)
     {
-        var category = await _service.FindOne(id)
-            ?? throw new NotFoundError("Category Not Found");
-
-        await _service.Remove(category);
+        await _service.Remove(new() { Id = id });
 
         return NoContent();
     }
