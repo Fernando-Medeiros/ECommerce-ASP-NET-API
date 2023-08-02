@@ -2,6 +2,7 @@ using ECommerce_ASP_NET_API.Modules.Cart;
 using ECommerce_ASP_NET_API.Modules.Category;
 using ECommerce_ASP_NET_API.Modules.Customer;
 using ECommerce_ASP_NET_API.Modules.Product;
+using ECommerce_ASP_NET_API.Modules.Sales;
 
 namespace ECommerce_ASP_NET_API.Startup;
 
@@ -20,5 +21,8 @@ public static partial class ServiceProviders
 
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<IProductService, ProductService>();
+
+        builder.Services.AddScoped<ISalesRepository, SalesRepository>();
+        builder.Services.AddScoped<ISalesService, SalesService>();
     }
 }
