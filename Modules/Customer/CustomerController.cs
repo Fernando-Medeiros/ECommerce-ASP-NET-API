@@ -1,6 +1,7 @@
 namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 using ECommerce_ASP_NET_API.Exceptions;
+using ECommerce_ASP_NET_API.Modules.Cart;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -9,6 +10,13 @@ public class CustomerController : ControllerBase
 {
     private readonly ICustomerService _service;
     public CustomerController(ICustomerService service) => _service = service;
+
+    [HttpGet("carts")]
+    public async Task<ActionResult<IEnumerable<CartDTO>>> FindCarts(
+        [FromQuery] CustomerQueryDTO query)
+    {
+        return Ok(await _service.FindCarts(query.Id!));
+    }
 
     [HttpGet]
     public async Task<ActionResult<CustomerDTO>> Find(

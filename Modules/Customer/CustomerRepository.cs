@@ -3,11 +3,21 @@ namespace ECommerce_ASP_NET_API.Modules.Customer;
 using Microsoft.EntityFrameworkCore;
 using ECommerce_ASP_NET_API.Context;
 using ECommerce_ASP_NET_API.Models;
+using System.Collections.Generic;
 
 public class CustomerRepository : ICustomerRepository
 {
     private readonly DatabaseContext _context;
     public CustomerRepository(DatabaseContext context) => _context = context;
+
+    public async Task<ICollection<Cart>?> FindCarts(string? id)
+    {
+        var customer = await _context.Customers
+            .Include(c => c.Carts)
+            .SingleOrDefaultAsync(c => c.Id == id);
+
+        return customer?.Carts;
+    }
 
     public async Task<Customer?> Find(string? id, string? email)
     {

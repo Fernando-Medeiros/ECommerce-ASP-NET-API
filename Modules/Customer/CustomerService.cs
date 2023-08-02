@@ -4,6 +4,7 @@ using AutoMapper;
 using BCrypt.Net;
 using ECommerce_ASP_NET_API.Models;
 using ECommerce_ASP_NET_API.Exceptions;
+using ECommerce_ASP_NET_API.Modules.Cart;
 
 public class CustomerService : ICustomerService
 {
@@ -13,6 +14,13 @@ public class CustomerService : ICustomerService
     {
         _repository = repository;
         _mapper = mapper;
+    }
+
+    public async Task<IEnumerable<CartDTO>> FindCarts(string id)
+    {
+        var carts = await _repository.FindCarts(id);
+
+        return _mapper.Map<IEnumerable<CartDTO>>(carts);
     }
 
     public async Task<CustomerDTO> FindById(string id)
