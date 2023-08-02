@@ -1,9 +1,11 @@
-using ECommerce_ASP_NET_API.Modules.Customer.DTOs;
+namespace ECommerce_ASP_NET_API.Modules.Customer;
 
-namespace ECommerce_ASP_NET_API.Modules.Customer.Contracts;
+using ECommerce_ASP_NET_API.Modules.Cart;
 
 public interface ICustomerService
 {
+    public Task<IEnumerable<CartDTO>> FindCarts(string id);
+
     public Task<CustomerDTO> FindById(string id);
 
     public Task<CustomerDTO> Register(CustomerDTO customer);

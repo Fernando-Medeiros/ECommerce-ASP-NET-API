@@ -1,14 +1,16 @@
-namespace ECommerce_ASP_NET_API.Modules.Customer.Contracts;
+namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 using ECommerce_ASP_NET_API.Models;
 
 public interface ICustomerRepository
 {
+    public Task<ICollection<Cart>?> FindCarts(string? id = null);
+
     public Task<Customer?> Find(string? id = null, string? email = null);
 
-    public Task<Customer> Create(Customer customer);
+    public Task Create(Customer customer);
 
-    public Task<Customer> Update(Customer customer);
+    public Task Update(Customer customer);
 
-    public Task<Customer> Remove(Customer customer);
+    public Task Remove(Customer customer);
 }

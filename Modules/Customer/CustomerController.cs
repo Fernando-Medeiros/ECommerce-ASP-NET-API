@@ -1,8 +1,7 @@
 namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 using ECommerce_ASP_NET_API.Exceptions;
-using ECommerce_ASP_NET_API.Modules.Customer.Contracts;
-using ECommerce_ASP_NET_API.Modules.Customer.DTOs;
+using ECommerce_ASP_NET_API.Modules.Cart;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -11,6 +10,13 @@ public class CustomerController : ControllerBase
 {
     private readonly ICustomerService _service;
     public CustomerController(ICustomerService service) => _service = service;
+
+    [HttpGet("carts")]
+    public async Task<ActionResult<IEnumerable<CartDTO>>> FindCarts(
+        [FromQuery] CustomerQueryDTO query)
+    {
+        return Ok(await _service.FindCarts(query.Id!));
+    }
 
     [HttpGet]
     public async Task<ActionResult<CustomerDTO>> Find(
@@ -36,7 +42,8 @@ public class CustomerController : ControllerBase
         [FromQuery] CustomerQueryDTO query,
         [FromBody] CustomerUpdateDTO customerDto)
     {
-        if (customerDto is null) throw new BadRequestError("Data is required");
+        if (customerDto is null)
+            throw new BadRequestError("Data is required");
 
         customerDto.Id = query.Id;
 
@@ -46,12 +53,10 @@ public class CustomerController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<ActionResult> Remove([FromQuery] CustomerQueryDTO query)
+    public async Task<ActionResult> Remove(
+        [FromQuery] CustomerQueryDTO query)
     {
-        var customer = await _service.FindById(query.Id!)
-            ?? throw new NotFoundError("Customer Not Found");
-
-        await _service.Remove(customer);
+        await _service.Remove(new() { Id = query.Id });
 
         return NoContent();
     }
