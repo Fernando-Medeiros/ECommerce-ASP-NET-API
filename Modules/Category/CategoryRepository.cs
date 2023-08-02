@@ -37,30 +37,24 @@ public class CategoryRepository : ICategoryRepository
         return null;
     }
 
-    public async Task<Category> Create(Category category)
+    public async Task Create(Category category)
     {
         _context.Categories.Add(category);
 
         await _context.SaveChangesAsync();
-
-        return category;
     }
 
-    public async Task<Category> Update(Category category)
+    public async Task Update(Category category)
     {
         _context.Categories.Entry(category).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
-
-        return category;
     }
 
-    public async Task<Category> Remove(Category category)
+    public async Task Remove(Category category)
     {
         _context.Categories.Remove(category);
 
         await _context.SaveChangesAsync();
-
-        return category;
     }
 }
