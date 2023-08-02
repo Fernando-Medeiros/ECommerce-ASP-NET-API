@@ -14,6 +14,8 @@ public class CategoryRepository : ICategoryRepository
         var categoryEntities = await _context.Categories
             .AsNoTracking()
             .Take(query.Limit)
+            .OrderBy(c => c.Id)
+            .Skip(query.Skip > 0 ? query.Skip : 0)
             .ToListAsync();
 
         if (query.Name)
