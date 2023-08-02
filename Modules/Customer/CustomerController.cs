@@ -34,7 +34,8 @@ public class CustomerController : ControllerBase
         [FromQuery] CustomerQueryDTO query,
         [FromBody] CustomerUpdateDTO customerDto)
     {
-        if (customerDto is null) throw new BadRequestError("Data is required");
+        if (customerDto is null)
+            throw new BadRequestError("Data is required");
 
         customerDto.Id = query.Id;
 
@@ -44,12 +45,10 @@ public class CustomerController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<ActionResult> Remove([FromQuery] CustomerQueryDTO query)
+    public async Task<ActionResult> Remove(
+        [FromQuery] CustomerQueryDTO query)
     {
-        var customer = await _service.FindById(query.Id!)
-            ?? throw new NotFoundError("Customer Not Found");
-
-        await _service.Remove(customer);
+        await _service.Remove(new() { Id = query.Id });
 
         return NoContent();
     }
