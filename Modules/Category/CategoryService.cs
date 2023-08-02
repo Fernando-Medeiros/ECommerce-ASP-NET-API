@@ -55,9 +55,10 @@ public class CategoryService : ICategoryService
         await _repository.Update(currentCategoryEntity);
     }
 
-    public async Task Remove(CategoryDTO categoryDto)
+    public async Task Remove(CategoryDTO Dto)
     {
-        var categoryEntity = _mapper.Map<Category>(categoryDto);
+        var categoryEntity = await _repository.FindOne(id: Dto.Id)
+            ?? throw new NotFoundError("Category Not Found");
 
         await _repository.Remove(categoryEntity);
     }

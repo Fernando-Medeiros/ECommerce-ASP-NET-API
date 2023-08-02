@@ -49,10 +49,7 @@ public class CategoryController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Remove(int id)
     {
-        var category = await _service.FindOne(id)
-            ?? throw new NotFoundError("Category Not Found");
-
-        await _service.Remove(category);
+        await _service.Remove(new() { Id = id });
 
         return NoContent();
     }
