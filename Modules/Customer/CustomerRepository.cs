@@ -16,35 +16,32 @@ public class CustomerRepository : ICustomerRepository
                 .AsNoTracking()
                 .SingleOrDefaultAsync(c => c.Id == id);
 
-        return await _context.Customers
-            .AsNoTracking()
-            .FirstOrDefaultAsync(c => c.Email == email);
+        else if (email != null)
+            return await _context.Customers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Email == email);
+
+        return null;
     }
 
-    public async Task<Customer> Create(Customer customer)
+    public async Task Create(Customer customer)
     {
         _context.Customers.Add(customer);
 
         await _context.SaveChangesAsync();
-
-        return customer;
     }
 
-    public async Task<Customer> Update(Customer customer)
+    public async Task Update(Customer customer)
     {
         _context.Customers.Entry(customer).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
-
-        return customer;
     }
 
-    public async Task<Customer> Remove(Customer customer)
+    public async Task Remove(Customer customer)
     {
         _context.Customers.Remove(customer);
 
         await _context.SaveChangesAsync();
-
-        return customer;
     }
 }

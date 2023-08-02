@@ -6,9 +6,9 @@ public interface ICustomerRepository
 {
     public Task<Customer?> Find(string? id = null, string? email = null);
 
-    public Task<Customer> Create(Customer customer);
+    public Task Create(Customer customer);
 
-    public Task<Customer> Update(Customer customer);
+    public Task Update(Customer customer);
 
-    public Task<Customer> Remove(Customer customer);
+    public Task Remove(Customer customer);
 }
