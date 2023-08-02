@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Modules.Customer.DTOs;
+namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;

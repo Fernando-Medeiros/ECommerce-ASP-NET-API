@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace ECommerce_ASP_NET_API.Modules.Customer.DTOs;
+namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 public class CustomerUpdateDTO : CustomerDTO
 {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ECommerce_ASP_NET_API.Modules.Customer.DTOs;
+namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 public class CustomerQueryDTO
 {

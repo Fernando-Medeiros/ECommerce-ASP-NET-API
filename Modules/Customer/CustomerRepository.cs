@@ -3,8 +3,6 @@ namespace ECommerce_ASP_NET_API.Modules.Customer;
 using Microsoft.EntityFrameworkCore;
 using ECommerce_ASP_NET_API.Context;
 using ECommerce_ASP_NET_API.Models;
-using ECommerce_ASP_NET_API.Modules.Customer.Contracts;
-
 
 public class CustomerRepository : ICustomerRepository
 {

@@ -1,8 +1,6 @@
 namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 using ECommerce_ASP_NET_API.Exceptions;
-using ECommerce_ASP_NET_API.Modules.Customer.Contracts;
-using ECommerce_ASP_NET_API.Modules.Customer.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]

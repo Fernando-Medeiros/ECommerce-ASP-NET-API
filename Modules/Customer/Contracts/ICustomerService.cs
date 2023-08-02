@@ -1,6 +1,4 @@
-using ECommerce_ASP_NET_API.Modules.Customer.DTOs;
-
-namespace ECommerce_ASP_NET_API.Modules.Customer.Contracts;
+namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 public interface ICustomerService
 {

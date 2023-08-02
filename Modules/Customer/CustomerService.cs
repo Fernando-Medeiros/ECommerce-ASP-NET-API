@@ -2,8 +2,6 @@ namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 using AutoMapper;
 using BCrypt.Net;
-using ECommerce_ASP_NET_API.Modules.Customer.Contracts;
-using ECommerce_ASP_NET_API.Modules.Customer.DTOs;
 using ECommerce_ASP_NET_API.Models;
 using ECommerce_ASP_NET_API.Exceptions;
 
