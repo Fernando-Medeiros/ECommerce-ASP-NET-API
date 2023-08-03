@@ -48,7 +48,7 @@ public class TokenService : ITokenService
     {
         ClaimsIdentity claims = new();
 
-        claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, customer.Id!));
+        claims.AddClaim(new Claim("id", customer.Id!));
 
         return claims;
     }

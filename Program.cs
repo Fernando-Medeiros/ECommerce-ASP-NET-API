@@ -2,6 +2,10 @@ using ECommerce_ASP_NET_API.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 
+ServiceProviders.AddAuthenticationMiddleware(builder);
+
+ServiceProviders.AddAuthorizationMiddleware(builder);
+
 ServiceProviders.Controller(builder);
 
 ServiceProviders.Swagger(builder);
@@ -12,8 +16,12 @@ ServiceProviders.Injectable(builder);
 
 var app = builder.Build();
 
+ServiceProviders.UseAuthenticationMiddleware(app);
+
+ServiceProviders.UseAuthorizationMiddleware(app);
+
 ServiceProviders.Development(app);
 
-ServiceProviders.Middleware(app);
+ServiceProviders.Pipeline(app);
 
 app.Run();
