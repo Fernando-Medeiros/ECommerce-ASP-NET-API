@@ -2,9 +2,9 @@ namespace ECommerce_ASP_NET_API.Modules.Cart;
 
 public interface ICartService
 {
-    public Task<CartDTO?> FindOne(int? id);
+    public Task<CartDTO> FindOne(int cartId, string customerId);
 
-    public Task<CartDTO> Register(CartDTO cart);
+    public Task Register(CartDTO cart);
 
     public Task Update(CartDTO cart);
 
