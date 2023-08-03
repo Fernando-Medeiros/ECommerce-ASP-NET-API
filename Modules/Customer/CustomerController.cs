@@ -1,7 +1,9 @@
 namespace ECommerce_ASP_NET_API.Modules.Customer;
 
 using ECommerce_ASP_NET_API.Exceptions;
+using ECommerce_ASP_NET_API.Identities;
 using ECommerce_ASP_NET_API.Modules.Cart;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -11,52 +13,60 @@ public class CustomerController : ControllerBase
     private readonly ICustomerService _service;
     public CustomerController(ICustomerService service) => _service = service;
 
+    [Authorize]
     [HttpGet("carts")]
-    public async Task<ActionResult<IEnumerable<CartDTO>>> FindCarts(
-        [FromQuery] CustomerQueryDTO query)
+    public async Task<ActionResult<IEnumerable<CartDTO>>> FindCarts()
     {
-        return Ok(await _service.FindCarts(query.Id!));
+        CustomerIdentity customer = new(User);
+
+        return Ok(await _service.FindCarts(customer.Id));
     }
 
+    [Authorize]
     [HttpGet]
-    public async Task<ActionResult<CustomerDTO>> Find(
-        [FromQuery] CustomerQueryDTO query)
+    public async Task<ActionResult<CustomerDTO>> Find()
     {
-        var customer = await _service.FindById(query.Id!)
+        CustomerIdentity customer = new(User);
+
+        var customerDto = await _service.FindById(customer.Id)
             ?? throw new NotFoundError("Customer Not Found");
 
-        return Ok(customer);
+        return Ok(customerDto);
     }
 
     [HttpPost]
-    public async Task<ActionResult<CustomerDTO>> Register(
+    public async Task<ActionResult> Register(
         [FromBody] CustomerCreateDTO customerDto)
     {
-        var customer = await _service.Register(customerDto);
+        await _service.Register(customerDto);
 
-        return Created(nameof(Find), customer);
+        return Created("", "");
     }
 
+    [Authorize]
     [HttpPatch]
     public async Task<ActionResult> Update(
-        [FromQuery] CustomerQueryDTO query,
         [FromBody] CustomerUpdateDTO customerDto)
     {
         if (customerDto is null)
             throw new BadRequestError("Data is required");
 
-        customerDto.Id = query.Id;
+        CustomerIdentity customer = new(User);
+
+        customerDto.Id = customer.Id;
 
         await _service.Update(customerDto);
 
         return NoContent();
     }
 
+    [Authorize]
     [HttpDelete]
-    public async Task<ActionResult> Remove(
-        [FromQuery] CustomerQueryDTO query)
+    public async Task<ActionResult> Remove()
     {
-        await _service.Remove(new() { Id = query.Id });
+        CustomerIdentity customer = new(User);
+
+        await _service.Remove(new() { Id = customer.Id });
 
         return NoContent();
     }

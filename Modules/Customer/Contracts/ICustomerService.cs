@@ -8,7 +8,7 @@ public interface ICustomerService
 
     public Task<CustomerDTO> FindById(string id);
 
-    public Task<CustomerDTO> Register(CustomerDTO customer);
+    public Task Register(CustomerDTO customer);
 
     public Task Update(CustomerDTO customer);
 
