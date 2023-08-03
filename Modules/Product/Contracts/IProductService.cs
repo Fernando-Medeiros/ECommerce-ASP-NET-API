@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Modules.Product;
+namespace ECommerce.Modules.Product;
 
 public interface IProductService
 {

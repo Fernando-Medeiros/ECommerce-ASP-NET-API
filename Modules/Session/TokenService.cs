@@ -1,10 +1,10 @@
-namespace ECommerce_ASP_NET_API.Modules.Session;
+namespace ECommerce.Modules.Session;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using ECommerce_ASP_NET_API.Modules.Customer;
+using ECommerce.Modules.Customer;
 
 public class TokenService : ITokenService
 {

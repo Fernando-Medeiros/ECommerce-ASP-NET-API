@@ -1,7 +1,7 @@
-namespace ECommerce_ASP_NET_API.Modules.Cart;
+namespace ECommerce.Modules.Cart;
 
 using System.Text.Json.Serialization;
-using ECommerce_ASP_NET_API.Models;
+using ECommerce.Models;
 
 public class CartDTO
 {

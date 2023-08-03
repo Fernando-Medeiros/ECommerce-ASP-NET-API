@@ -1,6 +1,6 @@
-using ECommerce_ASP_NET_API.Exceptions;
+using ECommerce.Exceptions;
 
-namespace ECommerce_ASP_NET_API.Startup;
+namespace ECommerce.Startup;
 
 public static partial class ServiceProviders
 {

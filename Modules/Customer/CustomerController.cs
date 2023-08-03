@@ -1,8 +1,8 @@
-namespace ECommerce_ASP_NET_API.Modules.Customer;
+namespace ECommerce.Modules.Customer;
 
-using ECommerce_ASP_NET_API.Exceptions;
-using ECommerce_ASP_NET_API.Identities;
-using ECommerce_ASP_NET_API.Modules.Cart;
+using ECommerce.Exceptions;
+using ECommerce.Identities;
+using ECommerce.Modules.Cart;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

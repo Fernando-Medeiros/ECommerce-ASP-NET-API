@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Modules.Session;
+namespace ECommerce.Modules.Session;
 
 public class EnvironmentDTO
 {

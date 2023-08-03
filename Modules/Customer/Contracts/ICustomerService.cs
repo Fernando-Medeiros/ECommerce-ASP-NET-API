@@ -1,6 +1,6 @@
-namespace ECommerce_ASP_NET_API.Modules.Customer;
+namespace ECommerce.Modules.Customer;
 
-using ECommerce_ASP_NET_API.Modules.Cart;
+using ECommerce.Modules.Cart;
 
 public interface ICustomerService
 {

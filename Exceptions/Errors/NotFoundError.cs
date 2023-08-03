@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Exceptions;
+namespace ECommerce.Exceptions;
 
 public class NotFoundError : HttpResponseException
 {

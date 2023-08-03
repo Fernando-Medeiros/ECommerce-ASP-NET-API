@@ -1,7 +1,7 @@
-namespace ECommerce_ASP_NET_API.Identities;
+namespace ECommerce.Identities;
 
 using System.Security.Claims;
-using ECommerce_ASP_NET_API.Exceptions;
+using ECommerce.Exceptions;
 
 public class CustomerIdentity
 {

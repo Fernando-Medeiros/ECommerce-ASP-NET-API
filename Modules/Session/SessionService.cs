@@ -1,9 +1,9 @@
-namespace ECommerce_ASP_NET_API.Modules.Session;
+namespace ECommerce.Modules.Session;
 
 using AutoMapper;
 using BCrypt.Net;
-using ECommerce_ASP_NET_API.Exceptions;
-using ECommerce_ASP_NET_API.Modules.Customer;
+using ECommerce.Exceptions;
+using ECommerce.Modules.Customer;
 
 public class SessionService : ISessionService
 {

@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Startup;
+namespace ECommerce.Startup;
 
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

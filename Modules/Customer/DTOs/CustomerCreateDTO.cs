@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace ECommerce_ASP_NET_API.Modules.Customer;
+namespace ECommerce.Modules.Customer;
 
 public class CustomerCreateDTO : CustomerDTO
 {

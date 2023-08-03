@@ -1,6 +1,6 @@
-namespace ECommerce_ASP_NET_API.Modules.Sales;
+namespace ECommerce.Modules.Sales;
 
-using ECommerce_ASP_NET_API.Exceptions;
+using ECommerce.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/sales", Name = "Sales")]

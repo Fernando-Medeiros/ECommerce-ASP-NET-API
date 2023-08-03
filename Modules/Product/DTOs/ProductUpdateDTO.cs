@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Modules.Product;
+namespace ECommerce.Modules.Product;
 
 using System.Text.Json.Serialization;
 

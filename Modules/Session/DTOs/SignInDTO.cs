@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Modules.Session;
+namespace ECommerce.Modules.Session;
 using System.ComponentModel.DataAnnotations;
 
 public class SignInDTO

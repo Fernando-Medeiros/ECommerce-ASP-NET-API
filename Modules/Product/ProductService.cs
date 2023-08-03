@@ -1,9 +1,9 @@
-namespace ECommerce_ASP_NET_API.Modules.Product;
+namespace ECommerce.Modules.Product;
 
 using AutoMapper;
-using ECommerce_ASP_NET_API.Exceptions;
-using ECommerce_ASP_NET_API.Models;
-using ECommerce_ASP_NET_API.Modules.Category;
+using ECommerce.Exceptions;
+using ECommerce.Models;
+using ECommerce.Modules.Category;
 
 public class ProductService : IProductService
 {

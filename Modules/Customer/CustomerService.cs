@@ -1,10 +1,10 @@
-namespace ECommerce_ASP_NET_API.Modules.Customer;
+namespace ECommerce.Modules.Customer;
 
 using AutoMapper;
 using BCrypt.Net;
-using ECommerce_ASP_NET_API.Models;
-using ECommerce_ASP_NET_API.Exceptions;
-using ECommerce_ASP_NET_API.Modules.Cart;
+using ECommerce.Models;
+using ECommerce.Exceptions;
+using ECommerce.Modules.Cart;
 
 public class CustomerService : ICustomerService
 {

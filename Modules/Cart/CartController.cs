@@ -1,6 +1,6 @@
-namespace ECommerce_ASP_NET_API.Modules.Cart;
+namespace ECommerce.Modules.Cart;
 
-using ECommerce_ASP_NET_API.Identities;
+using ECommerce.Identities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

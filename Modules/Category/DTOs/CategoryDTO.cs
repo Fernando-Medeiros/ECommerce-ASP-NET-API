@@ -1,8 +1,8 @@
-namespace ECommerce_ASP_NET_API.Modules.Category;
+namespace ECommerce.Modules.Category;
 
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using ECommerce_ASP_NET_API.Models;
+using ECommerce.Models;
 
 public class CategoryDTO
 {

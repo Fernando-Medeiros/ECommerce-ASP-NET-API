@@ -1,9 +1,9 @@
-namespace ECommerce_ASP_NET_API.Modules.Cart;
+namespace ECommerce.Modules.Cart;
 
 using AutoMapper;
-using ECommerce_ASP_NET_API.Exceptions;
-using ECommerce_ASP_NET_API.Models;
-using ECommerce_ASP_NET_API.Modules.Product;
+using ECommerce.Exceptions;
+using ECommerce.Models;
+using ECommerce.Modules.Product;
 
 public class CartService : ICartService
 {

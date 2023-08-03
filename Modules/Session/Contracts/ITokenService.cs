@@ -1,6 +1,6 @@
-namespace ECommerce_ASP_NET_API.Modules.Session;
+namespace ECommerce.Modules.Session;
 
-using ECommerce_ASP_NET_API.Modules.Customer;
+using ECommerce.Modules.Customer;
 
 public interface ITokenService
 {

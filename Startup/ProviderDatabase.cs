@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ECommerce_ASP_NET_API.Context;
+using ECommerce.Context;
 
-namespace ECommerce_ASP_NET_API.Startup;
+namespace ECommerce.Startup;
 
 public static partial class ServiceProviders
 {

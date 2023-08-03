@@ -1,6 +1,6 @@
-namespace ECommerce_ASP_NET_API.Modules.Sales;
+namespace ECommerce.Modules.Sales;
 
-using ECommerce_ASP_NET_API.Models;
+using ECommerce.Models;
 
 public interface ISalesRepository
 {

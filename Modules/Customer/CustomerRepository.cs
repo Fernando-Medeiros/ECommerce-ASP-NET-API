@@ -1,8 +1,8 @@
-namespace ECommerce_ASP_NET_API.Modules.Customer;
+namespace ECommerce.Modules.Customer;
 
 using Microsoft.EntityFrameworkCore;
-using ECommerce_ASP_NET_API.Context;
-using ECommerce_ASP_NET_API.Models;
+using ECommerce.Context;
+using ECommerce.Models;
 using System.Collections.Generic;
 
 public class CustomerRepository : ICustomerRepository

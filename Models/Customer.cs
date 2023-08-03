@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Models;
+namespace ECommerce.Models;
 
 public class Customer
 {

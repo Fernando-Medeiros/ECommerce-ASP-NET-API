@@ -1,7 +1,7 @@
-namespace ECommerce_ASP_NET_API.Modules.Category;
+namespace ECommerce.Modules.Category;
 
-using ECommerce_ASP_NET_API.Context;
-using ECommerce_ASP_NET_API.Models;
+using ECommerce.Context;
+using ECommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class CategoryRepository : ICategoryRepository

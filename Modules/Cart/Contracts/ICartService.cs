@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Modules.Cart;
+namespace ECommerce.Modules.Cart;
 
 public interface ICartService
 {

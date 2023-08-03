@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ECommerce_ASP_NET_API.Modules.Sales;
+namespace ECommerce.Modules.Sales;
 
 public class SalesDTO
 {

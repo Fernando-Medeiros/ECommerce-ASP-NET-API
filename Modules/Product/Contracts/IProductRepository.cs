@@ -1,6 +1,6 @@
-namespace ECommerce_ASP_NET_API.Modules.Product;
+namespace ECommerce.Modules.Product;
 
-using ECommerce_ASP_NET_API.Models;
+using ECommerce.Models;
 
 public interface IProductRepository
 {

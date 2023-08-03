@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Modules.Category;
+namespace ECommerce.Modules.Category;
 
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

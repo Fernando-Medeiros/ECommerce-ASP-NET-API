@@ -1,11 +1,11 @@
-using ECommerce_ASP_NET_API.Modules.Cart;
-using ECommerce_ASP_NET_API.Modules.Category;
-using ECommerce_ASP_NET_API.Modules.Customer;
-using ECommerce_ASP_NET_API.Modules.Product;
-using ECommerce_ASP_NET_API.Modules.Sales;
-using ECommerce_ASP_NET_API.Modules.Session;
+using ECommerce.Modules.Cart;
+using ECommerce.Modules.Category;
+using ECommerce.Modules.Customer;
+using ECommerce.Modules.Product;
+using ECommerce.Modules.Sales;
+using ECommerce.Modules.Session;
 
-namespace ECommerce_ASP_NET_API.Startup;
+namespace ECommerce.Startup;
 
 public static partial class ServiceProviders
 {

@@ -1,4 +1,4 @@
-namespace ECommerce_ASP_NET_API.Modules.Sales;
+namespace ECommerce.Modules.Sales;
 
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;

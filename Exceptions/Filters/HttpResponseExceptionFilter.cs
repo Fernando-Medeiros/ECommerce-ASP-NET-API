@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ECommerce_ASP_NET_API.Exceptions;
+namespace ECommerce.Exceptions;
 
 public class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter
 {

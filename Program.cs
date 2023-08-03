@@ -1,4 +1,4 @@
-using ECommerce_ASP_NET_API.Startup;
+using ECommerce.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 
