@@ -30,7 +30,7 @@ public class CustomerService : ICustomerService
         return _mapper.Map<CustomerDTO>(customerEntity);
     }
 
-    public async Task<CustomerDTO> Register(CustomerDTO Dto)
+    public async Task Register(CustomerDTO Dto)
     {
         if (await _repository.Find(email: Dto.Email) != null)
             throw new BadRequestError("Email is already in use");
@@ -44,8 +44,6 @@ public class CustomerService : ICustomerService
         var customerEntity = _mapper.Map<Customer>(Dto);
 
         await _repository.Create(customerEntity);
-
-        return _mapper.Map<CustomerDTO>(customerEntity);
     }
 
     public async Task Update(CustomerDTO Dto)
