@@ -1,13 +1,53 @@
 namespace ECommerce_ASP_NET_API.Startup;
 
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 public static partial class ServiceProviders
 {
-    public static void Middleware(WebApplication app)
+    public static void AddAuthenticationMiddleware(WebApplicationBuilder builder)
     {
-        app.UseHttpsRedirection();
+        builder.Services
+            .AddAuthentication(opt =>
+            {
+                string scheme = JwtBearerDefaults.AuthenticationScheme;
 
+                opt.DefaultAuthenticateScheme = scheme;
+                opt.DefaultChallengeScheme = scheme;
+            })
+            .AddJwtBearer(opt =>
+            {
+                byte[] key = Encoding.ASCII.GetBytes(
+                        builder.Configuration
+                        .GetSection("Environment")
+                        .GetValue<string>("PrivateKey")!
+                );
+
+                opt.RequireHttpsMetadata = false;
+                opt.SaveToken = true;
+                opt.TokenValidationParameters = new()
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                };
+            }
+        );
+    }
+
+    public static void AddAuthorizationMiddleware(WebApplicationBuilder builder)
+    {
+        builder.Services.AddAuthorization();
+    }
+
+    public static void UseAuthorizationMiddleware(WebApplication app)
+    {
         app.UseAuthorization();
+    }
 
-        app.MapControllers();
+    public static void UseAuthenticationMiddleware(WebApplication app)
+    {
+        app.UseAuthentication();
     }
 }
