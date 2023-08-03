@@ -17,7 +17,7 @@ public class CustomerDTO
     [MinLength(3), MaxLength(50)]
     public virtual string? LastName { get; set; }
 
-    [MinLength(11), MaxLength(150)]
+    [MinLength(11), MaxLength(150), EmailAddress]
     public virtual string? Email { get; set; }
 
     [MinLength(8), MaxLength(255)]
