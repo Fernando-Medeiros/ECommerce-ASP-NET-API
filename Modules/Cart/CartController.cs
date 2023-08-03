@@ -1,6 +1,7 @@
 namespace ECommerce_ASP_NET_API.Modules.Cart;
 
-using ECommerce_ASP_NET_API.Exceptions;
+using ECommerce_ASP_NET_API.Identities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -8,41 +9,61 @@ using Microsoft.AspNetCore.Mvc;
 public class CartController : ControllerBase
 {
     private readonly ICartService _service;
+
     public CartController(ICartService service) => _service = service;
 
+    [Authorize]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<CartDTO>> FindOne(int id)
     {
-        var cart = await _service.FindOne(id)
-            ?? throw new NotFoundError("Cart Not Found");
+        CustomerIdentity customer = new(User);
 
-        return Ok(cart);
+        return Ok(await _service.FindOne(id, customer.Id));
     }
 
+    [Authorize]
     [HttpPost]
-    public async Task<ActionResult<CartDTO>> Register(
-        [FromBody] CartCreateDTO cartDto)
+    public async Task<ActionResult> Register([FromBody] CartCreateDTO Dto)
     {
-        var cart = await _service.Register(cartDto);
+        CustomerIdentity customer = new(User);
 
-        return Created(nameof(FindOne), cart);
+        await _service.Register(new()
+        {
+            CustomerId = customer.Id,
+            ProductId = Dto.ProductId,
+            Quantity = Dto.Quantity
+        });
+
+        return Created("", "");
     }
 
+    [Authorize]
     [HttpPatch("{id:int}")]
-    public async Task<ActionResult> Update(
-        int id, [FromBody] CartUpdateDTO cartDto)
+    public async Task<ActionResult> Update(int id, [FromBody] CartUpdateDTO Dto)
     {
-        cartDto.Id = id;
+        CustomerIdentity customer = new(User);
 
-        await _service.Update(cartDto);
+        await _service.Update(new()
+        {
+            Id = id,
+            CustomerId = customer.Id,
+            Quantity = Dto.Quantity
+        });
 
         return NoContent();
     }
 
+    [Authorize]
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Remove(int id)
     {
-        await _service.Remove(new() { Id = id });
+        CustomerIdentity customer = new(User);
+
+        await _service.Remove(new()
+        {
+            Id = id,
+            CustomerId = customer.Id
+        });
 
         return NoContent();
     }

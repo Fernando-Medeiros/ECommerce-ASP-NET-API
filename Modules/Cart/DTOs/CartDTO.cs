@@ -5,13 +5,13 @@ using ECommerce_ASP_NET_API.Models;
 
 public class CartDTO
 {
-    public virtual int? Id { get; set; }
+    public virtual int Id { get; set; }
 
     public virtual string? CustomerId { get; set; }
 
-    public virtual int? ProductId { get; set; }
+    public virtual int ProductId { get; set; }
 
-    public virtual int? Quantity { get; set; }
+    public virtual int Quantity { get; set; }
 
     public virtual DateTime? CreatedAt { get; set; }
 
