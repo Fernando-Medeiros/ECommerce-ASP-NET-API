@@ -1,6 +1,5 @@
 namespace ECommerce.Modules.Customer;
 
-using ECommerce.Exceptions;
 using ECommerce.Identities;
 using ECommerce.Modules.Cart;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 public class CustomerController : ControllerBase
 {
     private readonly ICustomerService _service;
+
     public CustomerController(ICustomerService service) => _service = service;
 
     [Authorize]
@@ -28,34 +28,38 @@ public class CustomerController : ControllerBase
     {
         CustomerIdentity customer = new(User);
 
-        var customerDto = await _service.FindById(customer.Id)
-            ?? throw new NotFoundError("Customer Not Found");
-
-        return Ok(customerDto);
+        return Ok(await _service.FindById(customer.Id));
     }
 
     [HttpPost]
-    public async Task<ActionResult> Register(
-        [FromBody] CustomerCreateDTO customerDto)
+    public async Task<ActionResult> Register([FromBody] CustomerCreateDTO dto)
     {
-        await _service.Register(customerDto);
+        await _service.Register(new()
+        {
+            Name = dto.Name,
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Email = dto.Email,
+            Password = dto.Password
+        });
 
         return Created("", "");
     }
 
     [Authorize]
     [HttpPatch]
-    public async Task<ActionResult> Update(
-        [FromBody] CustomerUpdateDTO customerDto)
+    public async Task<ActionResult> Update([FromBody] CustomerUpdateDTO dto)
     {
-        if (customerDto is null)
-            throw new BadRequestError("Data is required");
-
         CustomerIdentity customer = new(User);
 
-        customerDto.Id = customer.Id;
-
-        await _service.Update(customerDto);
+        await _service.Update(new()
+        {
+            Id = customer.Id,
+            Name = dto.Name,
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Email = dto.Email
+        });
 
         return NoContent();
     }

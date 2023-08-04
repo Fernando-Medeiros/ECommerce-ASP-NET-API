@@ -1,28 +1,26 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace ECommerce.Modules.Customer;
 
-public class CustomerCreateDTO : CustomerDTO
+public class CustomerCreateDTO
 {
-    [JsonIgnore]
-    public override string? Id { get; set; }
-
     [Required(ErrorMessage = "The Name is Required")]
-    public override string? Name { get; set; }
+    [MinLength(3), MaxLength(50)]
+    public string? Name { get; set; }
 
     [Required(ErrorMessage = "The FirstName is Required")]
-    public override string? FirstName { get; set; }
+    [MinLength(3), MaxLength(50)]
+    public string? FirstName { get; set; }
 
     [Required(ErrorMessage = "The LastName is Required")]
-    public override string? LastName { get; set; }
+    [MinLength(3), MaxLength(50)]
+    public string? LastName { get; set; }
 
     [Required(ErrorMessage = "The Email is Required")]
-    public override string? Email { get; set; }
+    [MinLength(11), MaxLength(150), EmailAddress]
+    public string? Email { get; set; }
 
     [Required(ErrorMessage = "The Password is Required")]
-    public override string? Password { get; set; }
-
-    [JsonIgnore]
-    public override DateTime? CreatedAt { get; set; }
+    [MinLength(8), MaxLength(255)]
+    public string? Password { get; set; }
 }

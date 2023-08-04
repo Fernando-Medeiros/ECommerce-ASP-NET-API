@@ -1,29 +1,23 @@
 namespace ECommerce.Modules.Customer;
 
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using ECommerce.Models;
 
 public class CustomerDTO
 {
-    public virtual string? Id { get; set; }
+    public string? Id { get; set; }
 
-    [MinLength(3), MaxLength(50)]
-    public virtual string? Name { get; set; }
+    public string? Name { get; set; }
 
-    [MinLength(3), MaxLength(50)]
-    public virtual string? FirstName { get; set; }
+    public string? FirstName { get; set; }
 
-    [MinLength(3), MaxLength(50)]
-    public virtual string? LastName { get; set; }
+    public string? LastName { get; set; }
 
-    [MinLength(11), MaxLength(150), EmailAddress]
-    public virtual string? Email { get; set; }
+    public string? Email { get; set; }
 
-    [MinLength(8), MaxLength(255)]
-    public virtual string? Password { get; set; }
+    public string? Password { get; set; }
 
-    public virtual DateTime? CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     [JsonIgnore]
     public ICollection<Cart>? Carts { get; set; }
