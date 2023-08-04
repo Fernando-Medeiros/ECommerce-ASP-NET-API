@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ECommerce.Exceptions;
 
-public class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter
+public class HttpExceptionFilter : IActionFilter, IOrderedFilter
 {
     public int Order => int.MaxValue - 10;
 
@@ -17,7 +17,6 @@ public class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter
             {
                 StatusCode = currentException.StatusCode
             };
-
             context.ExceptionHandled = true;
         }
     }
