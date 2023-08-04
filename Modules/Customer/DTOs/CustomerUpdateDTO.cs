@@ -1,15 +1,18 @@
-using System.Text.Json.Serialization;
-
 namespace ECommerce.Modules.Customer;
 
-public class CustomerUpdateDTO : CustomerDTO
+using System.ComponentModel.DataAnnotations;
+
+public class CustomerUpdateDTO
 {
-    [JsonIgnore]
-    public override string? Id { get; set; }
+    [MinLength(3), MaxLength(50)]
+    public string? Name { get; set; }
 
-    [JsonIgnore]
-    public override string? Password { get; set; }
+    [MinLength(3), MaxLength(50)]
+    public string? FirstName { get; set; }
 
-    [JsonIgnore]
-    public override DateTime? CreatedAt { get; set; }
+    [MinLength(3), MaxLength(50)]
+    public string? LastName { get; set; }
+
+    [MinLength(11), MaxLength(150), EmailAddress]
+    public string? Email { get; set; }
 }
