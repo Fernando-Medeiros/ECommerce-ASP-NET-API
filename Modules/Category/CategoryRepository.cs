@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 public class CategoryRepository : ICategoryRepository
 {
     private readonly DatabaseContext _context;
+
     public CategoryRepository(DatabaseContext context) => _context = context;
 
     public async Task<IEnumerable<Category>> FindMany(CategoryQueryDTO query)

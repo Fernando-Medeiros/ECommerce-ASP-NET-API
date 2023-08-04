@@ -1,16 +1,10 @@
 namespace ECommerce.Modules.Category;
 
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-public class CategoryUpdateDTO : CategoryDTO
+public class CategoryUpdateDTO
 {
-    [JsonIgnore]
-    public override int? Id { get; set; }
-
-    [Required]
-    public override string? Name { get; set; }
-
-    [JsonIgnore]
-    public override DateTime? CreatedAt { get; set; }
+    [Required(ErrorMessage = "The Name is Required")]
+    [MinLength(3), MaxLength(100)]
+    public string? Name { get; set; }
 }

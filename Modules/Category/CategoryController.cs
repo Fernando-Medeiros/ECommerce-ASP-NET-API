@@ -1,6 +1,5 @@
 namespace ECommerce.Modules.Category;
 
-using ECommerce.Exceptions;
 using ECommerce.Modules.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 public class CategoryController : ControllerBase
 {
     private readonly ICategoryService _service;
+
     public CategoryController(ICategoryService service) => _service = service;
 
     [HttpGet]
@@ -27,28 +27,30 @@ public class CategoryController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<CategoryDTO>> FindOne(int id)
     {
-        var category = await _service.FindOne(id)
-            ?? throw new NotFoundError("Category Not Found");
-
-        return Ok(category);
+        return Ok(await _service.FindOne(id));
     }
 
     [HttpPost]
-    public async Task<ActionResult<CategoryDTO>> Register(
-            [FromBody] CategoryCreateDTO categoryDto)
+    public async Task<ActionResult> Register([FromBody] CategoryCreateDTO Dto)
     {
-        var category = await _service.Register(categoryDto);
+        await _service.Register(new()
+        {
+            Name = Dto.Name,
+        });
 
-        return Ok(category);
+        return Created("", "");
     }
 
     [HttpPatch("{id:int}")]
     public async Task<ActionResult> Update(
-            int id, [FromBody] CategoryUpdateDTO categoryDto)
+        int id,
+        [FromBody] CategoryUpdateDTO Dto)
     {
-        categoryDto.Id = id;
-
-        await _service.Update(categoryDto);
+        await _service.Update(new()
+        {
+            Id = id,
+            Name = Dto.Name,
+        });
 
         return NoContent();
     }
