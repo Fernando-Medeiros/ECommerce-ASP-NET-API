@@ -1,6 +1,5 @@
 namespace ECommerce.Modules.Product;
 
-using ECommerce.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 public class ProductController : ControllerBase
 {
     private readonly IProductService _service;
+
     public ProductController(IProductService service) => _service = service;
 
     [HttpGet]
@@ -20,28 +20,38 @@ public class ProductController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ProductDTO>> FindOne(int id)
     {
-        var product = await _service.FindOne(id)
-            ?? throw new NotFoundError("Product Not Found");
-
-        return Ok(product);
+        return Ok(await _service.FindOne(id));
     }
 
     [HttpPost]
-    public async Task<ActionResult<ProductDTO>> Register(
-        [FromBody] ProductCreateDTO productDto)
+    public async Task<ActionResult> Register([FromBody] ProductCreateDTO dto)
     {
-        var product = await _service.Register(productDto);
+        await _service.Register(new()
+        {
+            Name = dto.Name,
+            ImageURL = dto.ImageURL,
+            Description = dto.Description,
+            Price = dto.Price,
+            Stock = dto.Stock,
+            CategoryId = dto.CategoryId
+        });
 
-        return Created(nameof(FindOne), product);
+        return Created("", "");
     }
 
     [HttpPatch("{id:int}")]
-    public async Task<ActionResult> Update(
-        int id, [FromBody] ProductUpdateDTO productDto)
+    public async Task<ActionResult> Update(int id, [FromBody] ProductUpdateDTO dto)
     {
-        productDto.Id = id;
-
-        await _service.Update(productDto);
+        await _service.Update(new()
+        {
+            Id = id,
+            Name = dto.Name,
+            ImageURL = dto.ImageURL,
+            Description = dto.Description,
+            Price = dto.Price,
+            Stock = dto.Stock,
+            CategoryId = dto.CategoryId
+        });
 
         return NoContent();
     }
