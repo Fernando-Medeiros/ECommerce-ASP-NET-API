@@ -8,9 +8,9 @@ public interface ICategoryService
 
     public Task<IEnumerable<ProductDTO>> FindProducts(int id);
 
-    public Task<CategoryDTO> FindOne(int id);
+    public Task<CategoryDTO> FindOne(int? id = null, string? name = null);
 
-    public Task<CategoryDTO> Register(CategoryDTO category);
+    public Task Register(CategoryDTO category);
 
     public Task Update(CategoryDTO category);
 
