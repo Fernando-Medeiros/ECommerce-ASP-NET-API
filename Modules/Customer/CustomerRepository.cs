@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class CustomerRepository : ICustomerRepository
 {
     private readonly DatabaseContext _context;
+
     public CustomerRepository(DatabaseContext context) => _context = context;
 
     public async Task<ICollection<Cart>?> FindCarts(string? id)

@@ -9,7 +9,9 @@ using ECommerce.Modules.Cart;
 public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _repository;
+
     private readonly IMapper _mapper;
+
     public CustomerService(ICustomerRepository repository, IMapper mapper)
     {
         _repository = repository;
@@ -25,57 +27,64 @@ public class CustomerService : ICustomerService
 
     public async Task<CustomerDTO> FindById(string id)
     {
-        var customerEntity = await _repository.Find(id);
+        var customerEntity = await _repository.Find(id)
+            ?? throw new NotFoundError("Customer Not Found");
 
         return _mapper.Map<CustomerDTO>(customerEntity);
     }
 
-    public async Task Register(CustomerDTO Dto)
+    public async Task Register(CustomerDTO dto)
     {
-        if (await _repository.Find(email: Dto.Email) != null)
-            throw new BadRequestError("Email is already in use");
+        await EmailExists(dto.Email);
 
-        Dto.Id = Guid.NewGuid().ToString();
+        dto.Id = Guid.NewGuid().ToString();
 
-        Dto.CreatedAt = DateTime.UtcNow;
+        dto.CreatedAt = DateTime.UtcNow;
 
-        Dto.Password = BCrypt.HashPassword(Dto.Password);
+        dto.Password = BCrypt.HashPassword(dto.Password);
 
-        var customerEntity = _mapper.Map<Customer>(Dto);
+        var customerEntity = _mapper.Map<Customer>(dto);
 
         await _repository.Create(customerEntity);
     }
 
-    public async Task Update(CustomerDTO Dto)
+    public async Task Update(CustomerDTO dto)
     {
-        var customerEntity = await _repository.Find(id: Dto.Id)
-            ?? throw new NotFoundError("Customer Not Found"); ;
+        CustomerDTO customer = await FindById(dto.Id!);
 
-        if (Dto.Name != null)
-            customerEntity.Name = Dto.Name;
-
-        if (Dto.FirstName != null)
-            customerEntity.FirstName = Dto.FirstName;
-
-        if (Dto.LastName != null)
-            customerEntity.LastName = Dto.LastName;
-
-        if (Dto.Email != null)
+        if (dto.Email != null)
         {
-            if (await _repository.Find(email: Dto.Email) != null)
-                throw new BadRequestError("Email is already in use");
+            await EmailExists(dto.Email);
 
-            customerEntity.Email = Dto.Email;
+            customer.Email = dto.Email;
         }
+
+        if (dto.Name != null)
+            customer.Name = dto.Name;
+
+        if (dto.FirstName != null)
+            customer.FirstName = dto.FirstName;
+
+        if (dto.LastName != null)
+            customer.LastName = dto.LastName;
+
+        var customerEntity = _mapper.Map<Customer>(customer);
 
         await _repository.Update(customerEntity);
     }
 
-    public async Task Remove(CustomerDTO Dto)
+    public async Task Remove(CustomerDTO dto)
     {
-        var customerEntity = await _repository.Find(id: Dto.Id)
-            ?? throw new NotFoundError("Customer Not Found");
+        CustomerDTO customer = await FindById(dto.Id!);
+
+        var customerEntity = _mapper.Map<Customer>(customer);
 
         await _repository.Remove(customerEntity);
+    }
+
+    private async Task EmailExists(string? email)
+    {
+        if (await _repository.Find(email: email) != null)
+            throw new BadRequestError("Email is already in use");
     }
 }
