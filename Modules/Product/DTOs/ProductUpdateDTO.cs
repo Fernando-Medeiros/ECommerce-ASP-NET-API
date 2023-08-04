@@ -1,12 +1,22 @@
 namespace ECommerce.Modules.Product;
 
-using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations;
 
-public class ProductUpdateDTO : ProductDTO
+public class ProductUpdateDTO
 {
-    [JsonIgnore]
-    public override int? Id { get; set; }
+    [MinLength(3), MaxLength(100)]
+    public string? Name { get; set; }
 
-    [JsonIgnore]
-    public override DateTime? CreatedAt { get; set; }
+    [MinLength(5), MaxLength(255)]
+    public string? Description { get; set; }
+
+    [MinLength(5), MaxLength(255)]
+    public string? ImageURL { get; set; }
+
+    public decimal? Price { get; set; }
+
+    [Range(1, 9999)]
+    public long? Stock { get; set; }
+
+    public int? CategoryId { get; set; }
 }

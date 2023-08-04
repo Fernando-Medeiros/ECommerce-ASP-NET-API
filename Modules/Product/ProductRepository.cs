@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 public class ProductRepository : IProductRepository
 {
     private readonly DatabaseContext _context;
+
     public ProductRepository(DatabaseContext context) => _context = context;
 
     public async Task<IEnumerable<Product>> FindMany(ProductQueryDTO query)
@@ -42,30 +43,24 @@ public class ProductRepository : IProductRepository
         return null;
     }
 
-    public async Task<Product> Create(Product product)
+    public async Task Create(Product product)
     {
         _context.Products.Add(product);
 
         await _context.SaveChangesAsync();
-
-        return product;
     }
 
-    public async Task<Product> Update(Product product)
+    public async Task Update(Product product)
     {
         _context.Products.Entry(product).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
-
-        return product;
     }
 
-    public async Task<Product> Remove(Product product)
+    public async Task Remove(Product product)
     {
         _context.Remove(product);
 
         await _context.SaveChangesAsync();
-
-        return product;
     }
 }
