@@ -8,16 +8,16 @@ using ECommerce.Modules.Product;
 public class CartService : ICartService
 {
     private readonly ICartRepository _cartRepository;
-    private readonly IProductRepository _productRepository;
+    private readonly IProductService _productService;
     private readonly IMapper _mapper;
 
     public CartService(
         ICartRepository cartRepository,
-        IProductRepository productRepository,
+        IProductService productService,
         IMapper mapper)
     {
         _cartRepository = cartRepository;
-        _productRepository = productRepository;
+        _productService = productService;
         _mapper = mapper;
     }
 
@@ -29,32 +29,39 @@ public class CartService : ICartService
         return _mapper.Map<CartDTO>(cartEntity);
     }
 
-    public async Task Register(CartDTO Dto)
+    public async Task Register(CartDTO dto)
     {
-        var _ = await _productRepository.FindOne(Dto.ProductId)
-            ?? throw new NotFoundError("Product Not Found");
+        var product = await _productService.FindOne(id: dto.ProductId);
 
-        Dto.CreatedAt = DateTime.UtcNow;
+        if (dto.Quantity > product.Stock)
+            throw new BadRequestError("Quantity greater than available stock");
 
-        var cartEntity = _mapper.Map<Cart>(Dto);
+        dto.CreatedAt = DateTime.UtcNow;
+
+        var cartEntity = _mapper.Map<Cart>(dto);
 
         await _cartRepository.Create(cartEntity);
     }
 
-    public async Task Update(CartDTO Dto)
+    public async Task Update(CartDTO dto)
     {
-        CartDTO cart = await FindOne(Dto.Id, Dto.CustomerId!);
+        var cart = await FindOne(dto.Id, dto.CustomerId!);
 
-        cart.Quantity = Dto.Quantity;
+        var product = await _productService.FindOne(id: cart.ProductId);
+
+        if (dto.Quantity > product.Stock)
+            throw new BadRequestError("Quantity greater than available stock");
+
+        cart.Quantity = dto.Quantity;
 
         var cartEntity = _mapper.Map<Cart>(cart);
 
         await _cartRepository.Update(cartEntity);
     }
 
-    public async Task Remove(CartDTO Dto)
+    public async Task Remove(CartDTO dto)
     {
-        CartDTO cart = await FindOne(Dto.Id, Dto.CustomerId!);
+        var cart = await FindOne(dto.Id, dto.CustomerId!);
 
         var cartEntity = _mapper.Map<Cart>(cart);
 
