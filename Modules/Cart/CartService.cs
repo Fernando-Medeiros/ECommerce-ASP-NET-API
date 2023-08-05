@@ -29,32 +29,32 @@ public class CartService : ICartService
         return _mapper.Map<CartDTO>(cartEntity);
     }
 
-    public async Task Register(CartDTO Dto)
+    public async Task Register(CartDTO dto)
     {
-        var _ = await _productRepository.FindOne(Dto.ProductId)
+        var _ = await _productRepository.FindOne(dto.ProductId)
             ?? throw new NotFoundError("Product Not Found");
 
-        Dto.CreatedAt = DateTime.UtcNow;
+        dto.CreatedAt = DateTime.UtcNow;
 
-        var cartEntity = _mapper.Map<Cart>(Dto);
+        var cartEntity = _mapper.Map<Cart>(dto);
 
         await _cartRepository.Create(cartEntity);
     }
 
-    public async Task Update(CartDTO Dto)
+    public async Task Update(CartDTO dto)
     {
-        CartDTO cart = await FindOne(Dto.Id, Dto.CustomerId!);
+        CartDTO cart = await FindOne(dto.Id, dto.CustomerId!);
 
-        cart.Quantity = Dto.Quantity;
+        cart.Quantity = dto.Quantity;
 
         var cartEntity = _mapper.Map<Cart>(cart);
 
         await _cartRepository.Update(cartEntity);
     }
 
-    public async Task Remove(CartDTO Dto)
+    public async Task Remove(CartDTO dto)
     {
-        CartDTO cart = await FindOne(Dto.Id, Dto.CustomerId!);
+        CartDTO cart = await FindOne(dto.Id, dto.CustomerId!);
 
         var cartEntity = _mapper.Map<Cart>(cart);
 
