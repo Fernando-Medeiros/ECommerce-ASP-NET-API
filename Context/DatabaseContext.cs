@@ -115,6 +115,11 @@ public class DatabaseContext : DbContext
         _.Entity<Product>()
         .Property(c => c.Price)
         .HasPrecision(12, 2);
+
+        _.Entity<Product>()
+        .HasMany(c => c.Carts)
+        .WithOne(c => c.Product)
+        .OnDelete(DeleteBehavior.Cascade);
     }
 
     private static void BSales(ModelBuilder _)
