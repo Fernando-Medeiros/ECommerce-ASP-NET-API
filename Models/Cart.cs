@@ -8,4 +8,5 @@ public class Cart
     public int Quantity { get; set; }
     public DateTime CreatedAt { get; set; }
     public Customer? Customer { get; set; }
+    public Product? Product { get; set; }
 }
