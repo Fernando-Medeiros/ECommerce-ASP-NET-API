@@ -5,22 +5,25 @@ using System.Text.Json.Serialization;
 
 public class ProductDTO
 {
-    public virtual int? Id { get; set; }
+    public int? Id { get; set; }
 
-    public virtual string? Name { get; set; }
+    public string? Name { get; set; }
 
-    public virtual string? Description { get; set; }
+    public string? Description { get; set; }
 
-    public virtual string? ImageURL { get; set; }
+    public string? ImageURL { get; set; }
 
-    public virtual decimal? Price { get; set; }
+    public decimal? Price { get; set; }
 
-    public virtual long? Stock { get; set; }
+    public long? Stock { get; set; }
 
-    public virtual int? CategoryId { get; set; }
+    public int? CategoryId { get; set; }
 
-    public virtual DateTime? CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     [JsonIgnore]
-    public virtual Category? Category { get; set; }
+    public Category? Category { get; set; }
+
+    [JsonIgnore]
+    public ICollection<Cart>? Carts { get; set; }
 }

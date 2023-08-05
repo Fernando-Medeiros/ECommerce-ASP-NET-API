@@ -5,16 +5,19 @@ using ECommerce.Models;
 
 public class CartDTO
 {
-    public virtual int Id { get; set; }
+    public int Id { get; set; }
 
-    public virtual string? CustomerId { get; set; }
+    public string? CustomerId { get; set; }
 
-    public virtual int ProductId { get; set; }
+    public int ProductId { get; set; }
 
-    public virtual int Quantity { get; set; }
+    public int Quantity { get; set; }
 
-    public virtual DateTime? CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     [JsonIgnore]
-    public virtual Customer? Customer { get; set; }
+    public Customer? Customer { get; set; }
+
+    [JsonIgnore]
+    public Product? Product { get; set; }
 }
