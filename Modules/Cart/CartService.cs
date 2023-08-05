@@ -8,16 +8,16 @@ using ECommerce.Modules.Product;
 public class CartService : ICartService
 {
     private readonly ICartRepository _cartRepository;
-    private readonly IProductRepository _productRepository;
+    private readonly IProductService _productService;
     private readonly IMapper _mapper;
 
     public CartService(
         ICartRepository cartRepository,
-        IProductRepository productRepository,
+        IProductService productService,
         IMapper mapper)
     {
         _cartRepository = cartRepository;
-        _productRepository = productRepository;
+        _productService = productService;
         _mapper = mapper;
     }
 
@@ -31,8 +31,10 @@ public class CartService : ICartService
 
     public async Task Register(CartDTO dto)
     {
-        var _ = await _productRepository.FindOne(dto.ProductId)
-            ?? throw new NotFoundError("Product Not Found");
+        var product = await _productService.FindOne(id: dto.ProductId);
+
+        if (dto.Quantity > product.Stock)
+            throw new BadRequestError("Quantity greater than available stock");
 
         dto.CreatedAt = DateTime.UtcNow;
 
@@ -43,7 +45,12 @@ public class CartService : ICartService
 
     public async Task Update(CartDTO dto)
     {
-        CartDTO cart = await FindOne(dto.Id, dto.CustomerId!);
+        var cart = await FindOne(dto.Id, dto.CustomerId!);
+
+        var product = await _productService.FindOne(id: cart.ProductId);
+
+        if (dto.Quantity > product.Stock)
+            throw new BadRequestError("Quantity greater than available stock");
 
         cart.Quantity = dto.Quantity;
 
@@ -54,7 +61,7 @@ public class CartService : ICartService
 
     public async Task Remove(CartDTO dto)
     {
-        CartDTO cart = await FindOne(dto.Id, dto.CustomerId!);
+        var cart = await FindOne(dto.Id, dto.CustomerId!);
 
         var cartEntity = _mapper.Map<Cart>(cart);
 
