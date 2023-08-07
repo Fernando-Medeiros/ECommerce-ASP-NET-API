@@ -108,15 +108,16 @@ public class DatabaseContext : DbContext
         _.Entity<Category>().HasKey(c => c.Id);
 
         _.Entity<Category>()
-        .Property(c => c.Name)
-        .HasMaxLength(100)
-        .IsRequired();
+            .Property(c => c.Name)
+            .HasMaxLength(100)
+            .IsRequired();
 
         _.Entity<Category>()
-        .HasMany(c => c.Products)
-        .WithOne(c => c.Category)
-        .OnDelete(DeleteBehavior.Restrict)
-        .IsRequired();
+            .HasMany(c => c.Products)
+            .WithOne(c => c.Category)
+            .HasForeignKey(c => c.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
     }
 
     private static void BCustomer(ModelBuilder _)
