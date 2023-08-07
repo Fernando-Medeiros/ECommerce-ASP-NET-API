@@ -7,19 +7,17 @@ using Microsoft.EntityFrameworkCore;
 public class SalesRepository : ISalesRepository
 {
     private readonly DatabaseContext _context;
+
     public SalesRepository(DatabaseContext context) => _context = context;
 
-    public async Task<Sales?> Find(int? id)
+    public async Task<Sales?> Find(int id)
     {
-        if (id != null)
-            return await _context.Sales
-                .AsNoTracking()
-                .SingleOrDefaultAsync(s => s.Id == id);
-
-        return null;
+        return await _context.Sales
+            .AsNoTracking()
+            .SingleOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task Create(Sales sales)
+    public async Task Register(Sales sales)
     {
         _context.Add(sales);
 
