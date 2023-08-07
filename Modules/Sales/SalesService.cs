@@ -1,10 +1,12 @@
 namespace ECommerce.Modules.Sales;
 
+using System.Collections.Generic;
 using AutoMapper;
 using ECommerce.Exceptions;
 using ECommerce.Models;
 using ECommerce.Modules.Customer;
 using ECommerce.Modules.Product;
+using ECommerce.Modules.Sales.DTOs;
 
 public class SalesService : ISalesService
 {
@@ -12,25 +14,40 @@ public class SalesService : ISalesService
 
     private readonly IProductRepository _productRepository;
 
-    private readonly ISalesRepository _repository;
+    private readonly ISalesRepository _salesRepository;
 
     private readonly IMapper _mapper;
 
     public SalesService(
         ICustomerRepository customerRepository,
         IProductRepository productRepository,
-        ISalesRepository repository,
+        ISalesRepository salesRepository,
         IMapper mapper)
     {
         _customerRepository = customerRepository; ;
         _productRepository = productRepository; ;
-        _repository = repository;
+        _salesRepository = salesRepository;
         _mapper = mapper;
     }
 
-    public async Task<SalesDTO> Find(int id)
+    public async Task<IEnumerable<SalesDTO>> FindMany(SalesQueryDTO query)
     {
-        var salesEntity = await _repository.Find(id)
+        var salesEntities = await _salesRepository.FindMany(query);
+
+        return _mapper.Map<IEnumerable<SalesDTO>>(salesEntities);
+    }
+
+    public async Task<SalesDTO> FindOne(SalesQueryFindOneDTO query)
+    {
+        var salesEntity = await _salesRepository.FindOne(query)
+            ?? throw new NotFoundError("Sales Not Found");
+
+        return _mapper.Map<SalesDTO>(salesEntity);
+    }
+
+    public async Task<SalesDTO> FindById(int id)
+    {
+        var salesEntity = await _salesRepository.FindById(id)
             ?? throw new NotFoundError("Sales Not Found");
 
         return _mapper.Map<SalesDTO>(salesEntity);
@@ -48,15 +65,15 @@ public class SalesService : ISalesService
 
         var salesEntity = _mapper.Map<Sales>(dto);
 
-        await _repository.Register(salesEntity);
+        await _salesRepository.Register(salesEntity);
     }
 
     public async Task Remove(SalesDTO dto)
     {
-        SalesDTO sales = await Find((int)dto.Id!);
+        SalesDTO sales = await FindById((int)dto.Id!);
 
         var salesEntity = _mapper.Map<Sales>(sales);
 
-        await _repository.Remove(salesEntity);
+        await _salesRepository.Remove(salesEntity);
     }
 }
