@@ -1,10 +1,15 @@
 namespace ECommerce.Modules.Sales;
 
 using ECommerce.Models;
+using ECommerce.Modules.Sales.DTOs;
 
 public interface ISalesRepository
 {
-    public Task<Sales?> Find(int id);
+    public Task<IEnumerable<Sales>> FindMany(SalesQueryDTO query);
+
+    public Task<Sales?> FindOne(SalesQueryFindOneDTO query);
+
+    public Task<Sales?> FindById(int id);
 
     public Task Register(Sales sales);
 
