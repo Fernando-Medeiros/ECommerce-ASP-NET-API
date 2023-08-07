@@ -1,7 +1,11 @@
 namespace ECommerce.Modules.Sales;
 
+using ECommerce.Modules.Sales.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+[ApiController]
+[Authorize(Roles = "manager")]
 [Route("api/sales", Name = "Sales")]
 public class SalesController : ControllerBase
 {
@@ -9,24 +13,24 @@ public class SalesController : ControllerBase
 
     public SalesController(ISalesService service) => _service = service;
 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<SalesDTO>> Find(int id)
+    [HttpGet("find-many")]
+    public async Task<ActionResult<IEnumerable<SalesDTO>>> FindMany(
+        [FromQuery] SalesQueryDTO query)
     {
-        return Ok(await _service.Find(id));
+        return Ok(await _service.FindMany(query));
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Register([FromBody] SalesCreateDTO dto)
+    [HttpGet("find-one")]
+    public async Task<ActionResult<SalesDTO>> FindOne(
+        [FromQuery] SalesQueryFindOneDTO query)
     {
-        await _service.Register(new()
-        {
-            CustomerId = dto.CustomerId,
-            ProductId = dto.ProductId,
-            Price = dto.Price,
-            Quantity = dto.Quantity,
-        });
+        return Ok(await _service.FindOne(query));
+    }
 
-        return Created("", "");
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<SalesDTO>> FindById(int id)
+    {
+        return Ok(await _service.FindById(id));
     }
 
     [HttpDelete("{id:int}")]
