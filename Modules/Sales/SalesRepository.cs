@@ -1,25 +1,52 @@
 namespace ECommerce.Modules.Sales;
 
+using System.Collections.Generic;
 using ECommerce.Context;
 using ECommerce.Models;
+using ECommerce.Modules.Sales.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 public class SalesRepository : ISalesRepository
 {
     private readonly DatabaseContext _context;
+
     public SalesRepository(DatabaseContext context) => _context = context;
 
-    public async Task<Sales?> Find(int? id)
+    public async Task<IEnumerable<Sales>> FindMany(SalesQueryDTO query)
     {
-        if (id != null)
-            return await _context.Sales
-                .AsNoTracking()
-                .SingleOrDefaultAsync(s => s.Id == id);
+        var salesEntities = await _context.Sales
+            .AsNoTracking()
+            .Take(query.Limit)
+            .OrderBy(c => c.Id)
+            .Skip(query.Skip > 0 ? query.Skip : 0)
+            .ToListAsync();
 
-        return null;
+        if (query.Price)
+            salesEntities = salesEntities.OrderBy(p => p.Price).ToList();
+
+        return salesEntities;
     }
 
-    public async Task Create(Sales sales)
+    public async Task<Sales?> FindOne(SalesQueryFindOneDTO query)
+    {
+        return await _context.Sales
+            .AsNoTracking()
+            .SingleOrDefaultAsync(s =>
+                s.ProductId == query.ProductId
+                &&
+                s.CustomerId == query.CustomerId
+                &&
+                s.CreatedAt == query.CreatedAt);
+    }
+
+    public async Task<Sales?> FindById(int id)
+    {
+        return await _context.Sales
+            .AsNoTracking()
+            .SingleOrDefaultAsync(s => s.Id == id);
+    }
+
+    public async Task Register(Sales sales)
     {
         _context.Add(sales);
 

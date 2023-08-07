@@ -1,25 +1,21 @@
 namespace ECommerce.Modules.Sales;
 
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-public class SalesCreateDTO : SalesDTO
+public class SalesCreateDTO
 {
-    [JsonIgnore]
-    public override int? Id { get; set; }
 
     [Required(ErrorMessage = "The CustomerId is Required")]
-    public override string? CustomerId { get; set; }
+    [MinLength(36), MaxLength(36)]
+    public string? CustomerId { get; set; }
 
     [Required(ErrorMessage = "The ProductId is Required")]
-    public override int? ProductId { get; set; }
+    public int? ProductId { get; set; }
 
     [Required(ErrorMessage = "The Price is Required")]
-    public override decimal? Price { get; set; }
+    public decimal? Price { get; set; }
 
     [Required(ErrorMessage = "The Quantity is Required")]
-    public override int? Quantity { get; set; }
-
-    [JsonIgnore]
-    public override DateTime? CreatedAt { get; set; }
+    [Range(1, 999)]
+    public int? Quantity { get; set; }
 }

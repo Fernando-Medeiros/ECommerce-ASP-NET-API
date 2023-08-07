@@ -1,29 +1,36 @@
 namespace ECommerce.Modules.Sales;
 
-using ECommerce.Exceptions;
+using ECommerce.Modules.Sales.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+[ApiController]
+[Authorize(Roles = "manager")]
 [Route("api/sales", Name = "Sales")]
 public class SalesController : ControllerBase
 {
     private readonly ISalesService _service;
+
     public SalesController(ISalesService service) => _service = service;
 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<SalesDTO>> Find(int id)
+    [HttpGet("find-many")]
+    public async Task<ActionResult<IEnumerable<SalesDTO>>> FindMany(
+        [FromQuery] SalesQueryDTO query)
     {
-        var sales = await _service.Find(id)
-            ?? throw new NotFoundError("Sales Not Found");
-
-        return Ok(sales);
+        return Ok(await _service.FindMany(query));
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Register([FromBody] SalesCreateDTO salesDto)
+    [HttpGet("find-one")]
+    public async Task<ActionResult<SalesDTO>> FindOne(
+        [FromQuery] SalesQueryFindOneDTO query)
     {
-        await _service.Register(salesDto);
+        return Ok(await _service.FindOne(query));
+    }
 
-        return Created("", "");
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<SalesDTO>> FindById(int id)
+    {
+        return Ok(await _service.FindById(id));
     }
 
     [HttpDelete("{id:int}")]
