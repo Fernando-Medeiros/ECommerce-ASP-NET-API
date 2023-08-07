@@ -50,6 +50,9 @@ public class TokenService : ITokenService
 
         claims.AddClaim(new Claim("id", customer.Id!));
 
+        if (string.IsNullOrEmpty(customer.Role) is false)
+            claims.AddClaim(new Claim(ClaimTypes.Role, customer.Role!));
+
         return claims;
     }
 }

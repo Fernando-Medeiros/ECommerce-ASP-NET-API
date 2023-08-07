@@ -12,11 +12,11 @@ public class CustomerIdentity
         Id = ExtractProperty(principal, "id").Value;
     }
 
-    private static Claim ExtractProperty(ClaimsPrincipal principal, string keySelector)
+    private protected static Claim ExtractProperty(
+        ClaimsPrincipal principal, string keySelector)
     {
         return principal.Claims
             .SingleOrDefault(c => c.Type.Equals(keySelector))
             ?? throw new ForbiddenError("Access denied, token incompatible");
     }
-
 }

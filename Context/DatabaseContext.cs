@@ -91,6 +91,10 @@ public class DatabaseContext : DbContext
         .Property(c => c.Password)
         .HasMaxLength(255)
         .IsRequired();
+
+        _.Entity<Customer>()
+        .Property(c => c.Role)
+        .HasMaxLength(50);
     }
 
     private static void BProduct(ModelBuilder _)

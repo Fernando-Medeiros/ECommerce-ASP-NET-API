@@ -15,9 +15,13 @@ public class CustomerDTO
 
     public string? Email { get; set; }
 
+    [JsonIgnore]
     public string? Password { get; set; }
 
     public DateTime? CreatedAt { get; set; }
+
+    [JsonIgnore]
+    public string? Role { get; set; }
 
     [JsonIgnore]
     public ICollection<Cart>? Carts { get; set; }
