@@ -125,37 +125,37 @@ public class DatabaseContext : DbContext
         _.Entity<Customer>().HasKey(c => c.Id);
 
         _.Entity<Customer>()
-        .Property(c => c.Id)
-        .HasMaxLength(36);
+            .Property(c => c.Id)
+            .HasMaxLength(36);
 
         _.Entity<Customer>()
-        .Property(c => c.Name)
-        .HasMaxLength(50)
-        .IsRequired();
+            .Property(c => c.Name)
+            .HasMaxLength(50)
+            .IsRequired();
 
         _.Entity<Customer>()
-        .Property(c => c.FirstName)
-        .HasMaxLength(50)
-        .IsRequired();
+            .Property(c => c.FirstName)
+            .HasMaxLength(50)
+            .IsRequired();
 
         _.Entity<Customer>()
-        .Property(c => c.LastName)
-        .HasMaxLength(50)
-        .IsRequired();
+            .Property(c => c.LastName)
+            .HasMaxLength(50)
+            .IsRequired();
 
         _.Entity<Customer>()
-        .Property(c => c.Email)
-        .HasMaxLength(150)
-        .IsRequired();
+            .Property(c => c.Email)
+            .HasMaxLength(150)
+            .IsRequired();
 
         _.Entity<Customer>()
-        .Property(c => c.Password)
-        .HasMaxLength(255)
-        .IsRequired();
+            .Property(c => c.Password)
+            .HasMaxLength(255)
+            .IsRequired();
 
         _.Entity<Customer>()
-        .Property(c => c.Role)
-        .HasMaxLength(50);
+            .Property(c => c.Role)
+            .HasMaxLength(50);
     }
 
     private static void BProduct(ModelBuilder _)
@@ -193,18 +193,18 @@ public class DatabaseContext : DbContext
         _.Entity<Sales>().HasKey(c => c.Id);
 
         _.Entity<Sales>()
-        .Property(c => c.CustomerId)
-        .HasMaxLength(36)
-        .IsRequired();
+            .Property(c => c.CustomerId)
+            .HasMaxLength(36)
+            .IsRequired();
 
         _.Entity<Sales>()
-        .Property(c => c.ProductId)
-        .HasMaxLength(36)
-        .IsRequired();
+            .Property(c => c.ProductId)
+            .HasMaxLength(36)
+            .IsRequired();
 
         _.Entity<Sales>()
-        .Property(c => c.Price)
-        .HasPrecision(12, 2);
+            .Property(c => c.Price)
+            .HasPrecision(12, 2);
     }
     #endregion
 }
