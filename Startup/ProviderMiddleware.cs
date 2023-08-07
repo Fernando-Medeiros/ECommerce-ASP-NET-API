@@ -38,7 +38,11 @@ public static partial class ServiceProviders
 
     public static void AddAuthorizationMiddleware(WebApplicationBuilder builder)
     {
-        builder.Services.AddAuthorization();
+        builder.Services.AddAuthorization(opt =>
+        {
+            opt.AddPolicy("Manager", policy => policy.RequireRole("manager"));
+            opt.AddPolicy("Employee", policy => policy.RequireRole("employee"));
+        });
     }
 
     public static void UseAuthorizationMiddleware(WebApplication app)
