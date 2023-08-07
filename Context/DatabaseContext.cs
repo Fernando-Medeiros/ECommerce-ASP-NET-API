@@ -8,6 +8,7 @@ public class DatabaseContext : DbContext
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
     #region Tables
+    public DbSet<Address> Addresses { get; set; }
     public DbSet<Cart> Carts { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Customer> Customers { get; set; }
@@ -18,6 +19,7 @@ public class DatabaseContext : DbContext
     #region Override
     override protected void OnModelCreating(ModelBuilder builder)
     {
+        DatabaseContext.BAddresses(builder);
         DatabaseContext.BCart(builder);
         DatabaseContext.BCategory(builder);
         DatabaseContext.BCustomer(builder);
@@ -27,6 +29,58 @@ public class DatabaseContext : DbContext
     #endregion
 
     #region Private ModelBuilder -> Tables
+    private static void BAddresses(ModelBuilder _)
+    {
+        _.Entity<Address>().HasKey(x => x.Id);
+
+        _.Entity<Address>()
+            .Property(x => x.Id)
+            .HasMaxLength(36)
+            .IsRequired();
+
+        _.Entity<Address>()
+            .Property(x => x.CustomerId)
+            .HasMaxLength(36)
+            .IsRequired();
+
+        _.Entity<Address>()
+            .Property(x => x.Street)
+            .HasMaxLength(100)
+            .IsRequired();
+
+        _.Entity<Address>()
+            .Property(x => x.ZipCode)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        _.Entity<Address>()
+            .Property(x => x.Type)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        _.Entity<Address>()
+            .Property(x => x.City)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        _.Entity<Address>()
+            .Property(x => x.State)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        _.Entity<Address>()
+            .Property(x => x.Country)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        _.Entity<Address>()
+            .HasOne(c => c.Customer)
+            .WithMany(c => c.Addresses)
+            .HasForeignKey(c => c.CustomerId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired();
+    }
+
     private static void BCart(ModelBuilder _)
     {
         _.Entity<Cart>().HasKey(c => c.Id);
