@@ -1,10 +1,11 @@
 namespace ECommerce.Modules.Product;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/products", Name = "Product")]
-public class ProductController : ControllerBase
+public partial class ProductController : ControllerBase
 {
     private readonly IProductService _service;
 
@@ -22,7 +23,11 @@ public class ProductController : ControllerBase
     {
         return Ok(await _service.FindOne(id));
     }
+}
 
+public partial class ProductController
+{
+    [Authorize(Roles = "manager, employee")]
     [HttpPost]
     public async Task<ActionResult> Register([FromBody] ProductCreateDTO dto)
     {
@@ -39,6 +44,7 @@ public class ProductController : ControllerBase
         return Created("", "");
     }
 
+    [Authorize(Roles = "manager, employee")]
     [HttpPatch("{id:int}")]
     public async Task<ActionResult> Update(int id, [FromBody] ProductUpdateDTO dto)
     {
@@ -56,6 +62,7 @@ public class ProductController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "manager, employee")]
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Remove(int id)
     {
