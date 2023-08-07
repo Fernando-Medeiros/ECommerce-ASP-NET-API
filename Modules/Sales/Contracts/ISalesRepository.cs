@@ -4,9 +4,9 @@ using ECommerce.Models;
 
 public interface ISalesRepository
 {
-    public Task<Sales?> Find(int? id);
+    public Task<Sales?> Find(int id);
 
-    public Task Create(Sales sales);
+    public Task Register(Sales sales);
 
     public Task Update(Sales sales);
 
