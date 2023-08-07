@@ -10,5 +10,6 @@ public class Customer
     public string? Password { get; set; }
     public string? Role { get; set; }
     public DateTime CreatedAt { get; set; }
+    public ICollection<Address>? Addresses { get; set; }
     public ICollection<Cart>? Carts { get; set; }
 }
