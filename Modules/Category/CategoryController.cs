@@ -1,11 +1,12 @@
 namespace ECommerce.Modules.Category;
 
 using ECommerce.Modules.Product;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/categories", Name = "Categories")]
-public class CategoryController : ControllerBase
+public partial class CategoryController : ControllerBase
 {
     private readonly ICategoryService _service;
 
@@ -29,7 +30,11 @@ public class CategoryController : ControllerBase
     {
         return Ok(await _service.FindOne(id));
     }
+}
 
+public partial class CategoryController
+{
+    [Authorize(Roles = "manager, employee")]
     [HttpPost]
     public async Task<ActionResult> Register([FromBody] CategoryCreateDTO Dto)
     {
@@ -41,6 +46,7 @@ public class CategoryController : ControllerBase
         return Created("", "");
     }
 
+    [Authorize(Roles = "manager, employee")]
     [HttpPatch("{id:int}")]
     public async Task<ActionResult> Update(
         int id,
@@ -55,6 +61,7 @@ public class CategoryController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "manager, employee")]
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Remove(int id)
     {
