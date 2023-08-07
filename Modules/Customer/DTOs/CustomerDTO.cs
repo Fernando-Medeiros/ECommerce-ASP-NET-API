@@ -24,5 +24,8 @@ public class CustomerDTO
     public string? Role { get; set; }
 
     [JsonIgnore]
+    public ICollection<Address>? Addresses { get; set; }
+
+    [JsonIgnore]
     public ICollection<Cart>? Carts { get; set; }
 }
