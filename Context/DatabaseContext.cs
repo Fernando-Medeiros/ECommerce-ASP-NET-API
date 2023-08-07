@@ -162,28 +162,29 @@ public class DatabaseContext : DbContext
         _.Entity<Product>().HasKey(c => c.Id);
 
         _.Entity<Product>()
-        .Property(c => c.Name)
-        .HasMaxLength(100)
-        .IsRequired();
+            .Property(c => c.Name)
+            .HasMaxLength(100)
+            .IsRequired();
 
         _.Entity<Product>()
-        .Property(c => c.Description)
-        .HasMaxLength(255)
-        .IsRequired();
+            .Property(c => c.Description)
+            .HasMaxLength(255)
+            .IsRequired();
 
         _.Entity<Product>()
-        .Property(c => c.ImageURL)
-        .HasMaxLength(255)
-        .IsRequired();
+            .Property(c => c.ImageURL)
+            .HasMaxLength(255)
+            .IsRequired();
 
         _.Entity<Product>()
-        .Property(c => c.Price)
-        .HasPrecision(12, 2);
+            .Property(c => c.Price)
+            .HasPrecision(12, 2);
 
         _.Entity<Product>()
-        .HasMany(c => c.Carts)
-        .WithOne(c => c.Product)
-        .OnDelete(DeleteBehavior.Cascade);
+            .HasMany(c => c.Carts)
+            .WithOne(c => c.Product)
+            .HasForeignKey(c => c.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
     private static void BSales(ModelBuilder _)
