@@ -86,15 +86,21 @@ public class DatabaseContext : DbContext
         _.Entity<Cart>().HasKey(c => c.Id);
 
         _.Entity<Cart>()
-        .Property(c => c.ProductId)
-        .HasMaxLength(36)
-        .IsRequired();
+            .Property(c => c.CustomerId)
+            .HasMaxLength(36)
+            .IsRequired();
 
         _.Entity<Cart>()
-        .HasOne(c => c.Customer)
-        .WithMany(c => c.Carts)
-        .OnDelete(DeleteBehavior.NoAction)
-        .IsRequired();
+            .Property(c => c.ProductId)
+            .HasMaxLength(36)
+            .IsRequired();
+
+        _.Entity<Cart>()
+            .HasOne(c => c.Customer)
+            .WithMany(c => c.Carts)
+            .HasForeignKey(c => c.CustomerId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired();
     }
 
     private static void BCategory(ModelBuilder _)
