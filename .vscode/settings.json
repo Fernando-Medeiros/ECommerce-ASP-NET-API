@@ -15,5 +15,5 @@
     "terminal.integrated.fontFamily": "monospace",
     "terminal.integrated.fontSize": 15,
     "terminal.integrated.lineHeight": 1,
-    "dotnet.defaultSolution": "ECommerce.sln",
+    "dotnet.defaultSolution": "src/src.sln",
 }
