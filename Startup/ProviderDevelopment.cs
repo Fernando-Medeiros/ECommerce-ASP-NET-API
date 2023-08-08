@@ -6,8 +6,7 @@ public static partial class ServiceProviders
     {
         if (app.Environment.IsDevelopment())
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseDeveloperExceptionPage();
         }
     }
 }
