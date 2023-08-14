@@ -5,7 +5,7 @@ using ECommerce.Modules.Cart;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
+[ApiController, Authorize]
 [Route("api/customers", Name = "Customer")]
 public class CustomerController : ControllerBase
 {
@@ -13,7 +13,6 @@ public class CustomerController : ControllerBase
 
     public CustomerController(ICustomerService service) => _service = service;
 
-    [Authorize]
     [HttpGet("carts")]
     public async Task<ActionResult<IEnumerable<CartDTO>>> FindCarts()
     {
@@ -22,7 +21,6 @@ public class CustomerController : ControllerBase
         return Ok(await _service.FindCarts(customer.Id));
     }
 
-    [Authorize]
     [HttpGet]
     public async Task<ActionResult<CustomerDTO>> Find()
     {
@@ -31,6 +29,7 @@ public class CustomerController : ControllerBase
         return Ok(await _service.FindById(customer.Id));
     }
 
+    [AllowAnonymous]
     [HttpPost]
     public async Task<ActionResult> Register([FromBody] CustomerCreateDTO dto)
     {
@@ -46,7 +45,6 @@ public class CustomerController : ControllerBase
         return Created("", "");
     }
 
-    [Authorize]
     [HttpPatch]
     public async Task<ActionResult> Update([FromBody] CustomerUpdateDTO dto)
     {
@@ -64,7 +62,6 @@ public class CustomerController : ControllerBase
         return NoContent();
     }
 
-    [Authorize]
     [HttpDelete]
     public async Task<ActionResult> Remove()
     {
