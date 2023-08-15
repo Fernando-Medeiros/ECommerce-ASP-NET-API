@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using ECommerce.Context;
+using ECommerce.Startup.EnvironmentDTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Startup;
 
@@ -9,11 +10,12 @@ public static partial class ServiceProviders
     {
         builder.Services.AddDbContext<DatabaseContext>(options =>
         {
-            var host = builder.Configuration.GetConnectionString("DefaultConnection");
+            string _connectionString = DatabaseCredentialDTO
+                .GetDatabaseConnectionString();
 
             options.UseMySql(
-                connectionString: host,
-                serverVersion: ServerVersion.AutoDetect(host));
+                _connectionString,
+                serverVersion: ServerVersion.AutoDetect(_connectionString));
         });
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
