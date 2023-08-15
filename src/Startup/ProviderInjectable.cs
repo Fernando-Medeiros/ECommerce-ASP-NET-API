@@ -33,9 +33,6 @@ public static partial class ServiceProviders
         builder.Services.AddScoped<ISessionRepository, SessionRepository>();
         builder.Services.AddScoped<ISessionService, SessionService>();
 
-        builder.Services.Configure<EnvironmentDTO>(
-            builder.Configuration.GetSection("Environment"));
-
         builder.Services.AddTransient<TokenService>();
     }
 }

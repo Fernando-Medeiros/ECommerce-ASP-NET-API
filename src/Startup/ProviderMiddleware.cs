@@ -1,6 +1,7 @@
 namespace ECommerce.Startup;
 
 using System.Text;
+using ECommerce.Startup.EnvironmentDTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -19,9 +20,7 @@ public static partial class ServiceProviders
             .AddJwtBearer(opt =>
             {
                 byte[] key = Encoding.ASCII.GetBytes(
-                        builder.Configuration
-                        .GetSection("Environment")
-                        .GetValue<string>("PrivateKey")!
+                    new AuthCredentialDTO().PrivateKey
                 );
 
                 opt.RequireHttpsMetadata = false;

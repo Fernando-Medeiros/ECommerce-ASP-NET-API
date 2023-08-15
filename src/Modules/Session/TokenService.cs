@@ -5,19 +5,18 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ECommerce.Modules.Customer;
+using ECommerce.Startup.EnvironmentDTOs;
 
 public class TokenService : ITokenService
 {
-    private readonly IConfiguration _configuration;
-    private readonly EnvironmentDTO _environment;
+    private readonly AuthCredentialDTO _environment;
+
     private readonly JwtSecurityTokenHandler _jwtHandler;
 
-    public TokenService(IConfiguration configuration)
+    public TokenService()
     {
         _jwtHandler = new();
-        _configuration = configuration;
-        _environment = _configuration
-            .GetSection("Environment").Get<EnvironmentDTO>()!;
+        _environment = new();
     }
 
     public TokenDTO Generate(CustomerDTO customer)
