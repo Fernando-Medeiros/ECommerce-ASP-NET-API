@@ -24,42 +24,34 @@ public class CustomerController : ControllerBase
 
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult<CustomerDTO>> Find()
+    public async Task<ActionResult<CustomerResource>> Find()
     {
         CustomerIdentity customer = new(User);
 
-        return Ok(await _service.FindById(customer.Id));
+        CustomerResource resource = new(await _service.FindById(customer.Id));
+
+        return Ok(resource);
     }
 
     [HttpPost]
-    public async Task<ActionResult> Register([FromBody] CustomerCreateDTO dto)
+    public async Task<ActionResult> Register(
+        [FromBody] CustomerCreateRequest request)
     {
-        await _service.Register(new()
-        {
-            Name = dto.Name,
-            FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            Email = dto.Email,
-            Password = dto.Password
-        });
+        await _service.Register(
+            dto: CustomerCreateDTO.ExtractProperties(request));
 
-        return Created("", "");
+        return Created("", null);
     }
 
     [Authorize]
     [HttpPatch]
-    public async Task<ActionResult> Update([FromBody] CustomerUpdateDTO dto)
+    public async Task<ActionResult> Update(
+        [FromBody] CustomerUpdateRequest request)
     {
         CustomerIdentity customer = new(User);
 
-        await _service.Update(new()
-        {
-            Id = customer.Id,
-            Name = dto.Name,
-            FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            Email = dto.Email
-        });
+        await _service.Update(
+            dto: CustomerUpdateDTO.ExtractProperties(request, customer.Id));
 
         return NoContent();
     }
@@ -70,7 +62,7 @@ public class CustomerController : ControllerBase
     {
         CustomerIdentity customer = new(User);
 
-        await _service.Remove(new() { Id = customer.Id });
+        await _service.Remove(id: customer.Id);
 
         return NoContent();
     }
