@@ -34,5 +34,7 @@ public struct CustomerUpdateDTO
 
         if (Email != null)
             customer.Email = Email;
+
+        customer.UpdatedAt = DateTime.UtcNow;
     }
 }
