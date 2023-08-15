@@ -1,6 +1,7 @@
 using ECommerce.Modules.Cart;
 using ECommerce.Modules.Category;
 using ECommerce.Modules.Customer;
+using ECommerce.Modules.CustomerAddress;
 using ECommerce.Modules.Product;
 using ECommerce.Modules.Sales;
 using ECommerce.Modules.Session;
@@ -11,6 +12,9 @@ public static partial class ServiceProviders
 {
     public static void Injectable(WebApplicationBuilder builder)
     {
+        builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+        builder.Services.AddScoped<IAddressService, AddressService>();
+
         builder.Services.AddScoped<ICartRepository, CartRepository>();
         builder.Services.AddScoped<ICartService, CartService>();
 
