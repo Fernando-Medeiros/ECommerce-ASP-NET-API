@@ -4,7 +4,7 @@ using ECommerce.Identities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
+[ApiController, Authorize]
 [Route("api/carts", Name = "Cart")]
 public class CartController : ControllerBase
 {
@@ -12,7 +12,6 @@ public class CartController : ControllerBase
 
     public CartController(ICartService service) => _service = service;
 
-    [Authorize]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<CartDTO>> FindOne(int id)
     {
@@ -21,7 +20,6 @@ public class CartController : ControllerBase
         return Ok(await _service.FindOne(id, customer.Id));
     }
 
-    [Authorize]
     [HttpPost]
     public async Task<ActionResult> Register([FromBody] CartCreateDTO Dto)
     {
@@ -37,7 +35,6 @@ public class CartController : ControllerBase
         return Created("", "");
     }
 
-    [Authorize]
     [HttpPatch("{id:int}")]
     public async Task<ActionResult> Update(int id, [FromBody] CartUpdateDTO Dto)
     {
@@ -53,7 +50,6 @@ public class CartController : ControllerBase
         return NoContent();
     }
 
-    [Authorize]
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> Remove(int id)
     {
