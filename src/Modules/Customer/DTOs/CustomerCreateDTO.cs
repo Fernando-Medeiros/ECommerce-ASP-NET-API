@@ -1,26 +1,28 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace ECommerce.Modules.Customer;
 
-public class CustomerCreateDTO
+using BCrypt.Net;
+
+public struct CustomerCreateDTO
 {
-    [Required(ErrorMessage = "The Name is Required")]
-    [MinLength(3), MaxLength(50)]
+    public string? Id { get; set; }
     public string? Name { get; set; }
-
-    [Required(ErrorMessage = "The FirstName is Required")]
-    [MinLength(3), MaxLength(50)]
     public string? FirstName { get; set; }
-
-    [Required(ErrorMessage = "The LastName is Required")]
-    [MinLength(3), MaxLength(50)]
     public string? LastName { get; set; }
-
-    [Required(ErrorMessage = "The Email is Required")]
-    [MinLength(11), MaxLength(150), EmailAddress]
     public string? Email { get; set; }
-
-    [Required(ErrorMessage = "The Password is Required")]
-    [MinLength(8), MaxLength(255)]
     public string? Password { get; set; }
+    public DateTime? CreatedAt { get; set; }
+
+    public static CustomerCreateDTO ExtractProperties(CustomerCreateRequest _)
+    {
+        return new()
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = _.Name,
+            FirstName = _.FirstName,
+            LastName = _.LastName,
+            Email = _.Email,
+            Password = BCrypt.HashPassword(_.Password),
+            CreatedAt = DateTime.UtcNow
+        };
+    }
 }

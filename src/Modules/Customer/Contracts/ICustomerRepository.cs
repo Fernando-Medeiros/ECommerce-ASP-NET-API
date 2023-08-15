@@ -1,16 +1,16 @@
 namespace ECommerce.Modules.Customer;
 
-using ECommerce.Models;
+using ECommerce.Modules.Cart;
 
 public interface ICustomerRepository
 {
-    public Task<ICollection<Cart>?> FindCarts(string? id = null);
+    public Task<IEnumerable<CartDTO?>> FindCarts(string id);
 
-    public Task<Customer?> Find(string? id = null, string? email = null);
+    public Task<CustomerDTO?> Find(string? id = null, string? email = null);
 
-    public Task Create(Customer customer);
+    public Task Create(CustomerCreateDTO dto);
 
-    public Task Update(Customer customer);
+    public Task Update(CustomerDTO dto);
 
-    public Task Remove(Customer customer);
+    public Task Remove(CustomerDTO dto);
 }
