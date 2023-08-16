@@ -11,6 +11,7 @@ public class Customer
     public string? Role { get; set; }
     public DateTime UpdatedAt { get; set; }
     public DateTime CreatedAt { get; set; }
+
     public ICollection<Address>? Addresses { get; set; }
     public ICollection<Cart>? Carts { get; set; }
 }

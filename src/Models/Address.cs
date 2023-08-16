@@ -11,6 +11,8 @@ public class Address
     public string? City { get; set; }
     public string? State { get; set; }
     public string? Country { get; set; }
+    public DateTime UpdatedAt { get; set; }
     public DateTime CreatedAt { get; set; }
+
     public Customer? Customer { get; set; }
 }
