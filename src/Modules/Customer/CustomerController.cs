@@ -87,7 +87,7 @@ public class CustomerController : ControllerBase
         return Ok(resources);
     }
 
-    [HttpGet("{id:int}/cart")]
+    [HttpGet("{id}/carts")]
     public async Task<ActionResult<CartResource>> FindOne(string id)
     {
         CustomerIdentity customer = new(User);
@@ -98,7 +98,7 @@ public class CustomerController : ControllerBase
         return Ok(resource);
     }
 
-    [HttpPost("/cart")]
+    [HttpPost("carts")]
     public async Task<ActionResult> Register(
         [FromBody] CartCreateRequest request)
     {
@@ -110,7 +110,7 @@ public class CustomerController : ControllerBase
         return Created("", null);
     }
 
-    [HttpPatch("{id}/cart")]
+    [HttpPatch("{id}/carts")]
     public async Task<ActionResult> Update(
         [FromBody] CartUpdateRequest request,
         string id)
@@ -123,7 +123,7 @@ public class CustomerController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}/cart")]
+    [HttpDelete("{id}/carts")]
     public async Task<ActionResult> Remove(string id)
     {
         CustomerIdentity customer = new(User);
@@ -148,7 +148,7 @@ public class CustomerController : ControllerBase
         return Ok(resources);
     }
 
-    [HttpGet("{id}/address")]
+    [HttpGet("{id}/addresses")]
     public async Task<ActionResult<AddressResource>> FindAddress(string id)
     {
         CustomerIdentity customer = new(User);
@@ -159,7 +159,7 @@ public class CustomerController : ControllerBase
         return Ok(resource);
     }
 
-    [HttpPost("address")]
+    [HttpPost("addresses")]
     public async Task<ActionResult> RegisterAddress(
         [FromBody] AddressCreateRequest request)
     {
@@ -172,7 +172,7 @@ public class CustomerController : ControllerBase
         return Created("", null);
     }
 
-    [HttpPatch("{id}/address")]
+    [HttpPatch("{id}/addresses")]
     public async Task<ActionResult> UpdateAddress(
         [FromBody] AddressUpdateRequest request, string id)
     {
@@ -185,7 +185,7 @@ public class CustomerController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}/address")]
+    [HttpDelete("{id}/addresses")]
     public async Task<ActionResult> RemoveAddress(string id)
     {
         CustomerIdentity customer = new(User);

@@ -28,7 +28,7 @@ public class ProductRepository : IProductRepository
         return productEntities;
     }
 
-    public async Task<Product?> FindOne(int? id = null, string? name = null)
+    public async Task<Product?> FindOne(string? id = null, string? name = null)
     {
         if (id != null)
             return await _context.Products

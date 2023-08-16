@@ -45,7 +45,7 @@ public class SalesService : ISalesService
         return _mapper.Map<SalesDTO>(salesEntity);
     }
 
-    public async Task<SalesDTO> FindById(int id)
+    public async Task<SalesDTO> FindById(string id)
     {
         var salesEntity = await _salesRepository.FindById(id)
             ?? throw new NotFoundError("Sales Not Found");
@@ -70,7 +70,7 @@ public class SalesService : ISalesService
 
     public async Task Remove(SalesDTO dto)
     {
-        SalesDTO sales = await FindById((int)dto.Id!);
+        SalesDTO sales = await FindById((string)dto.Id!);
 
         var salesEntity = _mapper.Map<Sales>(sales);
 

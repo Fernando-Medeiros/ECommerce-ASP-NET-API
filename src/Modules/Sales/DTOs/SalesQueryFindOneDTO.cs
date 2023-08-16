@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 public class SalesQueryFindOneDTO
 {
     [Required]
-    public int ProductId { get; set; }
+    public string? ProductId { get; set; }
 
     [Required, MinLength(36), MaxLength(36)]
     public string? CustomerId { get; set; }

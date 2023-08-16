@@ -6,7 +6,7 @@ public interface IProductRepository
 {
     public Task<IEnumerable<Product>> FindMany(ProductQueryDTO query);
 
-    public Task<Product?> FindOne(int? id = null, string? name = null);
+    public Task<Product?> FindOne(string? id = null, string? name = null);
 
     public Task Create(Product product);
 

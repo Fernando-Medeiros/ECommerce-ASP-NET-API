@@ -19,14 +19,14 @@ public partial class CategoryController : ControllerBase
         return Ok(await _service.FindMany(query));
     }
 
-    [HttpGet("{id:int}/products")]
-    public async Task<ActionResult<IEnumerable<ProductDTO>>> FindProducts(int id)
+    [HttpGet("{id}/products")]
+    public async Task<ActionResult<IEnumerable<ProductDTO>>> FindProducts(string id)
     {
         return Ok(await _service.FindProducts(id));
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<CategoryDTO>> FindOne(int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<CategoryDTO>> FindOne(string id)
     {
         return Ok(await _service.FindOne(id));
     }
@@ -47,9 +47,9 @@ public partial class CategoryController
     }
 
     [Authorize(Roles = "manager, employee")]
-    [HttpPatch("{id:int}")]
+    [HttpPatch("{id}")]
     public async Task<ActionResult> Update(
-        int id,
+        string id,
         [FromBody] CategoryUpdateDTO Dto)
     {
         await _service.Update(new()
@@ -62,8 +62,8 @@ public partial class CategoryController
     }
 
     [Authorize(Roles = "manager, employee")]
-    [HttpDelete("{id:int}")]
-    public async Task<ActionResult> Remove(int id)
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Remove(string id)
     {
         await _service.Remove(new() { Id = id });
 

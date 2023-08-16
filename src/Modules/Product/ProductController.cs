@@ -18,8 +18,8 @@ public partial class ProductController : ControllerBase
         return Ok(await _service.FindMany(query));
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<ProductDTO>> FindOne(int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ProductDTO>> FindOne(string id)
     {
         return Ok(await _service.FindOne(id));
     }
@@ -45,8 +45,8 @@ public partial class ProductController
     }
 
     [Authorize(Roles = "manager, employee")]
-    [HttpPatch("{id:int}")]
-    public async Task<ActionResult> Update(int id, [FromBody] ProductUpdateDTO dto)
+    [HttpPatch("{id}")]
+    public async Task<ActionResult> Update(string id, [FromBody] ProductUpdateDTO dto)
     {
         await _service.Update(new()
         {
@@ -63,8 +63,8 @@ public partial class ProductController
     }
 
     [Authorize(Roles = "manager, employee")]
-    [HttpDelete("{id:int}")]
-    public async Task<ActionResult> Remove(int id)
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Remove(string id)
     {
         await _service.Remove(new() { Id = id });
 

@@ -39,7 +39,7 @@ public class SalesRepository : ISalesRepository
                 s.CreatedAt == query.CreatedAt);
     }
 
-    public async Task<Sales?> FindById(int id)
+    public async Task<Sales?> FindById(string id)
     {
         return await _context.Sales
             .AsNoTracking()

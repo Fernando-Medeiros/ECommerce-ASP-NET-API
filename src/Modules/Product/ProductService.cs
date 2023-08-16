@@ -30,7 +30,7 @@ public class ProductService : IProductService
         return _mapper.Map<IEnumerable<ProductDTO>>(productEntities);
     }
 
-    public async Task<ProductDTO> FindOne(int? id = null, string? name = null)
+    public async Task<ProductDTO> FindOne(string? id = null, string? name = null)
     {
         var productEntity = await _productRepository.FindOne(id, name)
             ?? throw new NotFoundError("Product Not Found");
@@ -66,7 +66,7 @@ public class ProductService : IProductService
         {
             await _categoryService.FindOne(Dto.CategoryId);
 
-            product.CategoryId = (int)Dto.CategoryId;
+            product.CategoryId = (string)Dto.CategoryId;
         }
 
         if (Dto.Description != null)
@@ -96,7 +96,7 @@ public class ProductService : IProductService
     }
 
 
-    private async Task ProductExists(int? id = null, string? name = null)
+    private async Task ProductExists(string? id = null, string? name = null)
     {
         if (await _productRepository.FindOne(id, name) != null)
             throw new BadRequestError("Product is already exist");

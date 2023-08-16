@@ -5,7 +5,9 @@ using System.Text.Json.Serialization;
 
 public class ProductDTO
 {
-    public int? Id { get; set; }
+    public string? Id { get; set; }
+
+    public string? CategoryId { get; set; }
 
     public string? Name { get; set; }
 
@@ -17,7 +19,7 @@ public class ProductDTO
 
     public long? Stock { get; set; }
 
-    public int? CategoryId { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

@@ -18,5 +18,5 @@ public class ProductUpdateDTO
     [Range(1, 9999)]
     public long? Stock { get; set; }
 
-    public int? CategoryId { get; set; }
+    public string? CategoryId { get; set; }
 }
