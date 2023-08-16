@@ -1,13 +1,24 @@
 namespace ECommerce.Modules.Cart;
 
-using System.ComponentModel.DataAnnotations;
-
-public class CartCreateDTO
+public struct CartCreateDTO
 {
-    [Required(ErrorMessage = "The Product is Required")]
-    public int ProductId { get; set; }
+    public string? Id { get; set; }
+    public string? CustomerId { get; set; }
+    public string? ProductId { get; set; }
 
-    [Required(ErrorMessage = "The Quantity is Required")]
-    [Range(1, 999)]
     public int Quantity { get; set; }
+    public DateTime CreatedAt { get; set; }
+
+    public static CartCreateDTO ExtractProprieties(
+        CartCreateRequest _, string customerId)
+    {
+        return new()
+        {
+            Id = Guid.NewGuid().ToString(),
+            CustomerId = customerId,
+            ProductId = _.ProductId,
+            Quantity = _.Quantity,
+            CreatedAt = DateTime.UtcNow
+        };
+    }
 }

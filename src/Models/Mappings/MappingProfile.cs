@@ -16,6 +16,7 @@ public class MappingProfile : Profile
         CreateMap<Address, AddressCreateDTO>().ReverseMap();
 
         CreateMap<Cart, CartDTO>().ReverseMap();
+        CreateMap<Cart, CartCreateDTO>().ReverseMap();
 
         CreateMap<Category, CategoryDTO>().ReverseMap();
         CreateMap<Category, CategoryCreateDTO>().ReverseMap();

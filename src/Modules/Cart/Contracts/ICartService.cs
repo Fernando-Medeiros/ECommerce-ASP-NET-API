@@ -2,11 +2,11 @@ namespace ECommerce.Modules.Cart;
 
 public interface ICartService
 {
-    public Task<CartDTO> FindOne(int cartId, string customerId);
+    public Task<CartDTO> FindOne(string cartId, string customerId);
 
-    public Task Register(CartDTO cart);
+    public Task Register(CartCreateDTO dto);
 
-    public Task Update(CartDTO cart);
+    public Task Update(CartUpdateDTO dto);
 
-    public Task Remove(CartDTO cart);
+    public Task Remove(string cartId, string customerId);
 }

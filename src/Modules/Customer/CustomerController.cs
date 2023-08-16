@@ -10,17 +10,20 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/customers", Name = "Customer")]
 public class CustomerController : ControllerBase
 {
-    private readonly ICustomerService _service;
-
     private readonly IAddressService _addressService;
 
+    private readonly ICartService _cartService;
+
+    private readonly ICustomerService _customerService;
+
     public CustomerController(
-        ICustomerService service,
-        IAddressService addressService
-        )
+        IAddressService addressService,
+        ICartService cartService,
+        ICustomerService customerService)
     {
-        _service = service;
         _addressService = addressService;
+        _cartService = cartService;
+        _customerService = customerService;
     }
 
     #region Owner
@@ -30,7 +33,7 @@ public class CustomerController : ControllerBase
     {
         CustomerIdentity customer = new(User);
 
-        CustomerResource resource = new(await _service.FindById(customer.Id));
+        CustomerResource resource = new(await _customerService.FindById(customer.Id));
 
         return Ok(resource);
     }
@@ -40,7 +43,7 @@ public class CustomerController : ControllerBase
     public async Task<ActionResult> Register(
         [FromBody] CustomerCreateRequest request)
     {
-        await _service.Register(
+        await _customerService.Register(
             dto: CustomerCreateDTO.ExtractProperties(request));
 
         return Created("", null);
@@ -52,7 +55,7 @@ public class CustomerController : ControllerBase
     {
         CustomerIdentity customer = new(User);
 
-        await _service.Update(
+        await _customerService.Update(
             dto: CustomerUpdateDTO.ExtractProperties(request, customer.Id));
 
         return NoContent();
@@ -63,7 +66,7 @@ public class CustomerController : ControllerBase
     {
         CustomerIdentity customer = new(User);
 
-        await _service.Remove(id: customer.Id);
+        await _customerService.Remove(id: customer.Id);
 
         return NoContent();
     }
@@ -73,11 +76,61 @@ public class CustomerController : ControllerBase
     #region Carts
 
     [HttpGet("carts")]
-    public async Task<ActionResult<IEnumerable<CartDTO>>> FindCarts()
+    public async Task<ActionResult<IEnumerable<CartResource>>> FindCarts()
     {
         CustomerIdentity customer = new(User);
 
-        return Ok(await _service.FindCarts(customer.Id));
+        IEnumerable<CartResource> resources = CartResource.ToArray(
+            array: await _customerService.FindCarts(customer.Id)
+        );
+
+        return Ok(resources);
+    }
+
+    [HttpGet("{id:int}/cart")]
+    public async Task<ActionResult<CartResource>> FindOne(string id)
+    {
+        CustomerIdentity customer = new(User);
+
+        CartResource resource = new(
+            await _cartService.FindOne(id, customer.Id));
+
+        return Ok(resource);
+    }
+
+    [HttpPost("/cart")]
+    public async Task<ActionResult> Register(
+        [FromBody] CartCreateRequest request)
+    {
+        CustomerIdentity customer = new(User);
+
+        await _cartService.Register(
+            CartCreateDTO.ExtractProprieties(request, customer.Id));
+
+        return Created("", null);
+    }
+
+    [HttpPatch("{id}/cart")]
+    public async Task<ActionResult> Update(
+        [FromBody] CartUpdateRequest request,
+        string id)
+    {
+        CustomerIdentity customer = new(User);
+
+        await _cartService.Update(
+            CartUpdateDTO.ExtractProprieties(request, id, customer.Id));
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}/cart")]
+    public async Task<ActionResult> Remove(string id)
+    {
+        CustomerIdentity customer = new(User);
+
+        await _cartService.Remove(id, customer.Id);
+
+        return NoContent();
     }
 
     #endregion

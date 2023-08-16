@@ -1,70 +1,56 @@
 namespace ECommerce.Modules.Cart;
 
-using AutoMapper;
 using ECommerce.Exceptions;
-using ECommerce.Models;
 using ECommerce.Modules.Product;
 
 public class CartService : ICartService
 {
     private readonly ICartRepository _cartRepository;
+
     private readonly IProductService _productService;
-    private readonly IMapper _mapper;
 
     public CartService(
         ICartRepository cartRepository,
-        IProductService productService,
-        IMapper mapper)
+        IProductService productService)
     {
         _cartRepository = cartRepository;
         _productService = productService;
-        _mapper = mapper;
     }
 
-    public async Task<CartDTO> FindOne(int cartId, string customerId)
+    public async Task<CartDTO> FindOne(string cartId, string customerId)
     {
-        var cartEntity = await _cartRepository.FindOne(cartId, customerId)
+        return await _cartRepository.FindOne(cartId, customerId)
             ?? throw new NotFoundError("Cart Not Found");
-
-        return _mapper.Map<CartDTO>(cartEntity);
     }
 
-    public async Task Register(CartDTO dto)
+    public async Task Register(CartCreateDTO dto)
     {
-        var product = await _productService.FindOne(id: dto.ProductId);
+        ProductDTO product = await _productService.FindOne(id: dto.ProductId);
 
         if (dto.Quantity > product.Stock)
             throw new BadRequestError("Quantity greater than available stock");
 
-        dto.CreatedAt = DateTime.UtcNow;
-
-        var cartEntity = _mapper.Map<Cart>(dto);
-
-        await _cartRepository.Create(cartEntity);
+        await _cartRepository.Register(dto);
     }
 
-    public async Task Update(CartDTO dto)
+    public async Task Update(CartUpdateDTO dto)
     {
-        var cart = await FindOne(dto.Id, dto.CustomerId!);
+        CartDTO cart = await FindOne(dto.Id!, dto.CustomerId!);
 
-        var product = await _productService.FindOne(id: cart.ProductId);
+        ProductDTO product = await _productService.FindOne(id: cart.ProductId);
 
         if (dto.Quantity > product.Stock)
             throw new BadRequestError("Quantity greater than available stock");
 
-        cart.Quantity = dto.Quantity;
+        dto.UpdateProperties(ref cart);
 
-        var cartEntity = _mapper.Map<Cart>(cart);
-
-        await _cartRepository.Update(cartEntity);
+        await _cartRepository.Update(cart);
     }
 
-    public async Task Remove(CartDTO dto)
+    public async Task Remove(string cartId, string customerId)
     {
-        var cart = await FindOne(dto.Id, dto.CustomerId!);
+        CartDTO cart = await FindOne(cartId, customerId);
 
-        var cartEntity = _mapper.Map<Cart>(cart);
-
-        await _cartRepository.Remove(cartEntity);
+        await _cartRepository.Remove(cart);
     }
 }
