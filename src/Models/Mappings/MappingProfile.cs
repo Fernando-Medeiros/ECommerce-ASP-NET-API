@@ -18,12 +18,15 @@ public class MappingProfile : Profile
         CreateMap<Cart, CartDTO>().ReverseMap();
 
         CreateMap<Category, CategoryDTO>().ReverseMap();
+        CreateMap<Category, CategoryCreateDTO>().ReverseMap();
 
         CreateMap<Customer, CustomerDTO>().ReverseMap();
         CreateMap<Customer, CustomerCreateDTO>().ReverseMap();
 
         CreateMap<Product, ProductDTO>().ReverseMap();
+        CreateMap<Product, ProductCreateDTO>().ReverseMap();
 
         CreateMap<Sales, SalesDTO>().ReverseMap();
+        CreateMap<Sales, SalesCreateDTO>().ReverseMap();
     }
 }
