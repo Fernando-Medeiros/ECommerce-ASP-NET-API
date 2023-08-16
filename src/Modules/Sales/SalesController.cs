@@ -27,14 +27,14 @@ public class SalesController : ControllerBase
         return Ok(await _service.FindOne(query));
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<SalesDTO>> FindById(int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<SalesDTO>> FindById(string id)
     {
         return Ok(await _service.FindById(id));
     }
 
-    [HttpDelete("{id:int}")]
-    public async Task<ActionResult> Remove(int id)
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Remove(string id)
     {
         await _service.Remove(new() { Id = id });
 

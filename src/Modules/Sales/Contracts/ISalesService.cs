@@ -8,7 +8,7 @@ public interface ISalesService
 
     public Task<SalesDTO> FindOne(SalesQueryFindOneDTO query);
 
-    public Task<SalesDTO> FindById(int id);
+    public Task<SalesDTO> FindById(string id);
 
     public Task Register(SalesDTO sales);
 

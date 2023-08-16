@@ -24,14 +24,14 @@ public class CategoryService : ICategoryService
         return _mapper.Map<IEnumerable<CategoryDTO>>(categoryEntities);
     }
 
-    public async Task<IEnumerable<ProductDTO>> FindProducts(int id)
+    public async Task<IEnumerable<ProductDTO>> FindProducts(string id)
     {
         var products = await _repository.FindProducts(id);
 
         return _mapper.Map<IEnumerable<ProductDTO>>(products);
     }
 
-    public async Task<CategoryDTO> FindOne(int? id = null, string? name = null)
+    public async Task<CategoryDTO> FindOne(string? id = null, string? name = null)
     {
         var categoryEntity = await _repository.FindOne(id, name)
             ?? throw new NotFoundError("Category Not Found");
@@ -72,7 +72,7 @@ public class CategoryService : ICategoryService
         await _repository.Remove(categoryEntity);
     }
 
-    private async Task CategoryExists(int? id = null, string? name = null)
+    private async Task CategoryExists(string? id = null, string? name = null)
     {
         if (await _repository.FindOne(id, name) != null)
             throw new BadRequestError("Category is already exist");

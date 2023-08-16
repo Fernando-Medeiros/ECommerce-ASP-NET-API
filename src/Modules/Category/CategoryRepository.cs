@@ -25,7 +25,7 @@ public class CategoryRepository : ICategoryRepository
         return categoryEntities;
     }
 
-    public async Task<ICollection<Product>?> FindProducts(int id)
+    public async Task<ICollection<Product>?> FindProducts(string id)
     {
         var category = await _context.Categories
             .Include(c => c.Products)
@@ -34,7 +34,7 @@ public class CategoryRepository : ICategoryRepository
         return category?.Products;
     }
 
-    public async Task<Category?> FindOne(int? id, string? name)
+    public async Task<Category?> FindOne(string? id, string? name)
     {
         if (id != null)
             return await _context.Categories

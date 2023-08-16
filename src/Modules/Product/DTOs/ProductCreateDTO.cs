@@ -24,5 +24,5 @@ public class ProductCreateDTO
     public long Stock { get; set; }
 
     [Required(ErrorMessage = "The Category is Required")]
-    public int CategoryId { get; set; }
+    public string? CategoryId { get; set; }
 }

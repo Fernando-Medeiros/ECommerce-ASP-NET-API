@@ -10,7 +10,7 @@ public class SalesCreateDTO
     public string? CustomerId { get; set; }
 
     [Required(ErrorMessage = "The ProductId is Required")]
-    public int? ProductId { get; set; }
+    public string? ProductId { get; set; }
 
     [Required(ErrorMessage = "The Price is Required")]
     public decimal? Price { get; set; }

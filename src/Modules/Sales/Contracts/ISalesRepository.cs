@@ -9,7 +9,7 @@ public interface ISalesRepository
 
     public Task<Sales?> FindOne(SalesQueryFindOneDTO query);
 
-    public Task<Sales?> FindById(int id);
+    public Task<Sales?> FindById(string id);
 
     public Task Register(Sales sales);
 
