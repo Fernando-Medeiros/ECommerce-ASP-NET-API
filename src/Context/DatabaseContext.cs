@@ -86,6 +86,11 @@ public class DatabaseContext : DbContext
         _.Entity<Cart>().HasKey(c => c.Id);
 
         _.Entity<Cart>()
+            .Property(x => x.Id)
+            .HasMaxLength(36)
+            .IsRequired();
+
+        _.Entity<Cart>()
             .Property(c => c.CustomerId)
             .HasMaxLength(36)
             .IsRequired();
@@ -106,6 +111,11 @@ public class DatabaseContext : DbContext
     private static void BCategory(ModelBuilder _)
     {
         _.Entity<Category>().HasKey(c => c.Id);
+
+        _.Entity<Category>()
+            .Property(x => x.Id)
+            .HasMaxLength(36)
+            .IsRequired();
 
         _.Entity<Category>()
             .Property(c => c.Name)
@@ -163,6 +173,16 @@ public class DatabaseContext : DbContext
         _.Entity<Product>().HasKey(c => c.Id);
 
         _.Entity<Product>()
+            .Property(c => c.Id)
+            .HasMaxLength(36)
+            .IsRequired();
+
+        _.Entity<Product>()
+            .Property(c => c.CategoryId)
+            .HasMaxLength(36)
+            .IsRequired();
+
+        _.Entity<Product>()
             .Property(c => c.Name)
             .HasMaxLength(100)
             .IsRequired();
@@ -191,6 +211,11 @@ public class DatabaseContext : DbContext
     private static void BSales(ModelBuilder _)
     {
         _.Entity<Sales>().HasKey(c => c.Id);
+
+        _.Entity<Sales>()
+            .Property(c => c.Id)
+            .HasMaxLength(36)
+            .IsRequired();
 
         _.Entity<Sales>()
             .Property(c => c.CustomerId)
