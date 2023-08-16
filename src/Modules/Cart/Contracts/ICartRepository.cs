@@ -1,14 +1,12 @@
 namespace ECommerce.Modules.Cart;
 
-using ECommerce.Models;
-
 public interface ICartRepository
 {
-    public Task<Cart?> FindOne(int cartId, string customerId);
+    public Task<CartDTO?> FindOne(string cartId, string customerId);
 
-    public Task Create(Cart cart);
+    public Task Register(CartCreateDTO dto);
 
-    public Task Update(Cart cart);
+    public Task Update(CartDTO dto);
 
-    public Task Remove(Cart cart);
+    public Task Remove(CartDTO dto);
 }
