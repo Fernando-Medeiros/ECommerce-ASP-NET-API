@@ -11,63 +11,57 @@ public partial class ProductController : ControllerBase
 
     public ProductController(IProductService service) => _service = service;
 
+    #region Public
+
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductDTO>>> FindMany(
+    public async Task<ActionResult<IEnumerable<ProductResource>>> FindMany(
         [FromQuery] ProductQueryDTO query)
     {
-        return Ok(await _service.FindMany(query));
+        IEnumerable<ProductResource> resources = ProductResource.ToArray(
+            array: await _service.FindMany(query));
+
+        return Ok(resources);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProductDTO>> FindOne(string id)
+    public async Task<ActionResult<ProductResource>> FindOne(string id)
     {
-        return Ok(await _service.FindOne(id));
-    }
-}
+        ProductResource resource = new(await _service.FindOne(id));
 
-public partial class ProductController
-{
-    [Authorize(Roles = "manager, employee")]
-    [HttpPost]
-    public async Task<ActionResult> Register([FromBody] ProductCreateDTO dto)
-    {
-        await _service.Register(new()
-        {
-            Name = dto.Name,
-            ImageURL = dto.ImageURL,
-            Description = dto.Description,
-            Price = dto.Price,
-            Stock = dto.Stock,
-            CategoryId = dto.CategoryId
-        });
-
-        return Created("", "");
+        return Ok(resource);
     }
 
-    [Authorize(Roles = "manager, employee")]
-    [HttpPatch("{id}")]
-    public async Task<ActionResult> Update(string id, [FromBody] ProductUpdateDTO dto)
+    #endregion
+
+    #region Manager - Employee
+
+    [HttpPost, Authorize(Roles = "manager, employee")]
+    public async Task<ActionResult> Register(
+        [FromBody] ProductCreateRequest request)
     {
-        await _service.Update(new()
-        {
-            Id = id,
-            Name = dto.Name,
-            ImageURL = dto.ImageURL,
-            Description = dto.Description,
-            Price = dto.Price,
-            Stock = dto.Stock,
-            CategoryId = dto.CategoryId
-        });
+        await _service.Register(
+            dto: ProductCreateDTO.ExtractProperties(request));
+
+        return Created("", null);
+    }
+
+    [HttpPatch("{id}"), Authorize(Roles = "manager, employee")]
+    public async Task<ActionResult> Update(
+        [FromBody] ProductUpdateRequest request, string id)
+    {
+        await _service.Update(
+            dto: ProductUpdateDTO.ExtractProperties(request, id));
 
         return NoContent();
     }
 
-    [Authorize(Roles = "manager, employee")]
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}"), Authorize(Roles = "manager, employee")]
     public async Task<ActionResult> Remove(string id)
     {
-        await _service.Remove(new() { Id = id });
+        await _service.Remove(id);
 
         return NoContent();
     }
+
+    #endregion
 }
