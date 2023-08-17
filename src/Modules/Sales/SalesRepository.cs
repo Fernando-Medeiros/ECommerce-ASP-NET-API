@@ -1,20 +1,27 @@
 namespace ECommerce.Modules.Sales;
 
-using System.Collections.Generic;
+using AutoMapper;
 using ECommerce.Context;
 using ECommerce.Models;
-using ECommerce.Modules.Sales.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 public class SalesRepository : ISalesRepository
 {
     private readonly DatabaseContext _context;
 
-    public SalesRepository(DatabaseContext context) => _context = context;
+    private readonly IMapper _mapper;
 
-    public async Task<IEnumerable<Sales>> FindMany(SalesQueryDTO query)
+    public SalesRepository(
+        DatabaseContext context,
+        IMapper mapper)
     {
-        var salesEntities = await _context.Sales
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<IEnumerable<SalesDTO?>> FindMany(SalesQueryDTO query)
+    {
+        List<Sales>? sales = await _context.Sales
             .AsNoTracking()
             .Take(query.Limit)
             .OrderBy(c => c.Id)
@@ -22,46 +29,44 @@ public class SalesRepository : ISalesRepository
             .ToListAsync();
 
         if (query.Price)
-            salesEntities = salesEntities.OrderBy(p => p.Price).ToList();
+            sales = sales.OrderBy(p => p.Price).ToList();
 
-        return salesEntities;
+        return _mapper.Map<IEnumerable<SalesDTO>>(sales);
     }
 
-    public async Task<Sales?> FindOne(SalesQueryFindOneDTO query)
+    public async Task<SalesDTO?> FindById(string id)
     {
-        return await _context.Sales
-            .AsNoTracking()
-            .SingleOrDefaultAsync(s =>
-                s.ProductId == query.ProductId
-                &&
-                s.CustomerId == query.CustomerId
-                &&
-                s.CreatedAt == query.CreatedAt);
-    }
-
-    public async Task<Sales?> FindById(string id)
-    {
-        return await _context.Sales
+        Sales? sales = await _context.Sales
             .AsNoTracking()
             .SingleOrDefaultAsync(s => s.Id == id);
+
+        return sales == null
+        ? null
+        : _mapper.Map<SalesDTO>(sales);
     }
 
-    public async Task Register(Sales sales)
+    public async Task Register(SalesCreateDTO dto)
     {
+        Sales sales = _mapper.Map<Sales>(dto);
+
         _context.Add(sales);
 
         await _context.SaveChangesAsync();
     }
 
-    public async Task Update(Sales sales)
+    public async Task Update(SalesDTO dto)
     {
+        Sales sales = _mapper.Map<Sales>(dto);
+
         _context.Update(sales).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
     }
 
-    public async Task Remove(Sales sales)
+    public async Task Remove(SalesDTO dto)
     {
+        Sales sales = _mapper.Map<Sales>(dto);
+
         _context.Remove(sales);
 
         await _context.SaveChangesAsync();
