@@ -1,22 +1,46 @@
 namespace ECommerce.Modules.Product;
 
-using System.ComponentModel.DataAnnotations;
-
 public class ProductUpdateDTO
 {
-    [MinLength(3), MaxLength(100)]
+    public string? Id { get; set; }
     public string? Name { get; set; }
-
-    [MinLength(5), MaxLength(255)]
     public string? Description { get; set; }
-
-    [MinLength(5), MaxLength(255)]
     public string? ImageURL { get; set; }
-
     public decimal? Price { get; set; }
-
-    [Range(1, 9999)]
     public long? Stock { get; set; }
-
     public string? CategoryId { get; set; }
+    public DateTime UpdatedAt { get; set; }
+
+    public static ProductUpdateDTO ExtractProperties(
+        ProductUpdateRequest _, string productId)
+    {
+        return new()
+        {
+            Id = productId,
+            Name = _.Name,
+            Description = _.Description,
+            ImageURL = _.ImageURL,
+            Price = _.Price,
+            Stock = _.Stock,
+            CategoryId = _.CategoryId,
+            UpdatedAt = DateTime.UtcNow
+        };
+    }
+
+    public void UpdateProperties(ref ProductDTO product)
+    {
+        if (Name != null) product.Name = Name;
+
+        if (Description != null) product.Description = Description;
+
+        if (ImageURL != null) product.ImageURL = ImageURL;
+
+        if (Price != null) product.Price = Price;
+
+        if (Stock != null) product.Stock = Stock;
+
+        if (CategoryId != null) product.CategoryId = CategoryId;
+
+        product.UpdatedAt = UpdatedAt;
+    }
 }
