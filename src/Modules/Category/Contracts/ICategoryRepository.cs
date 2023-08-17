@@ -1,18 +1,20 @@
 namespace ECommerce.Modules.Category;
 
-using ECommerce.Models;
+using ECommerce.Modules.Product;
 
 public interface ICategoryRepository
 {
-    public Task<IEnumerable<Category>> FindMany(CategoryQueryDTO query);
+    public Task<IEnumerable<CategoryDTO?>> FindMany(CategoryQueryDTO query);
 
-    public Task<ICollection<Product>?> FindProducts(string id);
+    public Task<IEnumerable<ProductDTO?>> FindProducts(string id);
 
-    public Task<Category?> FindOne(string? id = null, string? name = null);
+    public Task<CategoryDTO?> FindOne(
+        string? id = null,
+        string? name = null);
 
-    public Task Create(Category category);
+    public Task Create(CategoryCreateDTO dto);
 
-    public Task Update(Category category);
+    public Task Update(CategoryDTO dto);
 
-    public Task Remove(Category category);
+    public Task Remove(CategoryDTO dto);
 }

@@ -1,18 +1,28 @@
 namespace ECommerce.Modules.Category;
 
+using AutoMapper;
 using ECommerce.Context;
 using ECommerce.Models;
+using ECommerce.Modules.Product;
 using Microsoft.EntityFrameworkCore;
 
 public class CategoryRepository : ICategoryRepository
 {
     private readonly DatabaseContext _context;
 
-    public CategoryRepository(DatabaseContext context) => _context = context;
+    private readonly IMapper _mapper;
 
-    public async Task<IEnumerable<Category>> FindMany(CategoryQueryDTO query)
+    public CategoryRepository(
+        DatabaseContext context,
+        IMapper mapper)
     {
-        var categoryEntities = await _context.Categories
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<IEnumerable<CategoryDTO?>> FindMany(CategoryQueryDTO query)
+    {
+        var categories = await _context.Categories
             .AsNoTracking()
             .Take(query.Limit)
             .OrderBy(c => c.Id)
@@ -20,52 +30,63 @@ public class CategoryRepository : ICategoryRepository
             .ToListAsync();
 
         if (query.Name)
-            categoryEntities = categoryEntities.OrderBy(c => c.Name).ToList();
+            categories = categories.OrderBy(c => c.Name).ToList();
 
-        return categoryEntities;
+        return _mapper.Map<IEnumerable<CategoryDTO>>(categories);
     }
 
-    public async Task<ICollection<Product>?> FindProducts(string id)
+    public async Task<IEnumerable<ProductDTO?>> FindProducts(string productId)
     {
         var category = await _context.Categories
             .Include(c => c.Products)
-            .SingleOrDefaultAsync(c => c.Id == id);
+            .SingleOrDefaultAsync(c => c.Id == productId);
 
-        return category?.Products;
+        return _mapper.Map<IEnumerable<ProductDTO>>(category?.Products);
+
     }
 
-    public async Task<Category?> FindOne(string? id, string? name)
+    public async Task<CategoryDTO?> FindOne(string? categoryId, string? name)
     {
-        if (id != null)
-            return await _context.Categories
+        Category? category = null;
+
+        if (categoryId != null)
+            category = await _context.Categories
                 .AsNoTracking()
-                .SingleOrDefaultAsync(c => c.Id == id);
+                .SingleOrDefaultAsync(c => c.Id == categoryId);
 
         else if (name != null)
-            return await _context.Categories
+            category = await _context.Categories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Name == name);
 
-        return null;
+        return category == null
+            ? null
+            : _mapper.Map<CategoryDTO>(category);
     }
 
-    public async Task Create(Category category)
+    public async Task Create(CategoryCreateDTO dto)
     {
-        _context.Categories.Add(category);
+        var categoryEntity = _mapper.Map<Category>(dto);
+
+        _context.Categories.Add(categoryEntity);
 
         await _context.SaveChangesAsync();
     }
 
-    public async Task Update(Category category)
+    public async Task Update(CategoryDTO dto)
     {
-        _context.Categories.Entry(category).State = EntityState.Modified;
+        var categoryEntity = _mapper.Map<Category>(dto);
+
+        _context.Categories.Entry(categoryEntity).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
     }
 
-    public async Task Remove(Category category)
+    public async Task Remove(CategoryDTO dto)
     {
-        _context.Categories.Remove(category);
+        var categoryEntity = _mapper.Map<Category>(dto);
+
+        _context.Categories.Remove(categoryEntity);
 
         await _context.SaveChangesAsync();
     }
