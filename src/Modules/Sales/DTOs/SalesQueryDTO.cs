@@ -1,7 +1,7 @@
-namespace ECommerce.Modules.Sales.DTOs;
-
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+
+namespace ECommerce.Modules.Sales;
 
 public class SalesQueryDTO
 {
