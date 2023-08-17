@@ -1,21 +1,25 @@
 namespace ECommerce.Modules.Sales;
 
-using System.ComponentModel.DataAnnotations;
-
-public class SalesCreateDTO
+public struct SalesCreateDTO
 {
-
-    [Required(ErrorMessage = "The CustomerId is Required")]
-    [MinLength(36), MaxLength(36)]
+    public string? Id { get; set; }
     public string? CustomerId { get; set; }
-
-    [Required(ErrorMessage = "The ProductId is Required")]
     public string? ProductId { get; set; }
+    public decimal Price { get; set; }
+    public int Quantity { get; set; }
+    public DateTime CreatedAt { get; set; }
 
-    [Required(ErrorMessage = "The Price is Required")]
-    public decimal? Price { get; set; }
-
-    [Required(ErrorMessage = "The Quantity is Required")]
-    [Range(1, 999)]
-    public int? Quantity { get; set; }
+    public static SalesCreateDTO ExtractProperties(
+        SalesCreateRequest _)
+    {
+        return new()
+        {
+            Id = Guid.NewGuid().ToString(),
+            CustomerId = _.CustomerId,
+            ProductId = _.ProductId,
+            Price = _.Price,
+            Quantity = _.Quantity,
+            CreatedAt = DateTime.UtcNow,
+        };
+    }
 }
