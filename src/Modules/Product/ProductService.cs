@@ -1,8 +1,6 @@
 namespace ECommerce.Modules.Product;
 
-using AutoMapper;
 using ECommerce.Exceptions;
-using ECommerce.Models;
 using ECommerce.Modules.Category;
 
 public class ProductService : IProductService
@@ -11,88 +9,54 @@ public class ProductService : IProductService
 
     private readonly IProductRepository _productRepository;
 
-    private readonly IMapper _mapper;
-
     public ProductService(
         ICategoryService categoryService,
-        IProductRepository productRepository,
-        IMapper mapper)
+        IProductRepository productRepository)
     {
         _categoryService = categoryService;
         _productRepository = productRepository;
-        _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ProductDTO>> FindMany(ProductQueryDTO query)
+    public async Task<IEnumerable<ProductDTO?>> FindMany(ProductQueryDTO query)
     {
-        var productEntities = await _productRepository.FindMany(query);
-
-        return _mapper.Map<IEnumerable<ProductDTO>>(productEntities);
+        return await _productRepository.FindMany(query);
     }
 
     public async Task<ProductDTO> FindOne(string? id = null, string? name = null)
     {
-        var productEntity = await _productRepository.FindOne(id, name)
+        return await _productRepository.FindOne(id, name)
             ?? throw new NotFoundError("Product Not Found");
-
-        return _mapper.Map<ProductDTO>(productEntity);
     }
 
-    public async Task Register(ProductDTO Dto)
+    public async Task Register(ProductCreateDTO Dto)
     {
         await ProductExists(name: Dto.Name);
 
         await _categoryService.FindOne(id: Dto.CategoryId);
 
-        Dto.CreatedAt = DateTime.UtcNow;
-
-        var productEntity = _mapper.Map<Product>(Dto);
-
-        await _productRepository.Create(productEntity);
+        await _productRepository.Register(Dto);
     }
 
-    public async Task Update(ProductDTO Dto)
+    public async Task Update(ProductUpdateDTO dto)
     {
-        ProductDTO product = await FindOne(Dto.Id);
+        if (dto.Name != null)
+            await ProductExists(name: dto.Name);
 
-        if (Dto.Name != null)
-        {
-            await ProductExists(name: Dto.Name);
+        if (dto.CategoryId != null)
+            await _categoryService.FindOne(dto.CategoryId);
 
-            product.Name = Dto.Name;
-        }
+        ProductDTO product = await FindOne(dto.Id);
 
-        if (Dto.CategoryId != null)
-        {
-            await _categoryService.FindOne(Dto.CategoryId);
+        dto.UpdateProperties(ref product);
 
-            product.CategoryId = (string)Dto.CategoryId;
-        }
-
-        if (Dto.Description != null)
-            product.Description = Dto.Description;
-
-        if (Dto.ImageURL != null)
-            product.ImageURL = Dto.ImageURL;
-
-        if (Dto.Price != null)
-            product.Price = (decimal)Dto.Price;
-
-        if (Dto.Stock != null)
-            product.Stock = (long)Dto.Stock!;
-
-        var productEntity = _mapper.Map<Product>(product);
-
-        await _productRepository.Update(productEntity);
+        await _productRepository.Update(product);
     }
 
-    public async Task Remove(ProductDTO Dto)
+    public async Task Remove(string id)
     {
-        ProductDTO product = await FindOne(Dto.Id);
+        ProductDTO product = await FindOne(id);
 
-        var productEntity = _mapper.Map<Product>(product);
-
-        await _productRepository.Remove(productEntity);
+        await _productRepository.Remove(product);
     }
 
 

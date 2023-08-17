@@ -1,17 +1,17 @@
 namespace ECommerce.Modules.Product;
 
-using ECommerce.Models;
-
 public interface IProductRepository
 {
-    public Task<IEnumerable<Product>> FindMany(ProductQueryDTO query);
+    public Task<IEnumerable<ProductDTO?>> FindMany(ProductQueryDTO query);
 
-    public Task<Product?> FindOne(string? id = null, string? name = null);
+    public Task<ProductDTO?> FindOne(
+        string? id = null,
+        string? name = null);
 
-    public Task Create(Product product);
+    public Task Register(ProductCreateDTO dto);
 
-    public Task Update(Product product);
+    public Task Update(ProductDTO dto);
 
-    public Task Remove(Product product);
+    public Task Remove(ProductDTO dto);
 }
 
