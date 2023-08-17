@@ -1,8 +1,7 @@
-namespace ECommerce.Modules.Sales;
-
-using ECommerce.Modules.Sales.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+namespace ECommerce.Modules.Sales;
 
 [ApiController]
 [Authorize(Roles = "manager")]
@@ -14,29 +13,27 @@ public class SalesController : ControllerBase
     public SalesController(ISalesService service) => _service = service;
 
     [HttpGet("find-many")]
-    public async Task<ActionResult<IEnumerable<SalesDTO>>> FindMany(
+    public async Task<ActionResult<IEnumerable<SalesResource>>> FindMany(
         [FromQuery] SalesQueryDTO query)
     {
-        return Ok(await _service.FindMany(query));
-    }
+        IEnumerable<SalesResource> resources = SalesResource.ToArray(
+            array: await _service.FindMany(query));
 
-    [HttpGet("find-one")]
-    public async Task<ActionResult<SalesDTO>> FindOne(
-        [FromQuery] SalesQueryFindOneDTO query)
-    {
-        return Ok(await _service.FindOne(query));
+        return Ok(resources);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<SalesDTO>> FindById(string id)
+    public async Task<ActionResult<SalesResource>> FindById(string id)
     {
-        return Ok(await _service.FindById(id));
+        SalesResource resource = new(await _service.FindById(id));
+
+        return Ok(resource);
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> Remove(string id)
     {
-        await _service.Remove(new() { Id = id });
+        await _service.Remove(id);
 
         return NoContent();
     }
