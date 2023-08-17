@@ -25,9 +25,12 @@ public partial class CategoryController : ControllerBase
     }
 
     [HttpGet("{id}/products")]
-    public async Task<ActionResult<IEnumerable<ProductDTO>>> FindProducts(string id)
+    public async Task<ActionResult<IEnumerable<ProductResource>>> FindProducts(string id)
     {
-        return Ok(await _service.FindProducts(id));
+        IEnumerable<ProductResource> resources = ProductResource.ToArray(
+            array: await _service.FindProducts(id));
+
+        return Ok(resources);
     }
 
     [HttpGet("{id}")]
