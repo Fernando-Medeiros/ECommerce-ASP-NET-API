@@ -12,11 +12,16 @@ public partial class CategoryController : ControllerBase
 
     public CategoryController(ICategoryService service) => _service = service;
 
+    #region Public
+
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoryDTO>>> FindMany(
+    public async Task<ActionResult<IEnumerable<CategoryResource>>> FindMany(
         [FromQuery] CategoryQueryDTO query)
     {
-        return Ok(await _service.FindMany(query));
+        IEnumerable<CategoryResource> resources = CategoryResource
+            .ToArray(array: await _service.FindMany(query));
+
+        return Ok(resources);
     }
 
     [HttpGet("{id}/products")]
@@ -26,37 +31,37 @@ public partial class CategoryController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<CategoryDTO>> FindOne(string id)
+    public async Task<ActionResult<CategoryResource>> FindOne(string id)
     {
-        return Ok(await _service.FindOne(id));
-    }
-}
+        CategoryResource resource = new(await _service.FindOne(id));
 
-public partial class CategoryController
-{
+        return Ok(resource);
+    }
+
+    #endregion
+
+    #region Manager - Employee
+
     [Authorize(Roles = "manager, employee")]
     [HttpPost]
-    public async Task<ActionResult> Register([FromBody] CategoryCreateDTO Dto)
+    public async Task<ActionResult> Register(
+        [FromBody] CategoryCreateRequest request)
     {
-        await _service.Register(new()
-        {
-            Name = Dto.Name,
-        });
+        await _service.Register(
+            dto: CategoryCreateDTO.ExtractProprieties(request)
+        );
 
-        return Created("", "");
+        return Created("", null);
     }
 
     [Authorize(Roles = "manager, employee")]
     [HttpPatch("{id}")]
     public async Task<ActionResult> Update(
-        string id,
-        [FromBody] CategoryUpdateDTO Dto)
+        [FromBody] CategoryUpdateRequest request, string id)
     {
-        await _service.Update(new()
-        {
-            Id = id,
-            Name = Dto.Name,
-        });
+        await _service.Update(
+            dto: CategoryUpdateDTO.ExtractProprieties(request, id)
+        );
 
         return NoContent();
     }
@@ -65,8 +70,10 @@ public partial class CategoryController
     [HttpDelete("{id}")]
     public async Task<ActionResult> Remove(string id)
     {
-        await _service.Remove(new() { Id = id });
+        await _service.Remove(id);
 
         return NoContent();
     }
+
+    #endregion
 }
