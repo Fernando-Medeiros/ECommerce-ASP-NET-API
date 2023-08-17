@@ -9,7 +9,7 @@ public class Product
     public string? ImageURL { get; set; }
     public decimal Price { get; set; }
     public long Stock { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
     public DateTime CreatedAt { get; set; }
 
     public Category? Category { get; set; }
