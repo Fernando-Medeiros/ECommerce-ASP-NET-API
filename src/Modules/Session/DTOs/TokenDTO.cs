@@ -1,8 +1,13 @@
 namespace ECommerce.Modules.Session;
 
-public struct TokenDTO
+public readonly struct TokenDTO
 {
-    public string Token { get; set; }
+    public readonly string Token { get; init; }
+    public readonly string Type { get; init; }
 
-    public string Type { get; set; }
+    public TokenDTO(string token, string type)
+    {
+        Token = token;
+        Type = type;
+    }
 }
