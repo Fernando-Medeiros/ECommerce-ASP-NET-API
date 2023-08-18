@@ -2,27 +2,40 @@ namespace ECommerce.Modules.Customer;
 
 using BCrypt.Net;
 
-public struct CustomerCreateDTO
+public readonly struct CustomerCreateDTO
 {
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public string? Email { get; set; }
-    public string? Password { get; set; }
-    public DateTime? CreatedAt { get; set; }
+    public readonly string? Id;
+    public readonly string? Name;
+    public readonly string? FirstName;
+    public readonly string? LastName;
+    public readonly string? Email;
+    public readonly string? Password;
+    public readonly DateTime CreatedAt;
 
-    public static CustomerCreateDTO ExtractProperties(CustomerCreateRequest _)
+    public CustomerCreateDTO(
+        string? name,
+        string? firstName,
+        string? lastName,
+        string? email,
+        string? password)
     {
-        return new()
-        {
-            Id = Guid.NewGuid().ToString(),
-            Name = _.Name,
-            FirstName = _.FirstName,
-            LastName = _.LastName,
-            Email = _.Email,
-            Password = BCrypt.HashPassword(_.Password),
-            CreatedAt = DateTime.UtcNow
-        };
+        Id = Guid.NewGuid().ToString();
+        Name = name;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Password = BCrypt.HashPassword(password);
+        CreatedAt = DateTime.UtcNow;
+    }
+
+    public static CustomerCreateDTO ExtractProperties(
+        CustomerCreateRequest req)
+    {
+        return new(
+            name: req.Name,
+            firstName: req.FirstName,
+            lastName: req.LastName,
+            email: req.Email,
+            password: req.Password);
     }
 }

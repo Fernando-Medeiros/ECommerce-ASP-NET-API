@@ -1,6 +1,6 @@
-namespace ECommerce.Modules.Customer;
-
 using System.ComponentModel.DataAnnotations;
+
+namespace ECommerce.Modules.Customer;
 
 public class CustomerUpdateRequest
 {

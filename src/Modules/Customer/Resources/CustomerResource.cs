@@ -1,17 +1,16 @@
-namespace ECommerce.Modules.Customer;
-
 using System.ComponentModel.DataAnnotations;
 
-public struct CustomerResource
-{
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
+namespace ECommerce.Modules.Customer;
 
+public readonly struct CustomerResource
+{
+    public readonly string? Id { get; init; }
+    public readonly string? Name { get; init; }
+    public readonly string? FirstName { get; init; }
+    public readonly string? LastName { get; init; }
     [EmailAddress]
-    public string? Email { get; set; }
-    public DateOnly? CreatedAt { get; set; }
+    public readonly string? Email { get; init; }
+    public readonly DateOnly CreatedAt { get; init; }
 
     public CustomerResource(CustomerDTO _)
     {
