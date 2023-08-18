@@ -1,19 +1,21 @@
 namespace ECommerce.Modules.Category;
 
-public class CategoryCreateDTO
+public readonly struct CategoryCreateDTO
 {
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public readonly string? Id;
+    public readonly string? Name;
+    public readonly DateTime CreatedAt;
+
+    public CategoryCreateDTO(string? name)
+    {
+        Id = Guid.NewGuid().ToString();
+        Name = name;
+        CreatedAt = DateTime.UtcNow;
+    }
 
     public static CategoryCreateDTO ExtractProperties(
-        CategoryCreateRequest _)
+        CategoryCreateRequest req)
     {
-        return new()
-        {
-            Id = Guid.NewGuid().ToString(),
-            Name = _.Name,
-            CreatedAt = DateTime.UtcNow,
-        };
+        return new(name: req.Name);
     }
 }
