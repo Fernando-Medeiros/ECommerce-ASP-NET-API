@@ -1,30 +1,46 @@
 namespace ECommerce.Modules.Product;
 
-public class ProductUpdateDTO
+public readonly struct ProductUpdateDTO
 {
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
-    public string? ImageURL { get; set; }
-    public decimal? Price { get; set; }
-    public long? Stock { get; set; }
-    public string? CategoryId { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public readonly string? Id;
+    public readonly string? CategoryId;
+    public readonly string? Name;
+    public readonly string? Description;
+    public readonly string? ImageURL;
+    public readonly decimal? Price;
+    public readonly long? Stock;
+    public readonly DateTime UpdatedAt;
+
+    public ProductUpdateDTO(
+        string? id,
+        string? name,
+        string? description,
+        string? imageURL,
+        decimal? price,
+        long? stock,
+        string? categoryId)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        ImageURL = imageURL;
+        Price = price;
+        Stock = stock;
+        CategoryId = categoryId;
+        UpdatedAt = DateTime.UtcNow;
+    }
 
     public static ProductUpdateDTO ExtractProperties(
-        ProductUpdateRequest _, string productId)
+        ProductUpdateRequest req, string productId)
     {
-        return new()
-        {
-            Id = productId,
-            Name = _.Name,
-            Description = _.Description,
-            ImageURL = _.ImageURL,
-            Price = _.Price,
-            Stock = _.Stock,
-            CategoryId = _.CategoryId,
-            UpdatedAt = DateTime.UtcNow
-        };
+        return new(
+            id: productId,
+            name: req.Name,
+            description: req.Description,
+            imageURL: req.ImageURL,
+            price: req.Price,
+            stock: req.Stock,
+            categoryId: req.CategoryId);
     }
 
     public void UpdateProperties(ref ProductDTO product)

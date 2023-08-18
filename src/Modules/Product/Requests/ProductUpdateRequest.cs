@@ -1,6 +1,6 @@
-namespace ECommerce.Modules.Product;
-
 using System.ComponentModel.DataAnnotations;
+
+namespace ECommerce.Modules.Product;
 
 public class ProductUpdateRequest
 {

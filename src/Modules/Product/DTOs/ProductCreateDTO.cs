@@ -1,29 +1,43 @@
 namespace ECommerce.Modules.Product;
 
-public class ProductCreateDTO
+public readonly struct ProductCreateDTO
 {
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
-    public string? ImageURL { get; set; }
-    public decimal Price { get; set; }
-    public long Stock { get; set; }
-    public string? CategoryId { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public readonly string? Id;
+    public readonly string? CategoryId;
+    public readonly string? Name;
+    public readonly string? Description;
+    public readonly string? ImageURL;
+    public readonly decimal Price;
+    public readonly long Stock;
+    public readonly DateTime CreatedAt;
+
+    public ProductCreateDTO(
+        string? name,
+        string? description,
+        string? imageURL,
+        decimal price,
+        long stock,
+        string? categoryId)
+    {
+        Id = Guid.NewGuid().ToString();
+        Name = name;
+        Description = description;
+        ImageURL = imageURL;
+        Price = price;
+        Stock = stock;
+        CategoryId = categoryId;
+        CreatedAt = DateTime.UtcNow;
+    }
 
     public static ProductCreateDTO ExtractProperties(
-        ProductCreateRequest _)
+        ProductCreateRequest req)
     {
-        return new()
-        {
-            Id = Guid.NewGuid().ToString(),
-            Name = _.Name,
-            Description = _.Description,
-            ImageURL = _.ImageURL,
-            Price = _.Price,
-            Stock = _.Stock,
-            CategoryId = _.CategoryId,
-            CreatedAt = DateTime.UtcNow
-        };
+        return new(
+            name: req.Name,
+            description: req.Description,
+            imageURL: req.ImageURL,
+            price: req.Price,
+            stock: req.Stock,
+            categoryId: req.CategoryId);
     }
 }
