@@ -9,7 +9,7 @@ public struct CartCreateDTO
     public int Quantity { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public static CartCreateDTO ExtractProprieties(
+    public static CartCreateDTO ExtractProperties(
         CartCreateRequest _, string customerId)
     {
         return new()

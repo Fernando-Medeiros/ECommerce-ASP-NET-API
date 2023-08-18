@@ -105,7 +105,7 @@ public class CustomerController : ControllerBase
         CustomerIdentity customer = new(User);
 
         await _cartService.Register(
-            CartCreateDTO.ExtractProprieties(request, customer.Id));
+            CartCreateDTO.ExtractProperties(request, customer.Id));
 
         return Created("", null);
     }
@@ -118,7 +118,7 @@ public class CustomerController : ControllerBase
         CustomerIdentity customer = new(User);
 
         await _cartService.Update(
-            CartUpdateDTO.ExtractProprieties(request, id, customer.Id));
+            CartUpdateDTO.ExtractProperties(request, id, customer.Id));
 
         return NoContent();
     }
@@ -166,7 +166,7 @@ public class CustomerController : ControllerBase
         CustomerIdentity customer = new(User);
 
         await _addressService.Register(
-            dto: AddressCreateDTO.ExtractProprieties(request, customer.Id)
+            dto: AddressCreateDTO.ExtractProperties(request, customer.Id)
         );
 
         return Created("", null);
@@ -179,7 +179,7 @@ public class CustomerController : ControllerBase
         CustomerIdentity customer = new(User);
 
         await _addressService.Update(
-            dto: AddressUpdateDTO.ExtractProprieties(request, id, customer.Id)
+            dto: AddressUpdateDTO.ExtractProperties(request, id, customer.Id)
         );
 
         return NoContent();

@@ -13,7 +13,7 @@ public struct AddressUpdateDTO
     public string? State { get; set; }
     public string? Country { get; set; }
 
-    public static AddressUpdateDTO ExtractProprieties(
+    public static AddressUpdateDTO ExtractProperties(
         AddressUpdateRequest _,
         string addressId, string customerId)
     {

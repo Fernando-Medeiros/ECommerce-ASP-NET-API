@@ -6,7 +6,7 @@ public class CategoryUpdateDTO
     public string? Name { get; set; }
     public DateTime UpdatedAt { get; set; }
 
-    public static CategoryUpdateDTO ExtractProprieties(
+    public static CategoryUpdateDTO ExtractProperties(
         CategoryUpdateRequest _, string categoryId)
     {
         return new()

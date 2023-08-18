@@ -14,7 +14,7 @@ public struct AddressCreateDTO
     public string? Country { get; set; }
     public DateTime? CreatedAt { get; set; }
 
-    public static AddressCreateDTO ExtractProprieties(
+    public static AddressCreateDTO ExtractProperties(
         AddressCreateRequest _,
         string customerId)
     {

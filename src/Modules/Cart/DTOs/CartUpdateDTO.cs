@@ -8,7 +8,7 @@ public struct CartUpdateDTO
     public int? Quantity { get; set; }
     public DateTime? UpdatedAt { get; set; }
 
-    public static CartUpdateDTO ExtractProprieties(
+    public static CartUpdateDTO ExtractProperties(
         CartUpdateRequest _, string cartId, string customerId)
     {
         return new()

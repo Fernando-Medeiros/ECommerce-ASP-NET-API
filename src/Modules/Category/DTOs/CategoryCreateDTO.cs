@@ -6,7 +6,7 @@ public class CategoryCreateDTO
     public string? Name { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public static CategoryCreateDTO ExtractProprieties(
+    public static CategoryCreateDTO ExtractProperties(
         CategoryCreateRequest _)
     {
         return new()
