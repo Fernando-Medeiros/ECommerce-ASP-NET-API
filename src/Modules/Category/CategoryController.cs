@@ -51,7 +51,7 @@ public partial class CategoryController : ControllerBase
         [FromBody] CategoryCreateRequest request)
     {
         await _service.Register(
-            dto: CategoryCreateDTO.ExtractProprieties(request)
+            dto: CategoryCreateDTO.ExtractProperties(request)
         );
 
         return Created("", null);
@@ -63,7 +63,7 @@ public partial class CategoryController : ControllerBase
         [FromBody] CategoryUpdateRequest request, string id)
     {
         await _service.Update(
-            dto: CategoryUpdateDTO.ExtractProprieties(request, id)
+            dto: CategoryUpdateDTO.ExtractProperties(request, id)
         );
 
         return NoContent();

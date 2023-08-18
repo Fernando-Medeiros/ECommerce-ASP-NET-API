@@ -1,23 +1,29 @@
 namespace ECommerce.Modules.Category;
 
-public class CategoryUpdateDTO
+public readonly struct CategoryUpdateDTO
 {
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public readonly string? Id;
+    public readonly string? Name;
+    public readonly DateTime UpdatedAt;
 
-    public static CategoryUpdateDTO ExtractProprieties(
-        CategoryUpdateRequest _, string categoryId)
+    public CategoryUpdateDTO(
+        string? categoryId,
+        string? name)
     {
-        return new()
-        {
-            Id = categoryId,
-            Name = _.Name,
-            UpdatedAt = DateTime.UtcNow,
-        };
+        Id = categoryId;
+        Name = name;
+        UpdatedAt = DateTime.UtcNow;
     }
 
-    public void UpdateProperties(ref CategoryDTO category)
+    public static CategoryUpdateDTO ExtractProperties(
+        CategoryUpdateRequest req, string categoryId)
+    {
+        return new(
+            categoryId: categoryId,
+            name: req.Name);
+    }
+
+    public readonly void UpdateProperties(ref CategoryDTO category)
     {
         if (Name != null) category.Name = Name;
 

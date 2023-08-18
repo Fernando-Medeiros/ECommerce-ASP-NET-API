@@ -1,28 +1,37 @@
 namespace ECommerce.Modules.Cart;
 
-public struct CartUpdateDTO
+public readonly struct CartUpdateDTO
 {
-    public string? Id { get; set; }
-    public string? CustomerId { get; set; }
+    public readonly string? Id;
+    public readonly string? CustomerId;
+    public readonly int? Quantity;
+    public readonly DateTime UpdatedAt;
 
-    public int? Quantity { get; set; }
-    public DateTime? UpdatedAt { get; set; }
-
-    public static CartUpdateDTO ExtractProprieties(
-        CartUpdateRequest _, string cartId, string customerId)
+    public CartUpdateDTO(
+        string? id,
+        string? customerId,
+        int? quantity)
     {
-        return new()
-        {
-            Id = cartId,
-            CustomerId = customerId,
-            Quantity = _.Quantity,
-        };
+        Id = id;
+        CustomerId = customerId;
+        Quantity = quantity;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public static CartUpdateDTO ExtractProperties(
+        CartUpdateRequest req, string cartId, string customerId)
+    {
+        return new(
+            id: cartId,
+            customerId: customerId,
+            quantity: req.Quantity
+        );
     }
 
     public readonly void UpdateProperties(ref CartDTO cart)
     {
         if (Quantity != null) cart.Quantity = (int)Quantity;
 
-        cart.UpdatedAt = DateTime.UtcNow;
+        cart.UpdatedAt = UpdatedAt;
     }
 }

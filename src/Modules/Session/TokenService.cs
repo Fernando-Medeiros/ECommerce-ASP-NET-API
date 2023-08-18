@@ -30,7 +30,7 @@ public class TokenService : ITokenService
 
         SecurityToken token = _jwtHandler.CreateToken(tokenDescriptor);
 
-        return new() { Token = _jwtHandler.WriteToken(token), Type = "Bearer" };
+        return new(token: _jwtHandler.WriteToken(token), type: "Bearer");
     }
 
     private SigningCredentials Credentials()

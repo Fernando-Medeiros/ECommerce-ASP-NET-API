@@ -1,36 +1,51 @@
 namespace ECommerce.Modules.CustomerAddress;
 
-public struct AddressCreateDTO
+public readonly struct AddressCreateDTO
 {
-    public string? Id { get; set; }
-    public string? CustomerId { get; set; }
+    public readonly string? Id;
+    public readonly string? CustomerId;
+    public readonly int Number;
+    public readonly string? Street;
+    public readonly string? ZipCode;
+    public readonly string? Type;
+    public readonly string? City;
+    public readonly string? State;
+    public readonly string? Country;
+    public readonly DateTime CreatedAt;
 
-    public int Number { get; set; }
-    public string? Street { get; set; }
-    public string? ZipCode { get; set; }
-    public string? Type { get; set; }
-    public string? City { get; set; }
-    public string? State { get; set; }
-    public string? Country { get; set; }
-    public DateTime? CreatedAt { get; set; }
-
-    public static AddressCreateDTO ExtractProprieties(
-        AddressCreateRequest _,
-        string customerId)
+    public AddressCreateDTO(
+        string? customerId,
+        int number,
+        string? street,
+        string? zipCode,
+        string? type,
+        string? city,
+        string? state,
+        string? country)
     {
-        return new()
-        {
-            Id = Guid.NewGuid().ToString(),
-            CustomerId = customerId,
+        Id = Guid.NewGuid().ToString();
+        CustomerId = customerId;
+        Number = number;
+        Street = street;
+        ZipCode = zipCode;
+        Type = type;
+        City = city;
+        State = state;
+        Country = country;
+        CreatedAt = DateTime.UtcNow;
+    }
 
-            Number = _.Number,
-            Street = _.Street,
-            ZipCode = _.ZipCode,
-            Type = _.Type,
-            City = _.City,
-            State = _.State,
-            Country = _.Country,
-            CreatedAt = DateTime.UtcNow,
-        };
+    public static AddressCreateDTO ExtractProperties(
+        AddressCreateRequest req, string customerId)
+    {
+        return new(
+            customerId: customerId,
+            number: req.Number,
+            street: req.Street,
+            zipCode: req.ZipCode,
+            type: req.Type,
+            city: req.City,
+            state: req.State,
+            country: req.Country);
     }
 }

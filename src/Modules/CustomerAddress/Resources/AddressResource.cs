@@ -1,20 +1,20 @@
 namespace ECommerce.Modules.CustomerAddress;
 
-public struct AddressResource
+public readonly struct AddressResource
 {
-    public string? Identity { get; set; }
-    public int Number { get; set; }
-    public string? Street { get; set; }
-    public string? ZipCode { get; set; }
-    public string? Type { get; set; }
-    public string? City { get; set; }
-    public string? State { get; set; }
-    public string? Country { get; set; }
-    public DateOnly CreatedAt { get; set; }
+    public readonly string? Id { get; init; }
+    public readonly int Number { get; init; }
+    public readonly string? Street { get; init; }
+    public readonly string? ZipCode { get; init; }
+    public readonly string? Type { get; init; }
+    public readonly string? City { get; init; }
+    public readonly string? State { get; init; }
+    public readonly string? Country { get; init; }
+    public readonly DateOnly CreatedAt { get; init; }
 
     public AddressResource(AddressDTO _)
     {
-        Identity = _.Id;
+        Id = _.Id;
         Number = _.Number;
         Street = _.Street;
         ZipCode = _.ZipCode;

@@ -1,25 +1,35 @@
 namespace ECommerce.Modules.Sales;
 
-public struct SalesCreateDTO
+public readonly struct SalesCreateDTO
 {
-    public string? Id { get; set; }
-    public string? CustomerId { get; set; }
-    public string? ProductId { get; set; }
-    public decimal Price { get; set; }
-    public int Quantity { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public readonly string? Id;
+    public readonly string? CustomerId;
+    public readonly string? ProductId;
+    public readonly decimal Price;
+    public readonly int Quantity;
+    public readonly DateTime CreatedAt;
+
+    public SalesCreateDTO(
+        string? customerId,
+        string? productId,
+        decimal price,
+        int quantity)
+    {
+        Id = Guid.NewGuid().ToString();
+        CustomerId = customerId;
+        ProductId = productId;
+        Price = price;
+        Quantity = quantity;
+        CreatedAt = DateTime.UtcNow;
+    }
 
     public static SalesCreateDTO ExtractProperties(
-        SalesCreateRequest _)
+        SalesCreateRequest req)
     {
-        return new()
-        {
-            Id = Guid.NewGuid().ToString(),
-            CustomerId = _.CustomerId,
-            ProductId = _.ProductId,
-            Price = _.Price,
-            Quantity = _.Quantity,
-            CreatedAt = DateTime.UtcNow,
-        };
+        return new(
+            customerId: req.CustomerId,
+            productId: req.ProductId,
+            price: req.Price,
+            quantity: req.Quantity);
     }
 }

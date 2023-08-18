@@ -1,24 +1,32 @@
 namespace ECommerce.Modules.Cart;
 
-public struct CartCreateDTO
+public readonly struct CartCreateDTO
 {
-    public string? Id { get; set; }
-    public string? CustomerId { get; set; }
-    public string? ProductId { get; set; }
+    public readonly string? Id;
+    public readonly string? CustomerId;
+    public readonly string? ProductId;
+    public readonly int Quantity;
+    public readonly DateTime CreatedAt;
 
-    public int Quantity { get; set; }
-    public DateTime CreatedAt { get; set; }
-
-    public static CartCreateDTO ExtractProprieties(
-        CartCreateRequest _, string customerId)
+    public CartCreateDTO(
+        string? customerId,
+        string? productId,
+        int quantity)
     {
-        return new()
-        {
-            Id = Guid.NewGuid().ToString(),
-            CustomerId = customerId,
-            ProductId = _.ProductId,
-            Quantity = _.Quantity,
-            CreatedAt = DateTime.UtcNow
-        };
+        Id = Guid.NewGuid().ToString();
+        CustomerId = customerId;
+        ProductId = productId;
+        Quantity = quantity;
+        CreatedAt = DateTime.UtcNow;
+    }
+
+    public static CartCreateDTO ExtractProperties(
+        CartCreateRequest req, string customerId)
+    {
+        return new(
+            customerId: customerId,
+            productId: req.ProductId,
+            quantity: req.Quantity
+        );
     }
 }

@@ -1,19 +1,19 @@
 namespace ECommerce.Modules.Product;
 
-public struct ProductResource
+public readonly struct ProductResource
 {
-    public string? Identity { get; set; }
-    public string? CategoryId { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
-    public string? ImageURL { get; set; }
-    public decimal Price { get; set; }
-    public long Stock { get; set; }
-    public DateOnly CreatedAt { get; set; }
+    public readonly string? Id { get; init; }
+    public readonly string? CategoryId { get; init; }
+    public readonly string? Name { get; init; }
+    public readonly string? Description { get; init; }
+    public readonly string? ImageURL { get; init; }
+    public readonly decimal Price { get; init; }
+    public readonly long Stock { get; init; }
+    public readonly DateOnly CreatedAt { get; init; }
 
     public ProductResource(ProductDTO _)
     {
-        Identity = _.Id;
+        Id = _.Id;
         CategoryId = _.CategoryId;
         Name = _.Name;
         Description = _.Description;

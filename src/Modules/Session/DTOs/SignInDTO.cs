@@ -1,5 +1,6 @@
-namespace ECommerce.Modules.Session;
 using System.ComponentModel.DataAnnotations;
+
+namespace ECommerce.Modules.Session;
 
 public class SignInDTO
 {
