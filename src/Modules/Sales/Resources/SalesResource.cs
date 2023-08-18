@@ -1,13 +1,13 @@
 namespace ECommerce.Modules.Sales;
 
-public struct SalesResource
+public readonly struct SalesResource
 {
-    public string? Id { get; set; }
-    public string? CustomerId { get; set; }
-    public string? ProductId { get; set; }
-    public decimal Price { get; set; }
-    public int Quantity { get; set; }
-    public DateOnly CreatedAt { get; set; }
+    public readonly string? Id { get; init; }
+    public readonly string? CustomerId { get; init; }
+    public readonly string? ProductId { get; init; }
+    public readonly decimal Price { get; init; }
+    public readonly int Quantity { get; init; }
+    public readonly DateOnly CreatedAt { get; init; }
 
     public SalesResource(SalesDTO _)
     {
