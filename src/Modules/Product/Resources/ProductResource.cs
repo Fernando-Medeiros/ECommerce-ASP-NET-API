@@ -2,7 +2,7 @@ namespace ECommerce.Modules.Product;
 
 public struct ProductResource
 {
-    public string? Identity { get; set; }
+    public string? Id { get; set; }
     public string? CategoryId { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
@@ -13,7 +13,7 @@ public struct ProductResource
 
     public ProductResource(ProductDTO _)
     {
-        Identity = _.Id;
+        Id = _.Id;
         CategoryId = _.CategoryId;
         Name = _.Name;
         Description = _.Description;

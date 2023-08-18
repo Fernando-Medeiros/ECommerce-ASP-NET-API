@@ -2,15 +2,14 @@ namespace ECommerce.Modules.Cart;
 
 public struct CartResource
 {
-    public string? Identify { get; set; }
+    public string? Id { get; set; }
     public string? ProductId { get; set; }
-
     public int Quantity { get; set; }
     public DateOnly CreatedAt { get; set; }
 
     public CartResource(CartDTO _)
     {
-        Identify = _.Id;
+        Id = _.Id;
         ProductId = _.ProductId;
         Quantity = _.Quantity;
         CreatedAt = DateOnly.FromDateTime(_.CreatedAt!.Value);

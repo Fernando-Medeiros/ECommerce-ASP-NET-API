@@ -2,13 +2,13 @@ namespace ECommerce.Modules.Category;
 
 public struct CategoryResource
 {
-    public string? Identify { get; set; }
+    public string? Id { get; set; }
     public string? Name { get; set; }
     public DateOnly CreatedAt { get; set; }
 
     public CategoryResource(CategoryDTO _)
     {
-        Identify = _.Id;
+        Id = _.Id;
         Name = _.Name;
         CreatedAt = DateOnly.FromDateTime(_.CreatedAt!.Value);
     }

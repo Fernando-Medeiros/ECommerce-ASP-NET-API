@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 public struct CustomerResource
 {
-    public string? Identity { get; set; }
+    public string? Id { get; set; }
     public string? Name { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
@@ -15,7 +15,7 @@ public struct CustomerResource
 
     public CustomerResource(CustomerDTO _)
     {
-        Identity = _.Id;
+        Id = _.Id;
         Name = _.Name;
         FirstName = _.FirstName;
         LastName = _.LastName;

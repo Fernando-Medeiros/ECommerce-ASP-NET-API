@@ -2,7 +2,7 @@ namespace ECommerce.Modules.CustomerAddress;
 
 public struct AddressResource
 {
-    public string? Identity { get; set; }
+    public string? Id { get; set; }
     public int Number { get; set; }
     public string? Street { get; set; }
     public string? ZipCode { get; set; }
@@ -14,7 +14,7 @@ public struct AddressResource
 
     public AddressResource(AddressDTO _)
     {
-        Identity = _.Id;
+        Id = _.Id;
         Number = _.Number;
         Street = _.Street;
         ZipCode = _.ZipCode;

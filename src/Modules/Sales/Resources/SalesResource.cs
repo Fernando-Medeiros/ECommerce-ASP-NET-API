@@ -2,7 +2,7 @@ namespace ECommerce.Modules.Sales;
 
 public struct SalesResource
 {
-    public string? Identity { get; set; }
+    public string? Id { get; set; }
     public string? CustomerId { get; set; }
     public string? ProductId { get; set; }
     public decimal Price { get; set; }
@@ -11,7 +11,7 @@ public struct SalesResource
 
     public SalesResource(SalesDTO _)
     {
-        Identity = _.Id;
+        Id = _.Id;
         CustomerId = _.CustomerId;
         ProductId = _.ProductId;
         Price = _.Price;
