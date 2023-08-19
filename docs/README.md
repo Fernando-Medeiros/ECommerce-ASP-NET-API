@@ -1,6 +1,9 @@
 # **ECommerce** - ASP.NET - [ API ]
 
 ## Dependencies
+- Docker Engine ^24.x
+- Docker Desktop ^4.x
+- Docker Compose  ^v2.x
 - Microsoft.NETCore.App 7^
 - Microsoft.AspNetCore.App 7^
 - Packages -> [pkg ECommerce](../src/ECommerce.csproj) | [pkg ECommerceTests](../tests/ECommerceTests.csproj)
@@ -11,11 +14,13 @@
    - [x] JWT Token [ *Bearer* ]
    - [x] CustomerIdentity
  - [x] **Authorization**:
-   - [x] Using Roles [ *manager, employee*]
+   - [x] Using Roles [ *manager, employee* ]
    - [x] EmployeeIdentity
  - [x] **Resources**:
-   - [x] Carts [ *owner* ]
    - [x] Customers [ *owner* ]
+     - [x] Carts [ *owner* ]
+     - [x] Addresses [ *owner* ]
+     - Post [ *public* ]  
    - [x] Categories:
      - Get [ *public* ]
      - Post, Patch, Delete [ *manager, employee* ]
@@ -28,25 +33,47 @@
 
 
 ## Usage
+- **Environment** in [env-example](../src/env-example):
+  ```sh
+    # copy env-example to .env
+    # src/
+    cp env-example .env
+  ```
 
-- **ConnectionStrings** in [appsettings](../src/appsettings.json):
-  - DefaultConnection -> "Server={localhost};DataBase={ECommerce};Uid={root};Pwd={12345}"
+  ```sh
+    PRIVATE_KEY="needs to contain 80 ~ 120"
+    TOKEN_EXPIRES=5 # UtcNow + TOKEN_EXPIRES
 
-- **Environment** in [appsettings](../src/appsettings.json):
-  - PrivateKey -> needs to contain 80 ~ 120 characters
-  - TokenExpires -> default 5 | [UtcNow.AddHours(TokenExpires)](../src//Modules/Session/TokenService.cs)
+    DB_HOST=localhost
+    DB_NAME=ECommerce
+    DB_USER=root
+    DB_PASS=12345
+  ```
 
 - **Docker** in [.docker](../.docker/docker-compose.yml):
   - Build container with **mysql:latest**
     ```sh
     # rootUser=root / rootPassword=12345 / database=ECommerce
+    # .docker/
     docker-compose up -d
     ```
+  
+  - After uploading the container **create** the first **migration** and update the database
+    ```sh
+    # src/
+    dotnet ef migrations add initial
+
+    dotnet ef database update
+    ```
+
   - To access the instance in the container
     ```sh
-    # Sudo
     docker exec -it ecommerce-mysql mysql -uroot -p
+    # or
+    # .docker/
+    docker compose exec mysql mysql -uroot -p
     ```
+
   - To **add** a customer and **make** them an **manager**
     ```sh
     # After uploading the container;
@@ -66,6 +93,6 @@
 - See:
   - Entities -> [Models](../src/Models)
   - Relationship -> [Database Context](../src/Context/DatabaseContext.cs)
-> ERD print 08/08/23
+> ERD print 18/08/23
 
 ![ERD](ERD-ECommerce.png)
