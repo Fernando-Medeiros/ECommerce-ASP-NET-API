@@ -1,30 +1,36 @@
 namespace ECommerce.Modules.Session;
 
-using AutoMapper;
 using BCrypt.Net;
 using ECommerce.Exceptions;
 using ECommerce.Modules.Customer;
 
 public class SessionService : ISessionService
 {
-    private readonly ISessionRepository _repository;
-    private readonly IMapper _mapper;
-    public SessionService(ISessionRepository repository, IMapper mapper)
+    private readonly ITokenService _tokenService;
+
+    private readonly ISessionRepository _sessionRepository;
+
+    public SessionService(
+        ITokenService tokenService,
+        ISessionRepository repository)
     {
-        _repository = repository;
-        _mapper = mapper;
+        _tokenService = tokenService;
+        _sessionRepository = repository;
     }
 
-    public async Task<CustomerDTO> FindCustomer(SignInDTO signInDto)
+    public async Task<CustomerDTO> FindCustomer(SignInDTO dto)
     {
-        var customerEntity = await _repository.FindCustomer(signInDto.Email!);
+        CustomerDTO customer = await _sessionRepository.FindCustomer(dto.Email)
+            ?? throw new NotFoundError("Customer Not Found");
 
-        if (customerEntity != null)
-        {
-            if (BCrypt.Verify(signInDto.Password, customerEntity!.Password) is false)
-                throw new UnauthorizedError("Email or Password invalid");
-        }
+        if (BCrypt.Verify(dto.Password, customer.Password) is false)
+            throw new UnauthorizedError("Email or Password invalid");
 
-        return _mapper.Map<CustomerDTO>(customerEntity);
+        return customer;
+    }
+
+    public TokenDTO GenerateAccessToken(CustomerDTO customer)
+    {
+        return _tokenService.Generate(customer);
     }
 }
