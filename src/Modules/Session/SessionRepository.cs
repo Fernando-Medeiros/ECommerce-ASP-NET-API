@@ -1,16 +1,31 @@
 namespace ECommerce.Modules.Session;
 
+using AutoMapper;
 using ECommerce.Context;
-using ECommerce.Models;
+using ECommerce.Modules.Customer;
 using Microsoft.EntityFrameworkCore;
 
 public class SessionRepository : ISessionRepository
 {
     private readonly DatabaseContext _context;
-    public SessionRepository(DatabaseContext context) => _context = context;
 
-    public async Task<Customer?> FindCustomer(string email)
+    private readonly IMapper _mapper;
+
+    public SessionRepository(
+        DatabaseContext context,
+        IMapper mapper)
     {
-        return await _context.Customers.SingleOrDefaultAsync(c => c.Email == email);
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<CustomerDTO?> FindCustomer(string email)
+    {
+        var customer = await _context.Customers
+            .SingleOrDefaultAsync(c => c.Email == email);
+
+        return customer == null
+        ? null
+        : _mapper.Map<CustomerDTO>(customer);
     }
 }

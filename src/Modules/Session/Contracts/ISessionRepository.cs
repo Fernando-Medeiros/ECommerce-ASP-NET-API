@@ -1,8 +1,8 @@
-namespace ECommerce.Modules.Session;
+using ECommerce.Modules.Customer;
 
-using ECommerce.Models;
+namespace ECommerce.Modules.Session;
 
 public interface ISessionRepository
 {
-    public Task<Customer?> FindCustomer(string email);
+    public Task<CustomerDTO?> FindCustomer(string email);
 }
