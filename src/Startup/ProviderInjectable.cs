@@ -33,6 +33,6 @@ public static partial class ServiceProviders
         builder.Services.AddScoped<ISessionRepository, SessionRepository>();
         builder.Services.AddScoped<ISessionService, SessionService>();
 
-        builder.Services.AddTransient<TokenService>();
+        builder.Services.AddTransient<ITokenService, TokenService>();
     }
 }
