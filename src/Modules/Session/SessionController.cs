@@ -1,30 +1,31 @@
-namespace ECommerce.Modules.Session;
-
-using ECommerce.Exceptions;
+using ECommerce.Modules.Customer;
 using Microsoft.AspNetCore.Mvc;
+
+namespace ECommerce.Modules.Session;
 
 [ApiController]
 [Route("api/", Name = "Session")]
 public class SessionController : ControllerBase
 {
-    private readonly ITokenService _tokenService;
     private readonly ISessionService _sessionService;
+
     public SessionController(
-        ISessionService sessionService,
-        TokenService tokenService)
+        ISessionService sessionService)
     {
         _sessionService = sessionService;
-        _tokenService = tokenService;
     }
 
     [HttpPost("signin")]
-    public async Task<ActionResult<TokenDTO>> SignIn([FromBody] SignInDTO signInDto)
+    public async Task<ActionResult<AccessTokenResource>> SignIn(
+        [FromBody] SignInRequest request)
     {
-        var customer = await _sessionService.FindCustomer(signInDto)
-            ?? throw new NotFoundError("Customer Not Found");
+        CustomerDTO customer = await _sessionService.FindCustomer(
+            dto: SignInDTO.ExtractProperties(request));
 
-        var token = _tokenService.Generate(customer);
+        TokenDTO token = _sessionService.GenerateAccessToken(customer);
 
-        return Ok(token);
+        AccessTokenResource resource = new(token);
+
+        return Ok(resource);
     }
 }
