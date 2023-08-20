@@ -1,8 +1,8 @@
-namespace ECommerce.Modules.Session;
-
 using ECommerce.Modules.Customer;
+
+namespace ECommerce.Modules.Session;
 
 public interface ITokenService
 {
-    public TokenDTO Generate(CustomerDTO customer);
+    public TokenDTO Generate(CustomerDTO dto);
 }

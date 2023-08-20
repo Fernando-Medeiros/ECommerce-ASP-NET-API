@@ -1,11 +1,11 @@
-namespace ECommerce.Modules.Session;
-
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ECommerce.Modules.Customer;
 using ECommerce.Startup.EnvironmentDTOs;
+
+namespace ECommerce.Modules.Session;
 
 public class TokenService : ITokenService
 {
@@ -25,7 +25,7 @@ public class TokenService : ITokenService
         {
             Subject = GeneratePayload(customer),
             Expires = DateTime.UtcNow.AddHours(_environment.TokenExpires),
-            SigningCredentials = Credentials(),
+            SigningCredentials = Credentials(_environment.PrivateKey),
         };
 
         SecurityToken token = _jwtHandler.CreateToken(tokenDescriptor);
@@ -33,14 +33,13 @@ public class TokenService : ITokenService
         return new(token: _jwtHandler.WriteToken(token), type: "Bearer");
     }
 
-    private SigningCredentials Credentials()
+    private static SigningCredentials Credentials(string privateKey)
     {
-        byte[] key = Encoding.ASCII.GetBytes(_environment.PrivateKey);
+        byte[] key = Encoding.ASCII.GetBytes(privateKey);
 
         return new(
             key: new SymmetricSecurityKey(key),
-            algorithm: SecurityAlgorithms.HmacSha256Signature
-            );
+            algorithm: SecurityAlgorithms.HmacSha256Signature);
     }
 
     private static ClaimsIdentity GeneratePayload(CustomerDTO customer)
@@ -49,7 +48,7 @@ public class TokenService : ITokenService
 
         claims.AddClaim(new Claim("id", customer.Id!));
 
-        if (string.IsNullOrEmpty(customer.Role) is false)
+        if (customer.Role != null)
             claims.AddClaim(new Claim(ClaimTypes.Role, customer.Role!));
 
         return claims;

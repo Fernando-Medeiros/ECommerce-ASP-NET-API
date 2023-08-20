@@ -1,12 +1,20 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace ECommerce.Modules.Session;
 
-public class SignInDTO
+public readonly struct SignInDTO
 {
-    [MinLength(11), MaxLength(150), EmailAddress, Required]
-    public string? Email { get; set; }
+    public readonly string Email;
+    public readonly string Password;
 
-    [MinLength(8), MaxLength(255), Required]
-    public string? Password { get; set; }
+    public SignInDTO(string email, string password)
+    {
+        Email = email;
+        Password = password;
+    }
+
+    public static SignInDTO ExtractProperties(SignInRequest req)
+    {
+        return new(
+            email: req.Email!,
+            password: req.Password!);
+    }
 }
