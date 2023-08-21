@@ -5,6 +5,8 @@ DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
+ServiceProviders.SmtpClient(builder);
+
 ServiceProviders.AddAuthenticationMiddleware(builder);
 
 ServiceProviders.AddAuthorizationMiddleware(builder);
