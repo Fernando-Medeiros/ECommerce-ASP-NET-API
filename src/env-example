@@ -1,5 +1,8 @@
 PRIVATE_KEY=ff267f0ac44a7ef41b200c90349230722ae25969f40d9134dc5%b3c08fb4835c821DgcÇvc$da&*Hv2#$54%&#@cD084
 
+URL_AUTH_EMAIL=http://localhost:5232/auth/active-account/
+URL_RESET_PASS=http://localhost:5232/auth/reset-password/
+
 TOKEN_ACCESS_EXP=12
 TOKEN_REFRESH_EXP=6
 TOKEN_RECOVER_PASS_EXP=0.10 # UtcNow.AddHours(0.10) += 5 minutes
