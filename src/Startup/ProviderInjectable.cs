@@ -6,6 +6,7 @@ using ECommerce.Modules.Product;
 using ECommerce.Modules.Sales;
 using ECommerce.Modules.Session;
 using ECommerce.ModulesHelpers.Mail;
+using ECommerce.ModulesHelpers.Token;
 
 namespace ECommerce.Startup;
 

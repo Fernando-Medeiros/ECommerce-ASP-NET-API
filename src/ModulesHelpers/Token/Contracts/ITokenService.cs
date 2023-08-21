@@ -1,6 +1,6 @@
 using ECommerce.Modules.Customer;
 
-namespace ECommerce.Modules.Session;
+namespace ECommerce.ModulesHelpers.Token;
 
 public interface ITokenService
 {

@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using ECommerce.Modules.Customer;
 using ECommerce.Startup.EnvironmentDTOs;
 
-namespace ECommerce.Modules.Session;
+namespace ECommerce.ModulesHelpers.Token;
 
 public class TokenService : ITokenService
 {

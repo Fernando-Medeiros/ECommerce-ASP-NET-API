@@ -1,4 +1,4 @@
-namespace ECommerce.Modules.Session;
+namespace ECommerce.ModulesHelpers.Token;
 
 public readonly struct AccessTokenResource
 {
