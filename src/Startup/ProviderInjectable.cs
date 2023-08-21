@@ -5,6 +5,7 @@ using ECommerce.Modules.CustomerAddress;
 using ECommerce.Modules.Product;
 using ECommerce.Modules.Sales;
 using ECommerce.Modules.Session;
+using ECommerce.ModulesHelpers.Mail;
 
 namespace ECommerce.Startup;
 
@@ -34,5 +35,7 @@ public static partial class ServiceProviders
         builder.Services.AddScoped<ISessionService, SessionService>();
 
         builder.Services.AddTransient<ITokenService, TokenService>();
+
+        builder.Services.AddTransient<IMailService, MailService>();
     }
 }
