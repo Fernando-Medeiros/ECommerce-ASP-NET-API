@@ -17,7 +17,7 @@ public class SessionController : ControllerBase
     }
 
     [HttpPost("signin")]
-    public async Task<ActionResult<AccessTokenResource>> SignIn(
+    public async Task<ActionResult<TokenResource>> SignIn(
         [FromBody] SignInRequest request)
     {
         CustomerDTO customer = await _sessionService.FindCustomer(
@@ -25,7 +25,7 @@ public class SessionController : ControllerBase
 
         TokenDTO token = _sessionService.GenerateAccessToken(customer);
 
-        AccessTokenResource resource = new(token);
+        TokenResource resource = new(token);
 
         return Ok(resource);
     }

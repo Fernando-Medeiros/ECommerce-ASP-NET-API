@@ -19,34 +19,53 @@ public class TokenService : ITokenService
         _environment = new();
     }
 
-    public TokenDTO Generate(CustomerDTO customer)
+    public TokenDTO Generate(CustomerDTO customer, ETokenScope scope)
     {
         SecurityTokenDescriptor tokenDescriptor = new()
         {
-            Subject = GeneratePayload(customer),
-            Expires = DateTime.UtcNow.AddHours(_environment.TokenExpires),
-            SigningCredentials = Credentials(_environment.PrivateKey),
+            Subject = GeneratePayload(customer, scope),
+            Expires = ExpiresAt(scope),
+            SigningCredentials = Credentials(),
         };
 
-        SecurityToken token = _jwtHandler.CreateToken(tokenDescriptor);
+        SecurityToken securityToken = _jwtHandler.CreateToken(tokenDescriptor);
 
-        return new(token: _jwtHandler.WriteToken(token), type: "Bearer");
+        string token = _jwtHandler.WriteToken(securityToken);
+
+        return new(token, type: ETokenType.Bearer, scope);
     }
 
-    private static SigningCredentials Credentials(string privateKey)
+    private SigningCredentials Credentials()
     {
-        byte[] key = Encoding.ASCII.GetBytes(privateKey);
+        byte[] key = Encoding.ASCII.GetBytes(_environment.PrivateKey);
 
         return new(
             key: new SymmetricSecurityKey(key),
             algorithm: SecurityAlgorithms.HmacSha256Signature);
     }
 
-    private static ClaimsIdentity GeneratePayload(CustomerDTO customer)
+    private DateTime ExpiresAt(ETokenScope scope)
+    {
+        double expires = scope switch
+        {
+            ETokenScope.Access => _environment.AccessTokenExp,
+            ETokenScope.Refresh => _environment.RefreshTokenExp,
+            ETokenScope.RecoverPassword => _environment.RecoverPasswordTokenExp,
+            ETokenScope.AuthenticateEmail => _environment.AuthenticateEmailTokenExp,
+            _ => 0
+        };
+        return DateTime.UtcNow.AddHours(expires);
+    }
+
+    private static ClaimsIdentity GeneratePayload(
+        CustomerDTO customer,
+        ETokenScope tokenScope)
     {
         ClaimsIdentity claims = new();
 
         claims.AddClaim(new Claim("id", customer.Id!));
+
+        claims.AddClaim(new Claim("scope", Enum.GetName(tokenScope)!));
 
         if (customer.Role != null)
             claims.AddClaim(new Claim(ClaimTypes.Role, customer.Role!));

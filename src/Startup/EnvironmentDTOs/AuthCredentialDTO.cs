@@ -6,13 +6,19 @@ namespace ECommerce.Startup.EnvironmentDTOs
     {
         public readonly string PrivateKey;
 
-        public readonly int TokenExpires;
+        public readonly double AccessTokenExp;
+        public readonly double RefreshTokenExp;
+        public readonly double RecoverPasswordTokenExp;
+        public readonly double AuthenticateEmailTokenExp;
 
         public AuthCredentialDTO()
         {
             PrivateKey = EnvReader.GetStringValue("PRIVATE_KEY");
 
-            TokenExpires = EnvReader.GetIntValue("TOKEN_EXPIRES");
+            AccessTokenExp = EnvReader.GetDoubleValue("TOKEN_ACCESS_EXP");
+            RefreshTokenExp = EnvReader.GetDoubleValue("TOKEN_REFRESH_EXP");
+            RecoverPasswordTokenExp = EnvReader.GetDoubleValue("TOKEN_RECOVER_PASS_EXP");
+            AuthenticateEmailTokenExp = EnvReader.GetDoubleValue("TOKEN_AUTH_EMAIL_EXP");
         }
     }
 }
