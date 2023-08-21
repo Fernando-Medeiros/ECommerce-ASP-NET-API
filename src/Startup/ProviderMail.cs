@@ -15,6 +15,7 @@ public static partial class ServiceProviders
                 _environment.FromAddress,
                 _environment.FromName
                 )
+            .AddRazorRenderer()
             .AddSmtpSender(new SmtpClient()
             {
                 Host = _environment.Host,
