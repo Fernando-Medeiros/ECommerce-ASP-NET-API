@@ -1,7 +1,15 @@
-PRIVATE_KEY=This token needs to contain 80 ~ 120 characters for the algorithm: SecurityAlgorithms.HmacSha256Signature
+PRIVATE_KEY=ff267f0ac44a7ef41b200c90349230722ae25969f40d9134dc5%b3c08fb4835c821DgcÇvc$da&*Hv2#$54%&#@cD084
 TOKEN_EXPIRES=5
 
 DB_HOST=localhost
 DB_NAME=ECommerce
 DB_USER=root
 DB_PASS=12345
+
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_ENCRYPTION=true
+MAIL_FROM_NAME=ECommerce
+MAIL_FROM_ADDRESS=noreply@ecommerce.com
+MAIL_USER=< !! YOUR EMAIL !! >
+MAIL_PASS=< !! YOUR SECRET_PASSWORD !! >
