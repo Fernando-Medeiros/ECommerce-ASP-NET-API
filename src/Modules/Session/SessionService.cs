@@ -30,8 +30,8 @@ public class SessionService : ISessionService
         return customer;
     }
 
-    public TokenDTO GenerateAccessToken(CustomerDTO customer)
+    public TokenDTO GenerateAccessToken(CustomerDTO dto)
     {
-        return _tokenService.Generate(customer);
+        return _tokenService.Generate(dto, ETokenScope.Access);
     }
 }
