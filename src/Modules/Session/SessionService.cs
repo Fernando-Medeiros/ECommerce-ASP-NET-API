@@ -3,6 +3,7 @@ namespace ECommerce.Modules.Session;
 using BCrypt.Net;
 using ECommerce.Exceptions;
 using ECommerce.Modules.Customer;
+using ECommerce.ModulesHelpers.Token;
 
 public class SessionService : ISessionService
 {
