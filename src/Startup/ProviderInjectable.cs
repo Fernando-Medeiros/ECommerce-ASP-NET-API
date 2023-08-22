@@ -1,3 +1,4 @@
+using ECommerce.Events;
 using ECommerce.Modules.Cart;
 using ECommerce.Modules.Category;
 using ECommerce.Modules.Customer;
@@ -38,5 +39,7 @@ public static partial class ServiceProviders
         builder.Services.AddTransient<ITokenService, TokenService>();
 
         builder.Services.AddTransient<IMailService, MailService>();
+
+        builder.Services.AddTransient<IMailEvents, MailEvents>();
     }
 }
