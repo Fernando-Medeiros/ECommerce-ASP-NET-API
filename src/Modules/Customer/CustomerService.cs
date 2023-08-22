@@ -1,15 +1,25 @@
-namespace ECommerce.Modules.Customer;
-
+using ECommerce.Events;
 using ECommerce.Exceptions;
 using ECommerce.Modules.Cart;
+
+namespace ECommerce.Modules.Customer;
 
 public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _repository;
 
-    public CustomerService(ICustomerRepository repository)
+    private readonly IMailEvents _mailEvents;
+
+    private event EventHandler<CustomerDTO> RegisterCustomerEvent;
+
+    public CustomerService(
+        ICustomerRepository repository,
+        IMailEvents mailEvents)
     {
         _repository = repository;
+        _mailEvents = mailEvents;
+
+        RegisterCustomerEvent += _mailEvents.OnRegisterCustomer;
     }
 
     public async Task<IEnumerable<CartDTO?>> FindCarts(string id)
@@ -28,7 +38,9 @@ public class CustomerService : ICustomerService
         if (await EmailExists(dto.Email))
             throw new BadRequestError("Email is already in use");
 
-        await _repository.Create(dto);
+        CustomerDTO customer = await _repository.Register(dto);
+
+        RegisterCustomerEvent.Invoke(this, customer);
     }
 
     public async Task Update(CustomerUpdateDTO dto)
