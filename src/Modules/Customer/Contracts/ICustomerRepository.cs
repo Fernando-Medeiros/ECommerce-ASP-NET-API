@@ -8,7 +8,7 @@ public interface ICustomerRepository
 
     public Task<CustomerDTO?> Find(string? id = null, string? email = null);
 
-    public Task Create(CustomerCreateDTO dto);
+    public Task<CustomerDTO> Register(CustomerCreateDTO dto);
 
     public Task Update(CustomerDTO dto);
 

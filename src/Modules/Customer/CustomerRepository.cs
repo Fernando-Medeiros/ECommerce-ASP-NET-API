@@ -47,13 +47,15 @@ public class CustomerRepository : ICustomerRepository
         return result == null ? null : _mapper.Map<CustomerDTO>(result);
     }
 
-    public async Task Create(CustomerCreateDTO dto)
+    public async Task<CustomerDTO> Register(CustomerCreateDTO dto)
     {
         var customerEntity = _mapper.Map<Customer>(dto);
 
         _context.Customers.Add(customerEntity);
 
         await _context.SaveChangesAsync();
+
+        return _mapper.Map<CustomerDTO>(customerEntity);
     }
 
     public async Task Update(CustomerDTO dto)
