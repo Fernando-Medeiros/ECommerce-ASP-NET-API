@@ -1,6 +1,6 @@
-namespace ECommerce.Modules.Customer;
+using ECommerce.ModulesHelpers.Crypt;
 
-using BCrypt.Net;
+namespace ECommerce.Modules.Customer;
 
 public readonly struct CustomerCreateDTO
 {
@@ -24,7 +24,7 @@ public readonly struct CustomerCreateDTO
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        Password = BCrypt.HashPassword(password);
+        Password = CryptPassword.Hash(password);
         CreatedAt = DateTime.UtcNow;
     }
 

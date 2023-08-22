@@ -1,9 +1,9 @@
-namespace ECommerce.Modules.Session;
-
-using BCrypt.Net;
 using ECommerce.Exceptions;
 using ECommerce.Modules.Customer;
+using ECommerce.ModulesHelpers.Crypt;
 using ECommerce.ModulesHelpers.Token;
+
+namespace ECommerce.Modules.Session;
 
 public class SessionService : ISessionService
 {
@@ -28,7 +28,7 @@ public class SessionService : ISessionService
             throw new UnauthorizedError(
                 "Access the link sent to your email to authenticate your account");
 
-        if (BCrypt.Verify(dto.Password, customer.Password) is false)
+        if (CryptPassword.Verify(dto.Password, customer.Password!) is false)
             throw new UnauthorizedError("Email or Password invalid");
 
         return customer;
