@@ -1,10 +1,10 @@
-namespace ECommerce.Modules.Customer;
-
 using ECommerce.Identities;
 using ECommerce.Modules.Cart;
 using ECommerce.Modules.CustomerAddress;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+namespace ECommerce.Modules.Customer;
 
 [ApiController, Authorize]
 [Route("api/customers", Name = "Customer")]

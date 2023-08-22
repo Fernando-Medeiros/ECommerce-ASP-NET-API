@@ -24,6 +24,10 @@ public class SessionService : ISessionService
         CustomerDTO customer = await _sessionRepository.FindCustomer(dto.Email)
             ?? throw new NotFoundError("Customer Not Found");
 
+        if (customer.VerifiedAt == null)
+            throw new UnauthorizedError(
+                "Access the link sent to your email to authenticate your account");
+
         if (BCrypt.Verify(dto.Password, customer.Password) is false)
             throw new UnauthorizedError("Email or Password invalid");
 
