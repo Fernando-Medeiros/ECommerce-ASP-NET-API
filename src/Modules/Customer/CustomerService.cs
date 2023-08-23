@@ -1,6 +1,5 @@
 using ECommerce.Events.Mail;
 using ECommerce.Exceptions;
-using ECommerce.Modules.CustomerCart;
 
 namespace ECommerce.Modules.Customer;
 
@@ -17,11 +16,6 @@ public class CustomerService : ICustomerService
         _repository = repository;
 
         RegisterCustomerEvent += _mailEvent.OnRegisterCustomer;
-    }
-
-    public async Task<IEnumerable<CartDTO?>> FindCarts(string id)
-    {
-        return await _repository.FindCarts(id);
     }
 
     public async Task<CustomerDTO> FindById(string id)

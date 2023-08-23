@@ -1,11 +1,7 @@
-using ECommerce.Modules.CustomerCart
-;
 namespace ECommerce.Modules.Customer;
 
 public interface ICustomerRepository
 {
-    public Task<IEnumerable<CartDTO?>> FindCarts(string id);
-
     public Task<CustomerDTO?> Find(string? id = null, string? email = null);
 
     public Task<CustomerDTO> Register(CustomerCreateDTO dto);

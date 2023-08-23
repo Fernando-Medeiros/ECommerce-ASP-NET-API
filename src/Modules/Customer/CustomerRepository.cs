@@ -3,9 +3,7 @@ namespace ECommerce.Modules.Customer;
 using AutoMapper;
 using ECommerce.Context;
 using ECommerce.Models;
-using ECommerce.Modules.CustomerCart;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 public class CustomerRepository : ICustomerRepository
 {
@@ -17,17 +15,6 @@ public class CustomerRepository : ICustomerRepository
     {
         _context = context;
         _mapper = mapper;
-    }
-
-    public async Task<IEnumerable<CartDTO?>> FindCarts(string id)
-    {
-        var customer = await _context.Customers
-            .Include(c => c.Carts)
-            .SingleOrDefaultAsync(c => c.Id == id);
-
-        return customer?.Carts == null
-            ? new List<CartDTO>()
-            : _mapper.Map<IEnumerable<CartDTO>>(customer?.Carts);
     }
 
     public async Task<CustomerDTO?> Find(string? id, string? email)
