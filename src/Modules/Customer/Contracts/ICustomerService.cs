@@ -1,6 +1,6 @@
-namespace ECommerce.Modules.Customer;
+using ECommerce.Modules.CustomerCart;
 
-using ECommerce.Modules.Cart;
+namespace ECommerce.Modules.Customer;
 
 public interface ICustomerService
 {

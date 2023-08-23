@@ -1,4 +1,4 @@
-namespace ECommerce.Modules.Cart;
+namespace ECommerce.Modules.CustomerCart;
 
 public readonly struct CartResource
 {

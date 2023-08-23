@@ -1,6 +1,6 @@
+using ECommerce.Modules.CustomerCart
+;
 namespace ECommerce.Modules.Customer;
-
-using ECommerce.Modules.Cart;
 
 public interface ICustomerRepository
 {

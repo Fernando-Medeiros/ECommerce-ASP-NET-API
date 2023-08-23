@@ -1,11 +1,11 @@
 namespace ECommerce.Modules.Customer;
 
-using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using ECommerce.Context;
 using ECommerce.Models;
+using ECommerce.Modules.CustomerCart;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using AutoMapper;
-using ECommerce.Modules.Cart;
 
 public class CustomerRepository : ICustomerRepository
 {

@@ -1,5 +1,5 @@
 using ECommerce.Identities;
-using ECommerce.Modules.Cart;
+using ECommerce.Modules.CustomerCart;
 using ECommerce.Modules.CustomerAddress;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

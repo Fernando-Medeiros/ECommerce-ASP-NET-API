@@ -1,6 +1,6 @@
 using ECommerce.Events.Mail;
 using ECommerce.Exceptions;
-using ECommerce.Modules.Cart;
+using ECommerce.Modules.CustomerCart;
 
 namespace ECommerce.Modules.Customer;
 
