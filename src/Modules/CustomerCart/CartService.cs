@@ -17,6 +17,11 @@ public class CartService : ICartService
         _productService = productService;
     }
 
+    public async Task<IEnumerable<CartDTO?>> FindCarts(string id)
+    {
+        return await _cartRepository.FindCarts(id);
+    }
+
     public async Task<CartDTO> FindOne(string cartId, string customerId)
     {
         return await _cartRepository.FindOne(cartId, customerId)
