@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ECommerce.Modules.Cart;
+namespace ECommerce.Modules.CustomerCart;
 
 public class CartUpdateRequest
 {

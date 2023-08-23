@@ -1,4 +1,4 @@
-namespace ECommerce.Modules.Cart;
+namespace ECommerce.Modules.CustomerCart;
 
 using ECommerce.Exceptions;
 using ECommerce.Modules.Product;
@@ -15,6 +15,11 @@ public class CartService : ICartService
     {
         _cartRepository = cartRepository;
         _productService = productService;
+    }
+
+    public async Task<IEnumerable<CartDTO?>> FindCarts(string id)
+    {
+        return await _cartRepository.FindCarts(id);
     }
 
     public async Task<CartDTO> FindOne(string cartId, string customerId)

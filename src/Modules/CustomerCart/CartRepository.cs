@@ -1,4 +1,4 @@
-namespace ECommerce.Modules.Cart;
+namespace ECommerce.Modules.CustomerCart;
 
 using AutoMapper;
 using ECommerce.Context;
@@ -18,6 +18,17 @@ public class CartRepository : ICartRepository
     {
         _context = context;
         _mapper = mapper;
+    }
+
+    public async Task<IEnumerable<CartDTO?>> FindCarts(string id)
+    {
+        var customer = await _context.Customers
+            .Include(c => c.Carts)
+            .SingleOrDefaultAsync(c => c.Id == id);
+
+        return customer?.Carts == null
+            ? new List<CartDTO>()
+            : _mapper.Map<IEnumerable<CartDTO>>(customer?.Carts);
     }
 
     public async Task<CartDTO?> FindOne(string cartId, string customerId)

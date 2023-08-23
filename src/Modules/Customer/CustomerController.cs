@@ -1,32 +1,19 @@
 using ECommerce.Identities;
-using ECommerce.Modules.Cart;
-using ECommerce.Modules.CustomerAddress;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.Customer;
 
 [ApiController, Authorize]
-[Route("api/customers", Name = "Customer")]
+[Route("api/customers")]
 public class CustomerController : ControllerBase
 {
-    private readonly IAddressService _addressService;
-
-    private readonly ICartService _cartService;
-
     private readonly ICustomerService _customerService;
 
-    public CustomerController(
-        IAddressService addressService,
-        ICartService cartService,
-        ICustomerService customerService)
+    public CustomerController(ICustomerService customerService)
     {
-        _addressService = addressService;
-        _cartService = cartService;
         _customerService = customerService;
     }
-
-    #region Owner
 
     [HttpGet]
     public async Task<ActionResult<CustomerResource>> Find()
@@ -70,131 +57,4 @@ public class CustomerController : ControllerBase
 
         return NoContent();
     }
-
-    #endregion
-
-    #region Carts
-
-    [HttpGet("carts")]
-    public async Task<ActionResult<IEnumerable<CartResource>>> FindCarts()
-    {
-        CustomerIdentity customer = new(User);
-
-        IEnumerable<CartResource> resources = CartResource.ToArray(
-            array: await _customerService.FindCarts(customer.Id)
-        );
-
-        return Ok(resources);
-    }
-
-    [HttpGet("{id}/carts")]
-    public async Task<ActionResult<CartResource>> FindOne(string id)
-    {
-        CustomerIdentity customer = new(User);
-
-        CartResource resource = new(
-            await _cartService.FindOne(id, customer.Id));
-
-        return Ok(resource);
-    }
-
-    [HttpPost("carts")]
-    public async Task<ActionResult> Register(
-        [FromBody] CartCreateRequest request)
-    {
-        CustomerIdentity customer = new(User);
-
-        await _cartService.Register(
-            CartCreateDTO.ExtractProperties(request, customer.Id));
-
-        return Created("", null);
-    }
-
-    [HttpPatch("{id}/carts")]
-    public async Task<ActionResult> Update(
-        [FromBody] CartUpdateRequest request,
-        string id)
-    {
-        CustomerIdentity customer = new(User);
-
-        await _cartService.Update(
-            CartUpdateDTO.ExtractProperties(request, id, customer.Id));
-
-        return NoContent();
-    }
-
-    [HttpDelete("{id}/carts")]
-    public async Task<ActionResult> Remove(string id)
-    {
-        CustomerIdentity customer = new(User);
-
-        await _cartService.Remove(id, customer.Id);
-
-        return NoContent();
-    }
-
-    #endregion
-
-    #region Addresses
-
-    [HttpGet("addresses")]
-    public async Task<ActionResult<IEnumerable<AddressResource>>> FindAddresses()
-    {
-        CustomerIdentity customer = new(User);
-
-        IEnumerable<AddressResource> resources = AddressResource.ToArray(
-            array: await _addressService.FindAddresses(customer.Id));
-
-        return Ok(resources);
-    }
-
-    [HttpGet("{id}/addresses")]
-    public async Task<ActionResult<AddressResource>> FindAddress(string id)
-    {
-        CustomerIdentity customer = new(User);
-
-        AddressResource resource = new(
-            await _addressService.FindOne(id, customer.Id));
-
-        return Ok(resource);
-    }
-
-    [HttpPost("addresses")]
-    public async Task<ActionResult> RegisterAddress(
-        [FromBody] AddressCreateRequest request)
-    {
-        CustomerIdentity customer = new(User);
-
-        await _addressService.Register(
-            dto: AddressCreateDTO.ExtractProperties(request, customer.Id)
-        );
-
-        return Created("", null);
-    }
-
-    [HttpPatch("{id}/addresses")]
-    public async Task<ActionResult> UpdateAddress(
-        [FromBody] AddressUpdateRequest request, string id)
-    {
-        CustomerIdentity customer = new(User);
-
-        await _addressService.Update(
-            dto: AddressUpdateDTO.ExtractProperties(request, id, customer.Id)
-        );
-
-        return NoContent();
-    }
-
-    [HttpDelete("{id}/addresses")]
-    public async Task<ActionResult> RemoveAddress(string id)
-    {
-        CustomerIdentity customer = new(User);
-
-        await _addressService.Remove(id, customer.Id);
-
-        return NoContent();
-    }
-
-    #endregion
-
 }

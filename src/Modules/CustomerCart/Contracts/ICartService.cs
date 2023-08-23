@@ -1,7 +1,9 @@
-namespace ECommerce.Modules.Cart;
+namespace ECommerce.Modules.CustomerCart;
 
 public interface ICartService
 {
+    public Task<IEnumerable<CartDTO?>> FindCarts(string id);
+
     public Task<CartDTO> FindOne(string cartId, string customerId);
 
     public Task Register(CartCreateDTO dto);
