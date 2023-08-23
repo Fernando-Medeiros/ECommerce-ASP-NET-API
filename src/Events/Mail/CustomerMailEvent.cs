@@ -2,15 +2,14 @@ using ECommerce.Modules.Customer;
 using ECommerce.ModulesHelpers.Mail;
 using ECommerce.ModulesHelpers.Token;
 
-namespace ECommerce.Events;
+namespace ECommerce.Events.Mail;
 
-public class MailEvents : IMailEvents
+public class CustomerMailEvent : ICustomerMailEvent
 {
     private readonly IMailService _mailService;
-
     private readonly ITokenService _tokenService;
 
-    public MailEvents(
+    public CustomerMailEvent(
         IMailService mailService,
         ITokenService tokenService)
     {
@@ -18,23 +17,12 @@ public class MailEvents : IMailEvents
         _tokenService = tokenService;
     }
 
-    public async void OnRegisterCustomer(
-        object? sender, CustomerDTO customer)
+    public async void OnRegisterCustomer(object? sender, CustomerDTO customer)
     {
         string token = _tokenService.Generate(
             customer, ETokenScope.AuthenticateEmail).Token;
 
         await _mailService.SendTemplateAsync(
             customer.Email!, new ActiveAccountVM(customer.Name!, token));
-    }
-
-    public async void OnRecoverPassword(
-        object? sender, CustomerDTO customer)
-    {
-        string token = _tokenService.Generate(
-            customer, ETokenScope.RecoverPassword).Token;
-
-        await _mailService.SendTemplateAsync(
-            customer.Email!, new RecoverPasswordVM(customer.Name!, token));
     }
 }

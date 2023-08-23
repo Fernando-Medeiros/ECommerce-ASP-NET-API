@@ -1,4 +1,4 @@
-using ECommerce.Events;
+using ECommerce.Events.Mail;
 using ECommerce.Exceptions;
 using ECommerce.Modules.Cart;
 
@@ -8,18 +8,15 @@ public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _repository;
 
-    private readonly IMailEvents _mailEvents;
-
     private event EventHandler<CustomerDTO> RegisterCustomerEvent;
 
     public CustomerService(
         ICustomerRepository repository,
-        IMailEvents mailEvents)
+        ICustomerMailEvent _mailEvent)
     {
         _repository = repository;
-        _mailEvents = mailEvents;
 
-        RegisterCustomerEvent += _mailEvents.OnRegisterCustomer;
+        RegisterCustomerEvent += _mailEvent.OnRegisterCustomer;
     }
 
     public async Task<IEnumerable<CartDTO?>> FindCarts(string id)

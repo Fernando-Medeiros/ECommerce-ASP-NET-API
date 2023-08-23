@@ -1,4 +1,4 @@
-using ECommerce.Events;
+using ECommerce.Events.Mail;
 using ECommerce.Modules.Cart;
 using ECommerce.Modules.Category;
 using ECommerce.Modules.Customer;
@@ -40,6 +40,7 @@ public static partial class ServiceProviders
 
         builder.Services.AddTransient<IMailService, MailService>();
 
-        builder.Services.AddTransient<IMailEvents, MailEvents>();
+        builder.Services.AddTransient<ICustomerMailEvent, CustomerMailEvent>();
+        builder.Services.AddTransient<IPasswordMailEvent, PasswordMailEvent>();
     }
 }
