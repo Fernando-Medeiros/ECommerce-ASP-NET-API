@@ -1,13 +1,20 @@
+using System.Security.Claims;
+using ECommerce.ModulesHelpers.Token;
+
 namespace ECommerce.Identities;
 
-using System.Security.Claims;
-
-public class EmployeeIdentity : CustomerIdentity
+public class EmployeeIdentity : MainIdentity
 {
+    public readonly string Id;
     public readonly string Role;
+    public readonly string Scope;
 
-    public EmployeeIdentity(ClaimsPrincipal principal) : base(principal)
+    public EmployeeIdentity(ClaimsPrincipal principal)
     {
-        Role = ExtractProperty(principal, ClaimTypes.Role).Value;
+        Id = ExtractProperty("id", principal).Value;
+        Role = ExtractProperty(ClaimTypes.Role, principal).Value;
+        Scope = ExtractProperty("scope", principal).Value;
+
+        CheckTokenScope(Scope, new() { ETokenScope.Access, ETokenScope.Refresh });
     }
 }
