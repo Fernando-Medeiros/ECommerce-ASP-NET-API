@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ECommerce.Modules.Session;
+namespace ECommerce.Modules.Auth;
 
 public class SignInRequest
 {

@@ -1,4 +1,5 @@
 using ECommerce.Events.Mail;
+using ECommerce.Modules.Auth;
 using ECommerce.Modules.Category;
 using ECommerce.Modules.Customer;
 using ECommerce.Modules.CustomerCart;
@@ -6,7 +7,6 @@ using ECommerce.Modules.CustomerAddress;
 using ECommerce.Modules.CustomerPassword;
 using ECommerce.Modules.Product;
 using ECommerce.Modules.Sales;
-using ECommerce.Modules.Session;
 using ECommerce.ModulesHelpers.Mail;
 using ECommerce.ModulesHelpers.Token;
 
@@ -16,6 +16,9 @@ public static partial class ServiceProviders
 {
     public static void Injectable(WebApplicationBuilder builder)
     {
+        builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+        builder.Services.AddScoped<IAuthService, AuhService>();
+
         builder.Services.AddScoped<IAddressRepository, AddressRepository>();
         builder.Services.AddScoped<IAddressService, AddressService>();
 
@@ -36,9 +39,6 @@ public static partial class ServiceProviders
 
         builder.Services.AddScoped<ISalesRepository, SalesRepository>();
         builder.Services.AddScoped<ISalesService, SalesService>();
-
-        builder.Services.AddScoped<ISessionRepository, SessionRepository>();
-        builder.Services.AddScoped<ISessionService, SessionService>();
 
         builder.Services.AddTransient<ITokenService, TokenService>();
 

@@ -1,9 +1,9 @@
 using ECommerce.Modules.Customer;
 using ECommerce.ModulesHelpers.Token;
 
-namespace ECommerce.Modules.Session;
+namespace ECommerce.Modules.Auth;
 
-public interface ISessionService
+public interface IAuthService
 {
     public Task<CustomerDTO> FindCustomer(SignInDTO dto);
 

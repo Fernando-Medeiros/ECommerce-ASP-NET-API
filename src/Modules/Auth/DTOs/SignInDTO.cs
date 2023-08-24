@@ -1,4 +1,4 @@
-namespace ECommerce.Modules.Session;
+namespace ECommerce.Modules.Auth;
 
 public readonly struct SignInDTO
 {
