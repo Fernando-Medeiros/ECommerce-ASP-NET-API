@@ -1,12 +1,13 @@
-namespace ECommerce.Modules.CustomerAddress;
-
 using ECommerce.Exceptions;
 
-public class AddressService : IAddressService
-{
-    private readonly IAddressRepository _repository;
+namespace ECommerce.Modules.CustomerAddress;
 
-    public AddressService(IAddressRepository repository)
+public class CustomerAddressService : ICustomerAddressService
+{
+    private readonly ICustomerAddressRepository _repository;
+
+    public CustomerAddressService(
+        ICustomerAddressRepository repository)
     {
         _repository = repository;
     }

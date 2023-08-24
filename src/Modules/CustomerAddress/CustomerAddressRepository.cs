@@ -1,17 +1,17 @@
-namespace ECommerce.Modules.CustomerAddress;
-
 using AutoMapper;
 using ECommerce.Context;
 using ECommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
-public class AddressRepository : IAddressRepository
+namespace ECommerce.Modules.CustomerAddress;
+
+public class CustomerAddressRepository : ICustomerAddressRepository
 {
     private readonly DatabaseContext _context;
 
     private readonly IMapper _mapper;
 
-    public AddressRepository(DatabaseContext context, IMapper mapper)
+    public CustomerAddressRepository(DatabaseContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

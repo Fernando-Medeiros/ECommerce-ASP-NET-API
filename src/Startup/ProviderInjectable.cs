@@ -19,14 +19,14 @@ public static partial class ServiceProviders
         builder.Services.AddScoped<IAuthRepository, AuthRepository>();
         builder.Services.AddScoped<IAuthService, AuhService>();
 
-        builder.Services.AddScoped<IAddressRepository, AddressRepository>();
-        builder.Services.AddScoped<IAddressService, AddressService>();
-
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
         builder.Services.AddScoped<ICategoryService, CategoryService>();
 
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+        builder.Services.AddScoped<ICustomerAddressRepository, CustomerAddressRepository>();
+        builder.Services.AddScoped<ICustomerAddressService, CustomerAddressService>();
 
         builder.Services.AddScoped<ICustomerCartRepository, CustomerCartRepository>();
         builder.Services.AddScoped<ICustomerCartService, CustomerCartService>();

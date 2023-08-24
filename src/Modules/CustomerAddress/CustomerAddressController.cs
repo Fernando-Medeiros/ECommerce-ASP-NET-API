@@ -8,9 +8,9 @@ namespace ECommerce.Modules.CustomerAddress;
 [Route("api/addresses")]
 public class CustomerAddressController : ControllerBase
 {
-    private readonly IAddressService _addressService;
+    private readonly ICustomerAddressService _addressService;
 
-    public CustomerAddressController(IAddressService addressService)
+    public CustomerAddressController(ICustomerAddressService addressService)
     {
         _addressService = addressService;
     }
