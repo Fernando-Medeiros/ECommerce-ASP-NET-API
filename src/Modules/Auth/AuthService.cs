@@ -5,37 +5,73 @@ using ECommerce.ModulesHelpers.Token;
 
 namespace ECommerce.Modules.Auth;
 
-public class AuhService : IAuthService
+public class AuthService : IAuthService
 {
     private readonly ITokenService _tokenService;
 
-    private readonly IAuthRepository _authRepository;
+    private readonly ICustomerRepository _customerRepository;
 
-    public AuhService(
+    public AuthService(
         ITokenService tokenService,
-        IAuthRepository authRepository)
+        ICustomerRepository customerRepository)
     {
         _tokenService = tokenService;
-        _authRepository = authRepository;
+        _customerRepository = customerRepository;
     }
 
-    public async Task<CustomerDTO> FindCustomer(SignInDTO dto)
+    public async Task<TokenDTO> SignIn(SignInDTO dto)
     {
-        CustomerDTO customer = await _authRepository.FindCustomer(dto.Email)
-            ?? throw new NotFoundError("Customer Not Found");
+        CustomerDTO customer = await FindCustomer(dto);
 
-        if (customer.VerifiedAt == null)
+        IsVerifiedAt(customer.VerifiedAt);
+
+        IsVerifiedPassword(dto.Password, customer.Password);
+
+        return _tokenService.Generate(customer, ETokenScope.Access);
+    }
+
+    public async Task<TokenDTO> Authenticate(SignInDTO dto)
+    {
+        CustomerDTO customer = await FindCustomer(dto);
+
+        IsVerifiedEmail(dto.Email, customer.Email);
+
+        IsVerifiedPassword(dto.Password, customer.Password);
+
+        customer.VerifiedAt = DateTime.UtcNow;
+
+        await _customerRepository.Update(customer);
+
+        return _tokenService.Generate(customer, ETokenScope.Access);
+    }
+
+    #region Private
+
+    private async Task<CustomerDTO> FindCustomer(SignInDTO dto)
+    {
+        return await _customerRepository.Find(dto.Id, dto.Email)
+            ?? throw new NotFoundError("Customer Not Found");
+    }
+
+    private static void IsVerifiedAt(DateTime? verifiedAt)
+    {
+        if (verifiedAt == null)
             throw new UnauthorizedError(
                 "Access the link sent to your email to authenticate your account");
-
-        if (CryptPassword.Verify(dto.Password, customer.Password!) is false)
-            throw new UnauthorizedError("Email or Password invalid");
-
-        return customer;
     }
 
-    public TokenDTO GenerateAccessToken(CustomerDTO dto)
+    private static void IsVerifiedPassword(string password, string? passwordHash)
     {
-        return _tokenService.Generate(dto, ETokenScope.Access);
+        if (CryptPassword.Verify(password, passwordHash!) is false)
+            throw new UnauthorizedError(
+                "Email or Password invalid");
     }
+
+    private static void IsVerifiedEmail(string email, string? customerEmail)
+    {
+        if (email != customerEmail)
+            throw new UnauthorizedError(
+                "Email is incompatible");
+    }
+    #endregion
 }

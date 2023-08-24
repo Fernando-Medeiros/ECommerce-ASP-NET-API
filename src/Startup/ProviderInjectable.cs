@@ -16,8 +16,7 @@ public static partial class ServiceProviders
 {
     public static void Injectable(WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-        builder.Services.AddScoped<IAuthService, AuhService>();
+        builder.Services.AddScoped<IAuthService, AuthService>();
 
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<ICustomerService, CustomerService>();

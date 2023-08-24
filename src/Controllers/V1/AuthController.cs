@@ -1,5 +1,6 @@
-using ECommerce.Modules.Customer;
+using ECommerce.Identities;
 using ECommerce.ModulesHelpers.Token;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.Auth;
@@ -20,10 +21,24 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<TokenResource>> SignIn(
         [FromBody] SignInRequest request)
     {
-        CustomerDTO customer = await _authService.FindCustomer(
+        TokenDTO token = await _authService.SignIn(
             dto: SignInDTO.ExtractProperties(request));
 
-        TokenDTO token = _authService.GenerateAccessToken(customer);
+        TokenResource resource = new(token);
+
+        return Ok(resource);
+    }
+
+    [Authorize]
+    [HttpPost("authenticate")]
+    public async Task<ActionResult<TokenResource>> AuthenticateEmail(
+        [FromBody] SignInRequest request)
+    {
+        CustomerIdentity customer = new(
+            User, new() { ETokenScope.AuthenticateEmail });
+
+        TokenDTO token = await _authService.Authenticate(
+            dto: SignInDTO.ExtractProperties(request, customer.Id));
 
         TokenResource resource = new(token);
 
