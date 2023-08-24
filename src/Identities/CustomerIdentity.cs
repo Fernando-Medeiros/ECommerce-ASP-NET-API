@@ -1,35 +1,26 @@
 using System.Security.Claims;
-using ECommerce.Exceptions;
 using ECommerce.ModulesHelpers.Token;
 
 namespace ECommerce.Identities;
 
-public class CustomerIdentity
+public class CustomerIdentity : MainIdentity
 {
     public readonly string Id;
     public readonly string Scope;
 
     public CustomerIdentity(ClaimsPrincipal principal)
     {
-        Id = ExtractProperty(principal, "id").Value;
+        Id = ExtractProperty("id", principal).Value;
+        Scope = ExtractProperty("scope", principal).Value;
 
-        Scope = ExtractProperty(principal, "scope").Value;
-
-        CheckTokenScope();
+        CheckTokenScope(Scope, new() { ETokenScope.Access, ETokenScope.Refresh });
     }
 
-    private protected static Claim ExtractProperty(
-        ClaimsPrincipal principal, string keySelector)
+    public CustomerIdentity(ClaimsPrincipal principal, List<ETokenScope> scopes)
     {
-        return principal.Claims
-            .SingleOrDefault(c => c.Type.Equals(keySelector))
-            ?? throw new ForbiddenError("Access denied, token incompatible");
-    }
+        Id = ExtractProperty("id", principal).Value;
+        Scope = ExtractProperty("scope", principal).Value;
 
-    private protected void CheckTokenScope()
-    {
-        if (Scope != Enum.GetName(ETokenScope.Access) ||
-            Scope != Enum.GetName(ETokenScope.Refresh))
-            throw new UnauthorizedError("Access denied, token scope incompatible");
+        CheckTokenScope(Scope, scopes);
     }
 }
