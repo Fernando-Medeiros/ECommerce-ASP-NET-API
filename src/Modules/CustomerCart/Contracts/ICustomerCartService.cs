@@ -1,6 +1,6 @@
 namespace ECommerce.Modules.CustomerCart;
 
-public interface ICartService
+public interface ICustomerCartService
 {
     public Task<IEnumerable<CartDTO?>> FindCarts(string id);
 

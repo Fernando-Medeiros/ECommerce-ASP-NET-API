@@ -1,16 +1,16 @@
-namespace ECommerce.Modules.CustomerCart;
-
 using ECommerce.Exceptions;
 using ECommerce.Modules.Product;
 
-public class CartService : ICartService
+namespace ECommerce.Modules.CustomerCart;
+
+public class CustomerCartService : ICustomerCartService
 {
-    private readonly ICartRepository _cartRepository;
+    private readonly ICustomerCartRepository _cartRepository;
 
     private readonly IProductService _productService;
 
-    public CartService(
-        ICartRepository cartRepository,
+    public CustomerCartService(
+        ICustomerCartRepository cartRepository,
         IProductService productService)
     {
         _cartRepository = cartRepository;

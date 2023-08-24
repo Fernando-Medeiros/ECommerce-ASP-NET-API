@@ -1,17 +1,17 @@
-namespace ECommerce.Modules.CustomerCart;
-
 using AutoMapper;
 using ECommerce.Context;
 using ECommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
-public class CartRepository : ICartRepository
+namespace ECommerce.Modules.CustomerCart;
+
+public class CustomerCartRepository : ICustomerCartRepository
 {
     private readonly DatabaseContext _context;
 
     private readonly IMapper _mapper;
 
-    public CartRepository(
+    public CustomerCartRepository(
         DatabaseContext context,
         IMapper mapper
         )

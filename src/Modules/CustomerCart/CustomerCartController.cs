@@ -8,9 +8,9 @@ namespace ECommerce.Modules.CustomerCart;
 [Route("api/carts")]
 public class CustomerCartController : ControllerBase
 {
-    private readonly ICartService _cartService;
+    private readonly ICustomerCartService _cartService;
 
-    public CustomerCartController(ICartService cartService)
+    public CustomerCartController(ICustomerCartService cartService)
     {
         _cartService = cartService;
     }

@@ -22,14 +22,14 @@ public static partial class ServiceProviders
         builder.Services.AddScoped<IAddressRepository, AddressRepository>();
         builder.Services.AddScoped<IAddressService, AddressService>();
 
-        builder.Services.AddScoped<ICartRepository, CartRepository>();
-        builder.Services.AddScoped<ICartService, CartService>();
-
         builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
         builder.Services.AddScoped<ICategoryService, CategoryService>();
 
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+        builder.Services.AddScoped<ICustomerCartRepository, CustomerCartRepository>();
+        builder.Services.AddScoped<ICustomerCartService, CustomerCartService>();
 
         builder.Services.AddScoped<ICustomerPasswordRepository, CustomerPasswordRepository>();
         builder.Services.AddScoped<ICustomerPasswordService, CustomerPasswordService>();
