@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-dotnettools.csdevkit",
+        "streetsidesoftware.code-spell-checker",
+        "ms-dotnettools.vscodeintellicode-csharp",
+        "kumar-harsh.graphql-for-vscode",
+        "kreativ-software.csharpextensions",
+        "oderwat.indent-rainbow"
+    ]
+}
