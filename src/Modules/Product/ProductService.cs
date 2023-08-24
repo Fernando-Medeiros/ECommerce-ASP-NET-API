@@ -1,16 +1,16 @@
 namespace ECommerce.Modules.Product;
 
 using ECommerce.Exceptions;
-using ECommerce.Modules.Category;
+using ECommerce.Modules.ProductCategory;
 
 public class ProductService : IProductService
 {
-    private readonly ICategoryService _categoryService;
+    private readonly IProductCategoryService _categoryService;
 
     private readonly IProductRepository _productRepository;
 
     public ProductService(
-        ICategoryService categoryService,
+        IProductCategoryService categoryService,
         IProductRepository productRepository)
     {
         _categoryService = categoryService;

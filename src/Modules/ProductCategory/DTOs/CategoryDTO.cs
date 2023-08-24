@@ -1,4 +1,4 @@
-namespace ECommerce.Modules.Category;
+namespace ECommerce.Modules.ProductCategory;
 
 using ECommerce.Models;
 

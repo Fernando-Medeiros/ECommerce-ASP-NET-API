@@ -1,13 +1,13 @@
-namespace ECommerce.Modules.Category;
-
 using ECommerce.Exceptions;
 using ECommerce.Modules.Product;
 
-public class CategoryService : ICategoryService
-{
-    private readonly ICategoryRepository _repository;
+namespace ECommerce.Modules.ProductCategory;
 
-    public CategoryService(ICategoryRepository repository)
+public class ProductCategoryService : IProductCategoryService
+{
+    private readonly IProductCategoryRepository _repository;
+
+    public ProductCategoryService(IProductCategoryRepository repository)
     {
         _repository = repository;
     }

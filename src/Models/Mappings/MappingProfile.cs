@@ -1,9 +1,9 @@
 using AutoMapper;
-using ECommerce.Modules.Category;
 using ECommerce.Modules.Customer;
 using ECommerce.Modules.CustomerCart;
 using ECommerce.Modules.CustomerAddress;
 using ECommerce.Modules.Product;
+using ECommerce.Modules.ProductCategory;
 using ECommerce.Modules.Sales;
 
 namespace ECommerce.Models.Mappings;
