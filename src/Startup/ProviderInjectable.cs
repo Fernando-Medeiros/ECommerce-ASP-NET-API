@@ -3,6 +3,7 @@ using ECommerce.Modules.Category;
 using ECommerce.Modules.Customer;
 using ECommerce.Modules.CustomerCart;
 using ECommerce.Modules.CustomerAddress;
+using ECommerce.Modules.CustomerPassword;
 using ECommerce.Modules.Product;
 using ECommerce.Modules.Sales;
 using ECommerce.Modules.Session;
@@ -26,6 +27,9 @@ public static partial class ServiceProviders
 
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+        builder.Services.AddScoped<ICustomerPasswordRepository, CustomerPasswordRepository>();
+        builder.Services.AddScoped<ICustomerPasswordService, CustomerPasswordService>();
 
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<IProductService, ProductService>();
