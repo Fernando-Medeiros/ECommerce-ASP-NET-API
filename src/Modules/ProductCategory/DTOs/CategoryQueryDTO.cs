@@ -1,7 +1,7 @@
-namespace ECommerce.Modules.Category;
-
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+
+namespace ECommerce.Modules.ProductCategory;
 
 public class CategoryQueryDTO
 {

@@ -1,8 +1,8 @@
-namespace ECommerce.Modules.Category;
+namespace ECommerce.Modules.ProductCategory;
 
 using ECommerce.Modules.Product;
 
-public interface ICategoryRepository
+public interface IProductCategoryRepository
 {
     public Task<IEnumerable<CategoryDTO?>> FindMany(CategoryQueryDTO query);
 

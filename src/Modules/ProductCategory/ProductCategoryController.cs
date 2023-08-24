@@ -1,16 +1,16 @@
-namespace ECommerce.Modules.Category;
-
 using ECommerce.Modules.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("api/categories", Name = "Categories")]
-public partial class CategoryController : ControllerBase
-{
-    private readonly ICategoryService _service;
+namespace ECommerce.Modules.ProductCategory;
 
-    public CategoryController(ICategoryService service) => _service = service;
+[ApiController]
+[Route("api/categories")]
+public partial class ProductCategoryController : ControllerBase
+{
+    private readonly IProductCategoryService _service;
+
+    public ProductCategoryController(IProductCategoryService service) => _service = service;
 
     #region Public
 

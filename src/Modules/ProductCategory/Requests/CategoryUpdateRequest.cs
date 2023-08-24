@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ECommerce.Modules.Category;
+namespace ECommerce.Modules.ProductCategory;
 
 public class CategoryUpdateRequest
 {

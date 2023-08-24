@@ -1,18 +1,18 @@
-namespace ECommerce.Modules.Category;
-
 using AutoMapper;
 using ECommerce.Context;
 using ECommerce.Models;
 using ECommerce.Modules.Product;
 using Microsoft.EntityFrameworkCore;
 
-public class CategoryRepository : ICategoryRepository
+namespace ECommerce.Modules.ProductCategory;
+
+public class ProductCategoryRepository : IProductCategoryRepository
 {
     private readonly DatabaseContext _context;
 
     private readonly IMapper _mapper;
 
-    public CategoryRepository(
+    public ProductCategoryRepository(
         DatabaseContext context,
         IMapper mapper)
     {
