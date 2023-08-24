@@ -3,25 +3,25 @@ using ECommerce.Modules.Customer;
 using ECommerce.ModulesHelpers.Crypt;
 using ECommerce.ModulesHelpers.Token;
 
-namespace ECommerce.Modules.Session;
+namespace ECommerce.Modules.Auth;
 
-public class SessionService : ISessionService
+public class AuhService : IAuthService
 {
     private readonly ITokenService _tokenService;
 
-    private readonly ISessionRepository _sessionRepository;
+    private readonly IAuthRepository _authRepository;
 
-    public SessionService(
+    public AuhService(
         ITokenService tokenService,
-        ISessionRepository repository)
+        IAuthRepository authRepository)
     {
         _tokenService = tokenService;
-        _sessionRepository = repository;
+        _authRepository = authRepository;
     }
 
     public async Task<CustomerDTO> FindCustomer(SignInDTO dto)
     {
-        CustomerDTO customer = await _sessionRepository.FindCustomer(dto.Email)
+        CustomerDTO customer = await _authRepository.FindCustomer(dto.Email)
             ?? throw new NotFoundError("Customer Not Found");
 
         if (customer.VerifiedAt == null)

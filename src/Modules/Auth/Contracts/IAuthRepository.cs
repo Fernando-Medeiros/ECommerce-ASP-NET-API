@@ -1,8 +1,8 @@
 using ECommerce.Modules.Customer;
 
-namespace ECommerce.Modules.Session;
+namespace ECommerce.Modules.Auth;
 
-public interface ISessionRepository
+public interface IAuthRepository
 {
     public Task<CustomerDTO?> FindCustomer(string email);
 }
