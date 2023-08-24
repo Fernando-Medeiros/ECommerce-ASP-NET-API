@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerce.Modules.CustomerAddress;
 
 [ApiController, Authorize]
-[Route("api/addresses")]
+[Route("api/v1/addresses")]
 public class CustomerAddressController : ControllerBase
 {
     private readonly ICustomerAddressService _addressService;
