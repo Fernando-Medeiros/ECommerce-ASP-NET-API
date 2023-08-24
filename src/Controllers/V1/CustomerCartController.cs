@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerce.Modules.CustomerCart;
 
 [ApiController, Authorize]
-[Route("api/carts")]
+[Route("api/v1/carts")]
 public class CustomerCartController : ControllerBase
 {
     private readonly ICustomerCartService _cartService;

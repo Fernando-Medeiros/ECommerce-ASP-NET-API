@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerce.Modules.CustomerPassword;
 
 [ApiController]
-[Route("api/passwords")]
+[Route("api/v1/passwords")]
 public class CustomerPasswordController : ControllerBase
 {
     private readonly ICustomerPasswordService _service;

@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.Sales;
 
-[ApiController]
-[Authorize(Roles = "manager")]
-[Route("api/sales", Name = "Sales")]
+[ApiController, Authorize(Roles = "manager")]
+[Route("api/v1/sales")]
 public class SalesController : ControllerBase
 {
     private readonly ISalesService _service;

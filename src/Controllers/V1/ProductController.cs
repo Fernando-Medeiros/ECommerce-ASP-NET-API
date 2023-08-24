@@ -1,10 +1,10 @@
-namespace ECommerce.Modules.Product;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+namespace ECommerce.Modules.Product;
+
 [ApiController]
-[Route("api/products", Name = "Product")]
+[Route("api/v1/products")]
 public partial class ProductController : ControllerBase
 {
     private readonly IProductService _service;

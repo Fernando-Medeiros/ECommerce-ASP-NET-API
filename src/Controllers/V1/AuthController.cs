@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerce.Modules.Auth;
 
 [ApiController]
-[Route("api/auth")]
+[Route("api/v1/auth")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
