@@ -1,59 +1,63 @@
 using ECommerce.Identities;
+using ECommerce.Startup.SwaggerProducesResponse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.Customer;
 
-[ApiController, Authorize]
-[Route("api/v1/customers")]
+[ApiController, Authorize, Route("api/v1/customers")]
+[BadRequest, Unauthorized, Forbidden, NotFound]
 public class CustomerController : ControllerBase
 {
-    private readonly ICustomerService _customerService;
+    private readonly ICustomerService _service;
 
-    public CustomerController(ICustomerService customerService)
-    {
-        _customerService = customerService;
-    }
+    public CustomerController(
+        ICustomerService service) => _service = service;
 
     [HttpGet]
-    public async Task<ActionResult<CustomerResource>> Find()
+    [Success(typeof(CustomerResource))]
+    public async Task<ActionResult> FindOne()
     {
         CustomerIdentity customer = new(User);
 
-        CustomerResource resource = new(await _customerService.FindById(customer.Id));
+        CustomerDTO customerDTO = await _service.FindById(customer.Id);
+
+        CustomerResource resource = new(customerDTO);
 
         return Ok(resource);
     }
 
-    [AllowAnonymous]
-    [HttpPost]
+    [HttpPost, AllowAnonymous]
+    [Created(typeof(Nullable))]
     public async Task<ActionResult> Register(
         [FromBody] CustomerCreateRequest request)
     {
-        await _customerService.Register(
+        await _service.Register(
             dto: CustomerCreateDTO.ExtractProperties(request));
 
         return Created("", null);
     }
 
     [HttpPatch]
+    [NoContent]
     public async Task<ActionResult> Update(
         [FromBody] CustomerUpdateRequest request)
     {
         CustomerIdentity customer = new(User);
 
-        await _customerService.Update(
+        await _service.Update(
             dto: CustomerUpdateDTO.ExtractProperties(request, customer.Id));
 
         return NoContent();
     }
 
     [HttpDelete]
+    [NoContent]
     public async Task<ActionResult> Remove()
     {
         CustomerIdentity customer = new(User);
 
-        await _customerService.Remove(id: customer.Id);
+        await _service.Remove(id: customer.Id);
 
         return NoContent();
     }
