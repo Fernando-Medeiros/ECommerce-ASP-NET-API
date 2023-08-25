@@ -1,37 +1,33 @@
 using ECommerce.Identities;
 using ECommerce.ModulesHelpers.Token;
+using ECommerce.Startup.SwaggerProducesResponse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.CustomerPassword;
 
-[ApiController]
-[Route("api/v1/passwords")]
+[ApiController, Authorize, Route("api/v1/passwords")]
+[BadRequest, Unauthorized, Forbidden, NotFound]
 public class CustomerPasswordController : ControllerBase
 {
     private readonly ICustomerPasswordService _service;
 
     public CustomerPasswordController(
-        ICustomerPasswordService service)
-    {
-        _service = service;
-    }
+        ICustomerPasswordService service) => _service = service;
 
-    [HttpPost("recover")]
+    [HttpPost("recover"), AllowAnonymous]
+    [Success(typeof(string))]
     public async Task<ActionResult> Recover(
         [FromBody] PasswordRecoverRequest request)
     {
         await _service.RecoverPassword(
             dto: new PasswordRecoverDTO(request.Email!));
 
-        return Ok(new
-        {
-            message = "The link to reset your password has been sent to your email."
-        });
+        return Ok("The link to reset your password has been sent to your email.");
     }
 
-    [Authorize]
     [HttpPatch("reset")]
+    [NoContent]
     public async Task<ActionResult> Reset(
         [FromBody] PasswordUpdateRequest request)
     {
@@ -43,8 +39,8 @@ public class CustomerPasswordController : ControllerBase
         return NoContent();
     }
 
-    [Authorize]
     [HttpPatch("update")]
+    [NoContent]
     public async Task<ActionResult> Update(
         [FromBody] PasswordUpdateRequest request)
     {

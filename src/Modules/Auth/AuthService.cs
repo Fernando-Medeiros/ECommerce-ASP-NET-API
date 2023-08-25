@@ -63,14 +63,14 @@ public class AuthService : IAuthService
     private static void IsVerifiedPassword(string password, string? passwordHash)
     {
         if (CryptPassword.Verify(password, passwordHash!) is false)
-            throw new UnauthorizedError(
+            throw new BadRequestError(
                 "Email or Password invalid");
     }
 
     private static void IsVerifiedEmail(string email, string? customerEmail)
     {
         if (email != customerEmail)
-            throw new UnauthorizedError(
+            throw new BadRequestError(
                 "Email is incompatible");
     }
     #endregion

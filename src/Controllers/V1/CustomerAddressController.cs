@@ -1,49 +1,55 @@
 using ECommerce.Identities;
+using ECommerce.Startup.SwaggerProducesResponse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.CustomerAddress;
 
-[ApiController, Authorize]
-[Route("api/v1/addresses")]
+[ApiController, Authorize, Route("api/v1/addresses")]
+[BadRequest, Unauthorized, Forbidden, NotFound]
 public class CustomerAddressController : ControllerBase
 {
-    private readonly ICustomerAddressService _addressService;
+    private readonly ICustomerAddressService _service;
 
-    public CustomerAddressController(ICustomerAddressService addressService)
-    {
-        _addressService = addressService;
-    }
+    public CustomerAddressController(
+        ICustomerAddressService service) => _service = service;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AddressResource>>> FindAddresses()
+    [Success(typeof(IEnumerable<AddressResource>))]
+    public async Task<ActionResult> FindAddresses()
     {
         CustomerIdentity customer = new(User);
 
+        IEnumerable<AddressDTO?> addresses = await _service.FindAddresses(
+            customer.Id);
+
         IEnumerable<AddressResource> resources = AddressResource.ToArray(
-            array: await _addressService.FindAddresses(customer.Id));
+            array: addresses);
 
         return Ok(resources);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<AddressResource>> FindAddress(string id)
+    [Success(typeof(AddressResource))]
+    public async Task<ActionResult> FindOne(string id)
     {
         CustomerIdentity customer = new(User);
 
-        AddressResource resource = new(
-            await _addressService.FindOne(id, customer.Id));
+        AddressDTO address = await _service.FindOne(id, customer.Id);
+
+        AddressResource resource = new(address);
 
         return Ok(resource);
     }
 
     [HttpPost]
-    public async Task<ActionResult> RegisterAddress(
+    [Created(typeof(Nullable))]
+    public async Task<ActionResult> Register(
         [FromBody] AddressCreateRequest request)
     {
         CustomerIdentity customer = new(User);
 
-        await _addressService.Register(
+        await _service.Register(
             dto: AddressCreateDTO.ExtractProperties(request, customer.Id)
         );
 
@@ -51,12 +57,13 @@ public class CustomerAddressController : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    public async Task<ActionResult> UpdateAddress(
+    [NoContent]
+    public async Task<ActionResult> Update(
         [FromBody] AddressUpdateRequest request, string id)
     {
         CustomerIdentity customer = new(User);
 
-        await _addressService.Update(
+        await _service.Update(
             dto: AddressUpdateDTO.ExtractProperties(request, id, customer.Id)
         );
 
@@ -64,11 +71,12 @@ public class CustomerAddressController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> RemoveAddress(string id)
+    [NoContent]
+    public async Task<ActionResult> Remove(string id)
     {
         CustomerIdentity customer = new(User);
 
-        await _addressService.Remove(id, customer.Id);
+        await _service.Remove(id, customer.Id);
 
         return NoContent();
     }

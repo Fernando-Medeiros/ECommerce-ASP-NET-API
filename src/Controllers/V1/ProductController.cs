@@ -1,32 +1,40 @@
+using ECommerce.Startup.SwaggerProducesResponse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.Product;
 
-[ApiController]
-[Route("api/v1/products")]
-public partial class ProductController : ControllerBase
+[ApiController, Route("api/v1/products")]
+[BadRequest, Unauthorized, Forbidden, NotFound]
+public class ProductController : ControllerBase
 {
     private readonly IProductService _service;
 
-    public ProductController(IProductService service) => _service = service;
+    public ProductController(
+        IProductService service) => _service = service;
 
     #region Public
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductResource>>> FindMany(
+    [Success(typeof(IEnumerable<ProductResource>))]
+    public async Task<ActionResult> FindMany(
         [FromQuery] ProductQueryDTO query)
     {
+        IEnumerable<ProductDTO?> products = await _service.FindMany(query);
+
         IEnumerable<ProductResource> resources = ProductResource.ToArray(
-            array: await _service.FindMany(query));
+            array: products);
 
         return Ok(resources);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProductResource>> FindOne(string id)
+    [Success(typeof(ProductResource))]
+    public async Task<ActionResult> FindOne(string id)
     {
-        ProductResource resource = new(await _service.FindOne(id));
+        ProductDTO product = await _service.FindOne(id);
+
+        ProductResource resource = new(product);
 
         return Ok(resource);
     }
@@ -36,6 +44,7 @@ public partial class ProductController : ControllerBase
     #region Manager - Employee
 
     [HttpPost, Authorize(Roles = "manager, employee")]
+    [Created(typeof(Nullable))]
     public async Task<ActionResult> Register(
         [FromBody] ProductCreateRequest request)
     {
@@ -46,6 +55,7 @@ public partial class ProductController : ControllerBase
     }
 
     [HttpPatch("{id}"), Authorize(Roles = "manager, employee")]
+    [NoContent]
     public async Task<ActionResult> Update(
         [FromBody] ProductUpdateRequest request, string id)
     {
@@ -56,6 +66,7 @@ public partial class ProductController : ControllerBase
     }
 
     [HttpDelete("{id}"), Authorize(Roles = "manager, employee")]
+    [NoContent]
     public async Task<ActionResult> Remove(string id)
     {
         await _service.Remove(id);
