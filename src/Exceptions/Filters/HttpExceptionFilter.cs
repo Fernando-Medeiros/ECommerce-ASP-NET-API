@@ -15,7 +15,7 @@ public class HttpExceptionFilter : IActionFilter, IOrderedFilter
         {
             context.Result = new ObjectResult(currentException.Value)
             {
-                StatusCode = currentException.StatusCode
+                StatusCode = currentException.Status
             };
             context.ExceptionHandled = true;
         }
