@@ -1,42 +1,53 @@
 using ECommerce.Modules.Product;
+using ECommerce.Startup.SwaggerProducesResponse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.ProductCategory;
 
-[ApiController]
-[Route("api/v1/categories")]
-public partial class ProductCategoryController : ControllerBase
+[ApiController, Route("api/v1/categories")]
+[BadRequest, Unauthorized, Forbidden, NotFound]
+public class ProductCategoryController : ControllerBase
 {
     private readonly IProductCategoryService _service;
 
-    public ProductCategoryController(IProductCategoryService service) => _service = service;
+    public ProductCategoryController(
+        IProductCategoryService service) => _service = service;
 
     #region Public
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoryResource>>> FindMany(
+    [Success(typeof(IEnumerable<CategoryResource>))]
+    public async Task<ActionResult> FindMany(
         [FromQuery] CategoryQueryDTO query)
     {
+        IEnumerable<CategoryDTO?> categories = await _service.FindMany(query);
+
         IEnumerable<CategoryResource> resources = CategoryResource
-            .ToArray(array: await _service.FindMany(query));
+            .ToArray(array: categories);
 
         return Ok(resources);
     }
 
     [HttpGet("{id}/products")]
-    public async Task<ActionResult<IEnumerable<ProductResource>>> FindProducts(string id)
+    [Success(typeof(IEnumerable<ProductResource>))]
+    public async Task<ActionResult> FindProducts(string id)
     {
+        IEnumerable<ProductDTO?> products = await _service.FindProducts(id);
+
         IEnumerable<ProductResource> resources = ProductResource.ToArray(
-            array: await _service.FindProducts(id));
+            array: products);
 
         return Ok(resources);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<CategoryResource>> FindOne(string id)
+    [Success(typeof(CategoryResource))]
+    public async Task<ActionResult> FindOne(string id)
     {
-        CategoryResource resource = new(await _service.FindOne(id));
+        CategoryDTO category = await _service.FindOne(id);
+
+        CategoryResource resource = new(category);
 
         return Ok(resource);
     }
@@ -45,8 +56,8 @@ public partial class ProductCategoryController : ControllerBase
 
     #region Manager - Employee
 
-    [Authorize(Roles = "manager, employee")]
-    [HttpPost]
+    [HttpPost, Authorize(Roles = "manager, employee")]
+    [Created(typeof(Nullable))]
     public async Task<ActionResult> Register(
         [FromBody] CategoryCreateRequest request)
     {
@@ -57,8 +68,8 @@ public partial class ProductCategoryController : ControllerBase
         return Created("", null);
     }
 
-    [Authorize(Roles = "manager, employee")]
-    [HttpPatch("{id}")]
+    [HttpPatch("{id}"), Authorize(Roles = "manager, employee")]
+    [NoContent]
     public async Task<ActionResult> Update(
         [FromBody] CategoryUpdateRequest request, string id)
     {
@@ -69,8 +80,8 @@ public partial class ProductCategoryController : ControllerBase
         return NoContent();
     }
 
-    [Authorize(Roles = "manager, employee")]
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}"), Authorize(Roles = "manager, employee")]
+    [NoContent]
     public async Task<ActionResult> Remove(string id)
     {
         await _service.Remove(id);
