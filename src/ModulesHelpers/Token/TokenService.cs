@@ -3,21 +3,15 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ECommerce.Modules.Customer;
-using ECommerce.Startup.EnvironmentDTOs;
+using ECommerce.Startup.Environment;
 
 namespace ECommerce.ModulesHelpers.Token;
 
 public class TokenService : ITokenService
 {
-    private readonly AuthCredentialDTO _environment;
-
     private readonly JwtSecurityTokenHandler _jwtHandler;
 
-    public TokenService()
-    {
-        _jwtHandler = new();
-        _environment = new();
-    }
+    public TokenService() => _jwtHandler = new();
 
     public TokenDTO Generate(CustomerDTO customer, ETokenScope scope)
     {
@@ -37,7 +31,7 @@ public class TokenService : ITokenService
 
     private SigningCredentials Credentials()
     {
-        byte[] key = Encoding.ASCII.GetBytes(_environment.PrivateKey);
+        byte[] key = Encoding.ASCII.GetBytes(AuthCredential.PrivateKey!);
 
         return new(
             key: new SymmetricSecurityKey(key),
@@ -48,10 +42,10 @@ public class TokenService : ITokenService
     {
         double expires = scope switch
         {
-            ETokenScope.Access => _environment.AccessTokenExp,
-            ETokenScope.Refresh => _environment.RefreshTokenExp,
-            ETokenScope.RecoverPassword => _environment.RecoverPasswordTokenExp,
-            ETokenScope.AuthenticateEmail => _environment.AuthenticateEmailTokenExp,
+            ETokenScope.Access => AuthCredential.AccessTokenExp,
+            ETokenScope.Refresh => AuthCredential.RefreshTokenExp,
+            ETokenScope.RecoverPassword => AuthCredential.RecoverPasswordTokenExp,
+            ETokenScope.AuthenticateEmail => AuthCredential.AuthenticateEmailTokenExp,
             _ => 0
         };
         return DateTime.UtcNow.AddHours(expires);

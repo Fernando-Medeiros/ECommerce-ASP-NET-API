@@ -8,11 +8,6 @@ public class MailService : IMailService
 
     public MailService(IFluentEmail fluentEmail) => _fluentEmail = fluentEmail;
 
-    public async Task SendMailAsync(string to, string subject, string body)
-    {
-        await _fluentEmail.To(to).Subject(subject).Body(body).SendAsync();
-    }
-
     public async Task SendTemplateAsync(string to, RecoverPasswordVM model)
     {
         await SendAsync(to, "Recover Password", ETemplates.RecoverPassword, model);

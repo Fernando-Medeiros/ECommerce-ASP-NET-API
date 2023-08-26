@@ -1,31 +1,29 @@
 using System.Net;
 using System.Net.Mail;
-using ECommerce.Startup.EnvironmentDTOs;
+using ECommerce.Startup.Environment;
 
 namespace ECommerce.Startup;
 
 public static partial class ServiceProviders
 {
-    public static void SmtpClient(WebApplicationBuilder builder)
+    public static void SmtpClient(WebApplicationBuilder b)
     {
-        MailCredentialDTO _environment = new();
-
-        builder.Services
+        b.Services
             .AddFluentEmail(
-                _environment.FromAddress,
-                _environment.FromName
+                MailCredential.FromAddress,
+                MailCredential.FromName
                 )
             .AddRazorRenderer()
             .AddSmtpSender(new SmtpClient()
             {
-                Host = _environment.Host,
-                Port = _environment.Port,
+                Host = MailCredential.Host!,
+                Port = MailCredential.Port,
                 UseDefaultCredentials = false,
-                EnableSsl = _environment.Encryption,
+                EnableSsl = MailCredential.Encryption,
                 Credentials = new NetworkCredential
                 {
-                    UserName = _environment.User,
-                    Password = _environment.Pass,
+                    UserName = MailCredential.User,
+                    Password = MailCredential.Pass,
                 }
             });
     }
