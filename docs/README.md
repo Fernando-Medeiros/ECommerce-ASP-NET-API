@@ -60,12 +60,12 @@
 
 ### Environment
 
-[env-example](../src/env-example)
+[appsettings.development.Example](../src/appsettings.development.Example)
 
 ```sh
-  # copy env-example to .env
+  # copy appsettings.development.Example to appsettings.development.json
   # src/
-  cp env-example .env
+  cp appsettings.development.Example appsettings.development.json
 ```
 
 ```sh
@@ -83,6 +83,8 @@
   DB_NAME=ECommerce
   DB_USER=root
   DB_PASS=12345
+  DB_PORT= null,
+  DB_SSL_MODE= null,
 
   MAIL_HOST=smtp.gmail.com
   MAIL_PORT=587
