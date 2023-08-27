@@ -1,15 +1,15 @@
-namespace ECommerce.Startup;
-
 using System.Text;
-using ECommerce.Startup.EnvironmentDTOs;
+using ECommerce.Startup.Environment;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
+namespace ECommerce.Startup;
+
 public static partial class ServiceProviders
 {
-    public static void AddAuthenticationMiddleware(WebApplicationBuilder builder)
+    public static void AddAuthenticationMiddleware(WebApplicationBuilder b)
     {
-        builder.Services
+        b.Services
             .AddAuthentication(opt =>
             {
                 string scheme = JwtBearerDefaults.AuthenticationScheme;
@@ -19,9 +19,7 @@ public static partial class ServiceProviders
             })
             .AddJwtBearer(opt =>
             {
-                byte[] key = Encoding.ASCII.GetBytes(
-                    new AuthCredentialDTO().PrivateKey
-                );
+                byte[] key = Encoding.ASCII.GetBytes(AuthCredential.PrivateKey!);
 
                 opt.RequireHttpsMetadata = false;
                 opt.SaveToken = true;

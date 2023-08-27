@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+    postgres:
+        container_name: ecommerce-postgres
+        image: docker.io/postgres:latest
+        restart: always
+        ports:
+            - '5432:5432'
+        volumes:
+            - 'postgresql_data:/postgresql/data'
+        environment:    
+              - POSTGRES_USER=root
+              - POSTGRES_DB=ECommerce
+              - POSTGRES_PASSWORD=12345
+              - ALLOW_EMPTY_PASSWORD=no
+        healthcheck:
+          test: ['CMD', '/opt/bitnami/scripts/postgresql_data/healthcheck.sh']
+          interval: 15s
+          timeout: 5s
+          retries: 6
+
+volumes:
+  postgresql_data:
+    driver: local

@@ -14,36 +14,36 @@ namespace ECommerce.Startup;
 
 public static partial class ServiceProviders
 {
-    public static void Injectable(WebApplicationBuilder builder)
+    public static void Injectable(WebApplicationBuilder b)
     {
-        builder.Services.AddScoped<IAuthService, AuthService>();
+        b.Services.AddScoped<IAuthService, AuthService>();
 
-        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-        builder.Services.AddScoped<ICustomerService, CustomerService>();
+        b.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+        b.Services.AddScoped<ICustomerService, CustomerService>();
 
-        builder.Services.AddScoped<ICustomerAddressRepository, CustomerAddressRepository>();
-        builder.Services.AddScoped<ICustomerAddressService, CustomerAddressService>();
+        b.Services.AddScoped<ICustomerAddressRepository, CustomerAddressRepository>();
+        b.Services.AddScoped<ICustomerAddressService, CustomerAddressService>();
 
-        builder.Services.AddScoped<ICustomerCartRepository, CustomerCartRepository>();
-        builder.Services.AddScoped<ICustomerCartService, CustomerCartService>();
+        b.Services.AddScoped<ICustomerCartRepository, CustomerCartRepository>();
+        b.Services.AddScoped<ICustomerCartService, CustomerCartService>();
 
-        builder.Services.AddScoped<ICustomerPasswordRepository, CustomerPasswordRepository>();
-        builder.Services.AddScoped<ICustomerPasswordService, CustomerPasswordService>();
+        b.Services.AddScoped<ICustomerPasswordRepository, CustomerPasswordRepository>();
+        b.Services.AddScoped<ICustomerPasswordService, CustomerPasswordService>();
 
-        builder.Services.AddScoped<IProductRepository, ProductRepository>();
-        builder.Services.AddScoped<IProductService, ProductService>();
+        b.Services.AddScoped<IProductRepository, ProductRepository>();
+        b.Services.AddScoped<IProductService, ProductService>();
 
-        builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
-        builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+        b.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+        b.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 
-        builder.Services.AddScoped<ISalesRepository, SalesRepository>();
-        builder.Services.AddScoped<ISalesService, SalesService>();
+        b.Services.AddScoped<ISalesRepository, SalesRepository>();
+        b.Services.AddScoped<ISalesService, SalesService>();
 
-        builder.Services.AddTransient<ITokenService, TokenService>();
+        b.Services.AddTransient<ITokenService, TokenService>();
 
-        builder.Services.AddTransient<IMailService, MailService>();
+        b.Services.AddTransient<IMailService, MailService>();
 
-        builder.Services.AddTransient<ICustomerMailEvent, CustomerMailEvent>();
-        builder.Services.AddTransient<IPasswordMailEvent, PasswordMailEvent>();
+        b.Services.AddTransient<ICustomerMailEvent, CustomerMailEvent>();
+        b.Services.AddTransient<IPasswordMailEvent, PasswordMailEvent>();
     }
 }

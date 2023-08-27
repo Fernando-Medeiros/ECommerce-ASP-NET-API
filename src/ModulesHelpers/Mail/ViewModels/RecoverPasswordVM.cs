@@ -1,17 +1,17 @@
-using ECommerce.Startup.EnvironmentDTOs;
+using ECommerce.Startup.Environment;
 
 namespace ECommerce.ModulesHelpers.Mail;
 
 public class RecoverPasswordVM
 {
+    public string Token { get; init; }
     public string UserName { get; init; }
     public string RedirectURL { get; init; }
-
-    private static readonly RedirectUrlDTO _environment = new();
 
     public RecoverPasswordVM(string name, string token)
     {
         UserName = name;
-        RedirectURL = _environment.ResetPasswordURL + token;
+        Token = token;
+        RedirectURL = RedirectUrl.ResetPasswordURL + token;
     }
 }

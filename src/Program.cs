@@ -1,9 +1,8 @@
-using dotenv.net;
 using ECommerce.Startup;
 
-DotEnv.Load();
-
 var builder = WebApplication.CreateBuilder(args);
+
+ServiceProviders.Environment(builder);
 
 ServiceProviders.SmtpClient(builder);
 

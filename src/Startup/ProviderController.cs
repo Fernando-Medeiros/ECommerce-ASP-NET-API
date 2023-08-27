@@ -4,15 +4,15 @@ namespace ECommerce.Startup;
 
 public static partial class ServiceProviders
 {
-    public static void Controller(WebApplicationBuilder builder)
+    public static void Controller(WebApplicationBuilder b)
     {
-        builder.Services.AddControllers(opt =>
+        b.Services.AddControllers(opt =>
             {
                 opt.Filters.Add<HttpExceptionFilter>();
                 opt.Filters.Add<DatabaseExceptionFilter>();
             }
         );
 
-        builder.Services.AddEndpointsApiExplorer();
+        b.Services.AddEndpointsApiExplorer();
     }
 }
