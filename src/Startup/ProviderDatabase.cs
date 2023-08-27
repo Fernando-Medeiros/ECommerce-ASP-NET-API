@@ -10,11 +10,9 @@ public static partial class ServiceProviders
     {
         b.Services.AddDbContext<DatabaseContext>(options =>
         {
-            string _connectionString = DatabaseCredential.GetDatabaseConnectionString();
+            string? _connectionString = DatabaseCredential.GetDatabaseConnectionString();
 
-            options.UseMySql(
-                _connectionString,
-                serverVersion: ServerVersion.AutoDetect(_connectionString));
+            options.UseNpgsql(_connectionString);
         });
 
         b.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
