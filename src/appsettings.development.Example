@@ -12,17 +12,12 @@
   "TOKEN_REFRESH_EXP": 6,
   "TOKEN_RECOVER_PASS_EXP": 0.10,
   "TOKEN_AUTH_EMAIL_EXP": 6,
-  "DB_HOST": "localhost",
-  "DB_NAME": "ECommerce",
-  "DB_USER": "root",
-  "DB_PASS": 12345,
-  "DB_PORT": null,
-  "DB_SSL_MODE": null,
   "MAIL_HOST": "smtp.gmail.com",
   "MAIL_PORT": 587,
   "MAIL_ENCRYPTION": true,
   "MAIL_FROM_NAME": "ECommerce",
   "MAIL_FROM_ADDRESS": "noreply@ecommerce.com",
   "MAIL_USER": "YOUR_GMAIL@gmail.com",
-  "MAIL_PASS": "YOUR_SECRET_PASSWORD"
+  "MAIL_PASS": "YOUR_SECRET_PASSWORD",
+  "DB_DEFAULT_CONNECTION": "Server=localhost;Database=ECommerce;UserId=root;Password=12345;"
 }
