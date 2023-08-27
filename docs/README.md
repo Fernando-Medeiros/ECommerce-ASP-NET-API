@@ -1,29 +1,40 @@
 # ECommerce-ASP-NET-API
 
 - [ECommerce-ASP-NET-API](#ecommerce-asp-net-api)
-  - [Dependencies](#dependencies)
-  - [Current Features](#current-features)
+  - [Requirements](#requirements)
+  - [Features](#features)
+      - [Auth](#auth)
+      - [Customer](#customer)
+      - [CustomerCart \&  CustomerAddress](#customercart---customeraddress)
+      - [CustomerPassword](#customerpassword)
+      - [Products](#products)
+      - [ProductCategory](#productcategory)
+      - [Sales](#sales)
+  - [DBOptions](#dboptions)
   - [Usage](#usage)
     - [Environment](#environment)
     - [Docker](#docker)
-        - [Build container with MySQL:latest](#build-container-with-mysqllatest)
+        - [MySQL or Postgres](#mysql-or-postgres)
         - [Create the first migration](#create-the-first-migration)
         - [Update Database](#update-database)
         - [To access the MySQL instance](#to-access-the-mysql-instance)
+        - [To access the Postgres instance](#to-access-the-postgres-instance)
         - [Change a customer to a Manager](#change-a-customer-to-a-manager)
   - [Entity Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
 
 
-## Dependencies
-+ Docker Engine ^24.x
-+ Docker Desktop ^4.x
-+ Docker Compose  ^v2.x
-+ Microsoft.NETCore.App 7^
-+ Microsoft.AspNetCore.App 7^
-+ Packages -> [pkg ECommerce](../src/ECommerce.csproj) | [pkg ECommerceTests](../tests/ECommerceTests.csproj)
-- VSCode (optional) [ex. recommendations](../.vscode/extensions.json)
+## Requirements
+| name                                                     | version | optional |
+| :------------------------------------------------------- | :-----: | :------: |
+| Docker Engine                                            |   ^24   |          |
+| Docker Desktop                                           |   ^4    |          |
+| Docker Compose                                           |   ^2    |          |
+| Microsoft.NETCore.App                                    |   ^7    |          |
+| Microsoft.AspNetCore.App                                 |   ^7    |          |
+| Dotnet EF                                                |   ^7    |          |
+| VSCode [ex. recommendations](../.vscode/extensions.json) |  1.8^   |    x     |
 
-## Current Features
+## Features
 
 > Authentication
 - [x] JWT Token [ *Bearer* ]
@@ -35,28 +46,73 @@
 - [x] EmployeeIdentity
 
 > Resources
-- [x] **Auth**
-  - [x] SignIn [ *public* ]
-  - [x] Authenticate [ *Authorize(Scope -> AuthenticateEmail)* ]
-- [x] **Customer** [ *owner* ]
-  - Post [ *public* ]  
-- [x] **CustomerCart** [ *owner* ]
-- [x] **CustomerAddress** [ *owner* ]
-- [x] **CustomerPassword**
-  - [x] Recover [ *public* ]
-  - [x] Reset [ *Authorize(Scope -> RecoverPassword)* ]
-  - [x] Update [ *owner* ]
-- [x] **Product**:
-  - Get [ *public* ]
-  - Post, Patch, Delete [ *manager, employee* ]
-- [x] **ProductCategory**:
-  - Get [ *public* ]
-  - Post, Patch, Delete [ *manager, employee* ]
-- [x] **Sales** [ *manager* ]
+
+#### Auth 
+| method |     name     | public |    tokenScope     |
+| :----- | :----------: | :----: | :---------------: |
+| Post   |    SignIn    |   x    |                   |
+| Post   | Authenticate |        | AuthenticateEmail |
+
+#### Customer 
+| method | owner | public |
+| :----- | :---: | :----: |
+| Get    |   x   |        |
+| Post   |       |   x    |
+| Patch  |   x   |        |
+| Delete |   x   |        |
+
+#### CustomerCart &  CustomerAddress 
+| method | owner |
+| :----- | :---: |
+| Get    |   x   |
+| Post   |   x   |
+| Patch  |   x   |
+| Delete |   x   |
+
+#### CustomerPassword
+| method | name    | public |   tokenScope    |
+| :----- | :------ | :----: | :-------------: |
+| Post   | Recover |   x    |                 |
+| Patch  | Reset   |        | RecoverPassword |
+| Patch  | Update  |        | Access, Refresh |
+
+#### Products
+| method | public | manager | employee |
+| :----- | :----: | :-----: | :------: |
+| Get    |   x    |         |          |
+| Post   |        |    x    |    x     |
+| Patch  |        |    x    |    x     |
+| Delete |        |    x    |    x     |
+
+#### ProductCategory
+| method | public | manager | employee |
+| :----- | :----: | :-----: | :------: |
+| Get    |   x    |         |          |
+| Post   |        |    x    |    x     |
+| Patch  |        |    x    |    x     |
+| Delete |        |    x    |    x     |
+
+#### Sales
+| method | public | manager | employee |
+| :----- | :----: | :-----: | :------: |
+| Get    |        |    x    |          |
+| Post   |        |    x    |          |
+| Patch  |        |    x    |          |
+| Delete |        |    x    |          |
 
 
+## DBOptions
+
+```xml
+# Postgres
+<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7^" />
+# Mysql
+<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7^" />
+```
 
 ## Usage
+
+> dotnet tool install --global dotnet-ef
 
 ### Environment
 
@@ -79,13 +135,6 @@
   TOKEN_RECOVER_PASS_EXP=0.10 # UtcNow.AddHours(0.10) += 5 minutes
   TOKEN_AUTH_EMAIL_EXP=6
 
-  DB_HOST=localhost
-  DB_NAME=ECommerce
-  DB_USER=root
-  DB_PASS=12345
-  DB_PORT= null,
-  DB_SSL_MODE= null,
-
   MAIL_HOST=smtp.gmail.com
   MAIL_PORT=587
   MAIL_ENCRYPTION=true
@@ -93,28 +142,30 @@
   MAIL_FROM_ADDRESS=noreply@ecommerce.com
   MAIL_USER=< !! YOUR GMAIL !! >
   MAIL_PASS=< !! YOUR SECRET_PASSWORD !! >
+  DB_DEFAULT_CONNECTION="Server=localhost;Database=ECommerce;UserId=root;Password=12345;"
 ```
 
 ### Docker
 
 [.docker](../.docker/docker-compose.yml)
 
-##### Build container with MySQL:latest
+##### MySQL or Postgres
   ```sh
-  # rootUser=root / rootPassword=12345 / database=ECommerce
-  # .docker/
+  # cd .docker/mysql/
+  docker-compose up -d
+  # cd .docker/postgres/
   docker-compose up -d
   ```
 
 ##### Create the first migration
   ```sh
-  # src/
+  # cd src/
   dotnet ef migrations add initial
   ```
 
 ##### Update Database
   ```sh
-  # src/
+  # cd src/
   dotnet ef database update
   ```
 
@@ -122,14 +173,22 @@
   ```sh
   docker exec -it ecommerce-mysql mysql -uroot -p
   # or
-  # .docker/
+  # cd .docker/mysql/
   docker compose exec mysql mysql -uroot -p
+  ```
+
+##### To access the Postgres instance
+  ```sh
+  docker exec -it ecommerce-postgres psql -U root ECommerce
+  # or
+  # cd .docker/postgres/
+  docker compose exec postgres psql -U root ECommerce
   ```
 
 ##### Change a customer to a Manager
   ```sh
   # Run the project and register a customer;
-  # After accessing the mysql instance
+  # After accessing the mysql or postgres instance
   USE ECommerce;
   
   # Update
