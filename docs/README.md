@@ -3,13 +3,8 @@
 - [ECommerce-ASP-NET-API](#ecommerce-asp-net-api)
   - [Requirements](#requirements)
   - [Features](#features)
-      - [Auth](#auth)
-      - [Customer](#customer)
-      - [CustomerCart \&  CustomerAddress](#customercart---customeraddress)
-      - [CustomerPassword](#customerpassword)
-      - [Products](#products)
-      - [ProductCategory](#productcategory)
-      - [Sales](#sales)
+    - [Overview](#overview)
+    - [Authorization - Authentication](#authorization---authentication)
   - [DBOptions](#dboptions)
   - [Usage](#usage)
     - [Environment](#environment)
@@ -26,7 +21,7 @@
 ## Requirements
 | name                                                     | version | optional |
 | :------------------------------------------------------- | :-----: | :------: |
-| Docker Engine                                            |   ^24   |          |
+| Docker Engine                                            |   ^24   |    x     |
 | Docker Desktop                                           |   ^4    |          |
 | Docker Compose                                           |   ^2    |          |
 | Microsoft.NETCore.App                                    |   ^7    |          |
@@ -42,63 +37,40 @@
 - [x] CustomerIdentity
 
 > Authorization
-- [x] Using Roles [ *manager, employee* ]
+- [x] Roles [ *Manager, Employee* ]
 - [x] EmployeeIdentity
 
-> Resources
 
-#### Auth 
-| method |     name     | public |    tokenScope     |
-| :----- | :----------: | :----: | :---------------: |
-| Post   |    SignIn    |   x    |                   |
-| Post   | Authenticate |        | AuthenticateEmail |
+### Overview
 
-#### Customer 
-| method | owner | public |
-| :----- | :---: | :----: |
-| Get    |   x   |        |
-| Post   |       |   x    |
-| Patch  |   x   |        |
-| Delete |   x   |        |
+| route           |                 get                 |           post           |       patch        |   delete   |
+| :-------------- | :---------------------------------: | :----------------------: | :----------------: | :--------: |
+| auth            |                                     | [ SignIn, Authenticate ] |                    |            |
+| passwords       |                                     |       [ Recover ]        | [  Update, Reset ] |            |
+| customers       |             [ FindOne ]             |       [ Register ]       |     [ Update ]     | [ Remove ] |
+| addresses       |        [ FindOne, FindMany ]        |       [ Register ]       |     [ Update ]     | [ Remove ] |
+| carts           |        [ FindOne, FindMany ]        |       [ Register ]       |     [ Update ]     | [ Remove ] |
+| categories      | [ FindOne, FindMany, FindProducts ] |       [ Register ]       |     [ Update ]     | [ Remove ] |
+| products        |        [ FindOne, FindMany ]        |       [ Register ]       |     [ Update ]     | [ Remove ] |
+| sales (**dev**) |        [ FindOne, FindMany ]        |                          |                    | [ Remove ] |
 
-#### CustomerCart &  CustomerAddress 
-| method | owner |
-| :----- | :---: |
-| Get    |   x   |
-| Post   |   x   |
-| Patch  |   x   |
-| Delete |   x   |
-
-#### CustomerPassword
-| method | name    | public |   tokenScope    |
-| :----- | :------ | :----: | :-------------: |
-| Post   | Recover |   x    |                 |
-| Patch  | Reset   |        | RecoverPassword |
-| Patch  | Update  |        | Access, Refresh |
-
-#### Products
-| method | public | manager | employee |
-| :----- | :----: | :-----: | :------: |
-| Get    |   x    |         |          |
-| Post   |        |    x    |    x     |
-| Patch  |        |    x    |    x     |
-| Delete |        |    x    |    x     |
-
-#### ProductCategory
-| method | public | manager | employee |
-| :----- | :----: | :-----: | :------: |
-| Get    |   x    |         |          |
-| Post   |        |    x    |    x     |
-| Patch  |        |    x    |    x     |
-| Delete |        |    x    |    x     |
-
-#### Sales
-| method | public | manager | employee |
-| :----- | :----: | :-----: | :------: |
-| Get    |        |    x    |          |
-| Post   |        |    x    |          |
-| Patch  |        |    x    |          |
-| Delete |        |    x    |          |
+### Authorization - Authentication
+| route           |               method                |         role         | owner | public |     token scope     |
+| :-------------- | :---------------------------------: | :------------------: | :---: | :----: | :-----------------: |
+| auth            |               SignIn                |                      |       |   x    |                     |
+|                 |            Authenticate             |                      |   x   |        |  AuthenticateEmail  |
+| passwords       |               Recover               |                      |       |   x    |                     |
+|                 |                Reset                |                      |   x   |        |   RecoverPassword   |
+|                 |               Update                |                      |   x   |        | [ Access, Refresh ] |
+| customers       |              Register               |                      |       |   x    |                     |
+|                 |                [ * ]                |                      |   x   |        | [ Access, Refresh ] |
+| addresses       |                [ * ]                |                      |   x   |        | [ Access, Refresh ] |
+| carts           |                [ * ]                |                      |   x   |        | [ Access, Refresh ] |
+| categories      | [ FindOne, FindMany, FindProducts ] |                      |       |   x    |                     |
+|                 |                [ * ]                | [ Manager, Employee] |       |        | [ Access, Refresh ] |
+| products        |        [ FindOne, FindMany ]        |                      |       |   x    |                     |
+|                 |                [ * ]                | [ Manager, Employee] |       |        | [ Access, Refresh ] |
+| sales (**dev**) |                [ * ]                |      [ Manager]      |       |        | [ Access, Refresh ] |
 
 
 ## DBOptions
@@ -202,6 +174,6 @@
 - See:
   - Entities -> [Models](../src/Models)
   - Relationship -> [Database Context](../src/Context/DatabaseContext.cs)
-> ERD print 24/08/23
+> ERD print 04/09/23
 
 ![ERD](ERD-ECommerce.png)
