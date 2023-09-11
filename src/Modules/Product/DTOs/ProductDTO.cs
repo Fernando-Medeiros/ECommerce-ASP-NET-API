@@ -1,6 +1,6 @@
 namespace ECommerce.Modules.Product;
 
-using ECommerce.Models;
+using ECommerce.Context.Models;
 
 public class ProductDTO
 {

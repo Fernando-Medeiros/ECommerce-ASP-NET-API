@@ -2,7 +2,7 @@ namespace ECommerce.Modules.Customer;
 
 using AutoMapper;
 using ECommerce.Context;
-using ECommerce.Models;
+using ECommerce.Context.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class CustomerRepository : ICustomerRepository

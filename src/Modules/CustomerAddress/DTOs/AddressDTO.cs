@@ -1,6 +1,6 @@
 namespace ECommerce.Modules.CustomerAddress;
 
-using ECommerce.Models;
+using ECommerce.Context.Models;
 
 public class AddressDTO
 {

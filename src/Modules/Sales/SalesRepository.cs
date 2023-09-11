@@ -2,7 +2,7 @@ namespace ECommerce.Modules.Sales;
 
 using AutoMapper;
 using ECommerce.Context;
-using ECommerce.Models;
+using ECommerce.Context.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class SalesRepository : ISalesRepository

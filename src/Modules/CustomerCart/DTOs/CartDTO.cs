@@ -1,6 +1,6 @@
 namespace ECommerce.Modules.CustomerCart;
 
-using ECommerce.Models;
+using ECommerce.Context.Models;
 
 public class CartDTO
 {
