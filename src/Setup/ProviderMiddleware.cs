@@ -33,9 +33,9 @@ public static partial class Setup
         );
     }
 
-    public static void AuthorizationMiddleware(WebApplicationBuilder builder)
+    public static void AuthorizationMiddleware(WebApplicationBuilder b)
     {
-        builder.Services.AddAuthorization(opt =>
+        b.Services.AddAuthorization(opt =>
         {
             opt.AddPolicy("Manager", policy => policy.RequireRole("manager"));
             opt.AddPolicy("Employee", policy => policy.RequireRole("employee"));

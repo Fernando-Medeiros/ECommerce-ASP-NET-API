@@ -5,9 +5,9 @@ namespace ECommerce.Setup;
 
 public static partial class Setup
 {
-    public static void Swagger(WebApplicationBuilder builder)
+    public static void Swagger(WebApplicationBuilder b)
     {
-        builder.Services.AddSwaggerGen(opt =>
+        b.Services.AddSwaggerGen(opt =>
         {
             SwaggerSettings.AddTokenSecurityDefinition(opt);
 
