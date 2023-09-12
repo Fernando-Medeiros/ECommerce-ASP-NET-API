@@ -1,13 +1,13 @@
 using System.Text;
-using ECommerce.Startup.Environment;
+using ECommerce.Setup.Environment;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ECommerce.Startup;
+namespace ECommerce.Setup;
 
-public static partial class ServiceProviders
+public static partial class Setup
 {
-    public static void AddAuthenticationMiddleware(WebApplicationBuilder b)
+    public static void AuthenticationMiddleware(WebApplicationBuilder b)
     {
         b.Services
             .AddAuthentication(opt =>
@@ -19,7 +19,7 @@ public static partial class ServiceProviders
             })
             .AddJwtBearer(opt =>
             {
-                byte[] key = Encoding.ASCII.GetBytes(AuthCredential.PrivateKey!);
+                byte[] key = Encoding.ASCII.GetBytes(AuthEnvironment.PrivateKey!);
 
                 opt.RequireHttpsMetadata = false;
                 opt.SaveToken = true;
@@ -33,22 +33,12 @@ public static partial class ServiceProviders
         );
     }
 
-    public static void AddAuthorizationMiddleware(WebApplicationBuilder builder)
+    public static void AuthorizationMiddleware(WebApplicationBuilder builder)
     {
         builder.Services.AddAuthorization(opt =>
         {
             opt.AddPolicy("Manager", policy => policy.RequireRole("manager"));
             opt.AddPolicy("Employee", policy => policy.RequireRole("employee"));
         });
-    }
-
-    public static void UseAuthorizationMiddleware(WebApplication app)
-    {
-        app.UseAuthorization();
-    }
-
-    public static void UseAuthenticationMiddleware(WebApplication app)
-    {
-        app.UseAuthentication();
     }
 }

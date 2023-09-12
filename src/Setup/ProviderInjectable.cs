@@ -10,9 +10,9 @@ using ECommerce.Modules.Sales;
 using ECommerce.ModulesHelpers.Mail;
 using ECommerce.ModulesHelpers.Token;
 
-namespace ECommerce.Startup;
+namespace ECommerce.Setup;
 
-public static partial class ServiceProviders
+public static partial class Setup
 {
     public static void Injectable(WebApplicationBuilder b)
     {

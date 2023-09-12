@@ -1,8 +1,8 @@
-using ECommerce.Startup.Environment;
+using ECommerce.Setup.Environment;
 
-namespace ECommerce.Startup;
+namespace ECommerce.Setup;
 
-public static partial class ServiceProviders
+public static partial class Setup
 {
     public static void Environment(WebApplicationBuilder b)
     {
@@ -14,9 +14,9 @@ public static partial class ServiceProviders
             .AddEnvironmentVariables()
             .Build();
 
-        AuthCredential.LoadEnv(Configuration);
-        DatabaseCredential.LoadEnv(Configuration);
-        MailCredential.LoadEnv(Configuration);
-        RedirectUrl.LoadEnv(Configuration);
+        AuthEnvironment.LoadEnv(Configuration);
+        DatabaseEnvironment.LoadEnv(Configuration);
+        MailEnvironment.LoadEnv(Configuration);
+        RedirectEnvironment.LoadEnv(Configuration);
     }
 }

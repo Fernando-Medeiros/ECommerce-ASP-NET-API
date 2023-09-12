@@ -1,9 +1,9 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace ECommerce.Startup;
+namespace ECommerce.Setup;
 
-public static partial class ServiceProviders
+public static partial class Setup
 {
     public static void Swagger(WebApplicationBuilder builder)
     {

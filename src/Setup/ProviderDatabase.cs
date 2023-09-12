@@ -1,18 +1,16 @@
 using ECommerce.Context;
-using ECommerce.Startup.Environment;
+using ECommerce.Setup.Environment;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerce.Startup;
+namespace ECommerce.Setup;
 
-public static partial class ServiceProviders
+public static partial class Setup
 {
     public static void Database(WebApplicationBuilder b)
     {
         b.Services.AddDbContext<DatabaseContext>(options =>
         {
-            string? _connectionString = DatabaseCredential.GetDatabaseConnectionString();
-
-            options.UseNpgsql(_connectionString);
+            options.UseNpgsql(DatabaseEnvironment.ConnectionString);
         });
 
         b.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
