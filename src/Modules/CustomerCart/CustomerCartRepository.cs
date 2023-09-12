@@ -1,6 +1,6 @@
 using AutoMapper;
 using ECommerce.Context;
-using ECommerce.Models;
+using ECommerce.Context.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Modules.CustomerCart;

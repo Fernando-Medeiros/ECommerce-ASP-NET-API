@@ -1,6 +1,6 @@
 namespace ECommerce.Modules.Customer;
 
-using ECommerce.Models;
+using ECommerce.Context.Models;
 
 public class CustomerDTO
 {

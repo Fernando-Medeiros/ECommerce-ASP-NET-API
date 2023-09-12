@@ -1,4 +1,4 @@
-namespace ECommerce.Models;
+namespace ECommerce.Context.Models;
 
 public class Address
 {

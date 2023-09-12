@@ -5,8 +5,9 @@ using ECommerce.Modules.CustomerAddress;
 using ECommerce.Modules.Product;
 using ECommerce.Modules.ProductCategory;
 using ECommerce.Modules.Sales;
+using ECommerce.Context.Models;
 
-namespace ECommerce.Models.Mappings;
+namespace ECommerce.Context.Mappings;
 
 public class MappingProfile : Profile
 {

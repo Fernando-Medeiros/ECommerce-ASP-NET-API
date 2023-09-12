@@ -25,7 +25,7 @@ namespace ECommerce.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ECommerce.Models.Address", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Address", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -82,7 +82,7 @@ namespace ECommerce.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Cart", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Cart", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -116,7 +116,7 @@ namespace ECommerce.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Category", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Category", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -138,7 +138,7 @@ namespace ECommerce.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Customer", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Customer", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -187,7 +187,7 @@ namespace ECommerce.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Product", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Product", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -233,7 +233,7 @@ namespace ECommerce.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Sales", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Sales", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -267,9 +267,9 @@ namespace ECommerce.Migrations
                     b.ToTable("Sales");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Address", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Address", b =>
                 {
-                    b.HasOne("ECommerce.Models.Customer", "Customer")
+                    b.HasOne("ECommerce.Context.Models.Customer", "Customer")
                         .WithMany("Addresses")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -278,15 +278,15 @@ namespace ECommerce.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Cart", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Cart", b =>
                 {
-                    b.HasOne("ECommerce.Models.Customer", "Customer")
+                    b.HasOne("ECommerce.Context.Models.Customer", "Customer")
                         .WithMany("Carts")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ECommerce.Models.Product", "Product")
+                    b.HasOne("ECommerce.Context.Models.Product", "Product")
                         .WithMany("Carts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -297,9 +297,9 @@ namespace ECommerce.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Product", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Product", b =>
                 {
-                    b.HasOne("ECommerce.Models.Category", "Category")
+                    b.HasOne("ECommerce.Context.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -308,19 +308,19 @@ namespace ECommerce.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Category", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Customer", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Customer", b =>
                 {
                     b.Navigation("Addresses");
 
                     b.Navigation("Carts");
                 });
 
-            modelBuilder.Entity("ECommerce.Models.Product", b =>
+            modelBuilder.Entity("ECommerce.Context.Models.Product", b =>
                 {
                     b.Navigation("Carts");
                 });
