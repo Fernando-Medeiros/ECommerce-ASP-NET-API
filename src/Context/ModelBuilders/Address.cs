@@ -5,7 +5,7 @@ namespace ECommerce.Context;
 
 public partial class DatabaseContext
 {
-    public static void AddressModelBuilder(ModelBuilder x)
+    private static void AddressModelBuilder(ModelBuilder x)
     {
         x.Entity<Address>().HasKey(x => x.Id);
 

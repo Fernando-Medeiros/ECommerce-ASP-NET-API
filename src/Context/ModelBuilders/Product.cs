@@ -5,7 +5,7 @@ namespace ECommerce.Context;
 
 public partial class DatabaseContext
 {
-    public static void ProductModelBuilder(ModelBuilder x)
+    private static void ProductModelBuilder(ModelBuilder x)
     {
         x.Entity<Product>().HasKey(c => c.Id);
 
