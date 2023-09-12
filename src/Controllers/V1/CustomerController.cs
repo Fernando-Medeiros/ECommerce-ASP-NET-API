@@ -1,3 +1,5 @@
+using AutoMapper;
+using ECommerce.Events.Mail;
 using ECommerce.Identities;
 using ECommerce.Setup.ApiProducesResponse;
 using Microsoft.AspNetCore.Authorization;
@@ -5,59 +7,67 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.Customer;
 
-[ApiController, Authorize, Route("api/v1/customers")]
-[BadRequest, Unauthorized, Forbidden, NotFound]
+[ApiController, Authorize]
+[Route("api/v1/customers")]
 public class CustomerController : ControllerBase
 {
-    private readonly ICustomerService _service;
+    private readonly ICustomerRepository _repository;
 
-    public CustomerController(
-        ICustomerService service) => _service = service;
+    public CustomerController(ICustomerRepository repository)
+    {
+        _repository = repository;
+    }
 
     [HttpGet]
+    [NotFound, Unauthorized, Forbidden]
     [Success(typeof(CustomerResource))]
     public async Task<ActionResult> FindOne()
     {
-        CustomerIdentity customer = new(User);
+        var customer = new CustomerIdentity(User);
 
-        CustomerDTO customerDTO = await _service.FindById(customer.Id);
+        var customerDTO = await new FindOneCustomer(_repository)
+            .Execute(new() { Id = customer.Id });
 
-        CustomerResource resource = new(customerDTO);
+        var resource = new CustomerResource(customerDTO);
 
         return Ok(resource);
     }
 
     [HttpPost, AllowAnonymous]
-    [Created(typeof(Nullable))]
+    [Created, BadRequest]
     public async Task<ActionResult> Register(
+        [FromServices] IMapper _mapper,
+        [FromServices] ICustomerMailEvent _mailEvent,
         [FromBody] CustomerCreateRequest request)
     {
-        await _service.Register(
-            dto: CustomerCreateDTO.ExtractProperties(request));
+        await new RegisterCustomer(_repository, _mailEvent, _mapper)
+            .Execute(CustomerCreateDTO.ExtractProperties(request));
 
         return Created("", null);
     }
 
     [HttpPatch]
-    [NoContent]
+    [NoContent, NotFound, BadRequest, Unauthorized, Forbidden]
     public async Task<ActionResult> Update(
+        [FromServices] IMapper _mapper,
         [FromBody] CustomerUpdateRequest request)
     {
-        CustomerIdentity customer = new(User);
+        var customer = new CustomerIdentity(User);
 
-        await _service.Update(
-            dto: CustomerUpdateDTO.ExtractProperties(request, customer.Id));
+        await new UpdateCustomer(_repository, _mapper)
+            .Execute(CustomerUpdateDTO.ExtractProperties(request, customer.Id));
 
         return NoContent();
     }
 
     [HttpDelete]
-    [NoContent]
+    [NoContent, NotFound, Unauthorized, Forbidden]
     public async Task<ActionResult> Remove()
     {
-        CustomerIdentity customer = new(User);
+        var customer = new CustomerIdentity(User);
 
-        await _service.Remove(id: customer.Id);
+        await new RemoveCustomer(_repository)
+            .Execute(new() { Id = customer.Id });
 
         return NoContent();
     }
