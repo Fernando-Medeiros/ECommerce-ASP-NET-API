@@ -1,4 +1,4 @@
-using ECommerce.Startup.Environment;
+using ECommerce.Setup.Environment;
 
 namespace ECommerce.ModulesHelpers.Mail;
 
@@ -12,6 +12,6 @@ public class ActiveAccountVM
     {
         UserName = name;
         Token = token;
-        RedirectURL = RedirectUrl.AuthEmailURL + token;
+        RedirectURL = RedirectEnvironment.AuthEmailURL + token;
     }
 }
