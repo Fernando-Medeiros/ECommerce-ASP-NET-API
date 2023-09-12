@@ -11,9 +11,9 @@ public class EmployeeIdentity : MainIdentity
 
     public EmployeeIdentity(ClaimsPrincipal principal)
     {
-        Id = ExtractProperty("id", principal).Value;
-        Role = ExtractProperty(ClaimTypes.Role, principal).Value;
-        Scope = ExtractProperty("scope", principal).Value;
+        Id = ExtractProperty(ClaimsTypes.Id, principal).Value;
+        Role = ExtractProperty(ClaimsTypes.Role, principal).Value;
+        Scope = ExtractProperty(ClaimsTypes.Scope, principal).Value;
 
         CheckTokenScope(Scope, new() { ETokenScope.Access, ETokenScope.Refresh });
     }

@@ -1,9 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ECommerce.Modules.Customer;
 using ECommerce.Setup.Environment;
+using ECommerce.Identities;
 
 namespace ECommerce.ModulesHelpers.Token;
 
@@ -15,9 +15,9 @@ public class TokenService : ITokenService
 
     public TokenDTO Generate(CustomerDTO customer, ETokenScope scope)
     {
-        SecurityTokenDescriptor tokenDescriptor = new()
+        var tokenDescriptor = new SecurityTokenDescriptor()
         {
-            Subject = GeneratePayload(customer, scope),
+            Subject = new ClaimsIdentityPayload(customer, scope),
             Expires = ExpiresAt(scope),
             SigningCredentials = Credentials(),
         };
@@ -26,10 +26,12 @@ public class TokenService : ITokenService
 
         string token = _jwtHandler.WriteToken(securityToken);
 
-        return new(token, type: ETokenType.Bearer, scope);
+        return new TokenDTO(token, ETokenType.Bearer, scope);
     }
 
-    private SigningCredentials Credentials()
+    #region Private
+
+    private static SigningCredentials Credentials()
     {
         byte[] key = Encoding.ASCII.GetBytes(AuthEnvironment.PrivateKey!);
 
@@ -38,7 +40,7 @@ public class TokenService : ITokenService
             algorithm: SecurityAlgorithms.HmacSha256Signature);
     }
 
-    private DateTime ExpiresAt(ETokenScope scope)
+    private static DateTime ExpiresAt(ETokenScope scope)
     {
         double expires = scope switch
         {
@@ -51,19 +53,5 @@ public class TokenService : ITokenService
         return DateTime.UtcNow.AddHours(expires);
     }
 
-    private static ClaimsIdentity GeneratePayload(
-        CustomerDTO customer,
-        ETokenScope tokenScope)
-    {
-        ClaimsIdentity claims = new();
-
-        claims.AddClaim(new Claim("id", customer.Id!));
-
-        claims.AddClaim(new Claim("scope", Enum.GetName(tokenScope)!));
-
-        if (customer.Role != null)
-            claims.AddClaim(new Claim(ClaimTypes.Role, customer.Role!));
-
-        return claims;
-    }
+    #endregion
 }
