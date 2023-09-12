@@ -10,16 +10,16 @@ public class CustomerIdentity : MainIdentity
 
     public CustomerIdentity(ClaimsPrincipal principal)
     {
-        Id = ExtractProperty("id", principal).Value;
-        Scope = ExtractProperty("scope", principal).Value;
+        Id = ExtractProperty(ClaimsTypes.Id, principal).Value;
+        Scope = ExtractProperty(ClaimsTypes.Scope, principal).Value;
 
         CheckTokenScope(Scope, new() { ETokenScope.Access, ETokenScope.Refresh });
     }
 
     public CustomerIdentity(ClaimsPrincipal principal, List<ETokenScope> scopes)
     {
-        Id = ExtractProperty("id", principal).Value;
-        Scope = ExtractProperty("scope", principal).Value;
+        Id = ExtractProperty(ClaimsTypes.Id, principal).Value;
+        Scope = ExtractProperty(ClaimsTypes.Scope, principal).Value;
 
         CheckTokenScope(Scope, scopes);
     }
