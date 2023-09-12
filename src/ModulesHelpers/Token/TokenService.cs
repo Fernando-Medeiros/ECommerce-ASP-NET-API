@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ECommerce.Modules.Customer;
-using ECommerce.Startup.Environment;
+using ECommerce.Setup.Environment;
 
 namespace ECommerce.ModulesHelpers.Token;
 
@@ -31,7 +31,7 @@ public class TokenService : ITokenService
 
     private SigningCredentials Credentials()
     {
-        byte[] key = Encoding.ASCII.GetBytes(AuthCredential.PrivateKey!);
+        byte[] key = Encoding.ASCII.GetBytes(AuthEnvironment.PrivateKey!);
 
         return new(
             key: new SymmetricSecurityKey(key),
@@ -42,10 +42,10 @@ public class TokenService : ITokenService
     {
         double expires = scope switch
         {
-            ETokenScope.Access => AuthCredential.AccessTokenExp,
-            ETokenScope.Refresh => AuthCredential.RefreshTokenExp,
-            ETokenScope.RecoverPassword => AuthCredential.RecoverPasswordTokenExp,
-            ETokenScope.AuthenticateEmail => AuthCredential.AuthenticateEmailTokenExp,
+            ETokenScope.Access => AuthEnvironment.AccessTokenExp,
+            ETokenScope.Refresh => AuthEnvironment.RefreshTokenExp,
+            ETokenScope.RecoverPassword => AuthEnvironment.RecoverPasswordTokenExp,
+            ETokenScope.AuthenticateEmail => AuthEnvironment.AuthenticateEmailTokenExp,
             _ => 0
         };
         return DateTime.UtcNow.AddHours(expires);

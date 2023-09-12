@@ -1,6 +1,6 @@
-namespace ECommerce.Startup;
+namespace ECommerce.Setup;
 
-public static partial class ServiceProviders
+public static partial class Setup
 {
     public static void Development(WebApplication app)
     {

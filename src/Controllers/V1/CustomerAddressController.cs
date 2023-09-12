@@ -1,5 +1,5 @@
 using ECommerce.Identities;
-using ECommerce.Startup.SwaggerProducesResponse;
+using ECommerce.Setup.ApiProducesResponse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

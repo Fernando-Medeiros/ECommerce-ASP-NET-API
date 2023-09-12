@@ -1,4 +1,4 @@
-namespace ECommerce.Startup.SwaggerProducesResponse;
+namespace ECommerce.Exceptions;
 
 public class ExceptionResponse
 {

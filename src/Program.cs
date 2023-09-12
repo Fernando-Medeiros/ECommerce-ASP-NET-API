@@ -1,31 +1,35 @@
-using ECommerce.Startup;
+using ECommerce.Setup;
+
+#region builder application
 
 var builder = WebApplication.CreateBuilder(args);
 
-ServiceProviders.Environment(builder);
+Setup.Environment(builder);
 
-ServiceProviders.SmtpClient(builder);
+Setup.SmtpClient(builder);
 
-ServiceProviders.AddAuthenticationMiddleware(builder);
+Setup.AuthenticationMiddleware(builder);
 
-ServiceProviders.AddAuthorizationMiddleware(builder);
+Setup.AuthorizationMiddleware(builder);
 
-ServiceProviders.Controller(builder);
+Setup.Controller(builder);
 
-ServiceProviders.Swagger(builder);
+Setup.Swagger(builder);
 
-ServiceProviders.Database(builder);
+Setup.Database(builder);
 
-ServiceProviders.Injectable(builder);
+Setup.Injectable(builder);
+
+#endregion
+
+#region  web application
 
 var app = builder.Build();
 
-ServiceProviders.UseAuthenticationMiddleware(app);
+Setup.Development(app);
 
-ServiceProviders.UseAuthorizationMiddleware(app);
-
-ServiceProviders.Development(app);
-
-ServiceProviders.Pipeline(app);
+Setup.Pipeline(app);
 
 app.Run();
+
+#endregion

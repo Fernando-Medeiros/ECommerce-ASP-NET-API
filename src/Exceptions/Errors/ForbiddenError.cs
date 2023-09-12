@@ -1,4 +1,4 @@
-using ECommerce.Startup.SwaggerProducesResponse;
+using ECommerce.Setup.ApiProducesResponse;
 
 namespace ECommerce.Exceptions;
 
