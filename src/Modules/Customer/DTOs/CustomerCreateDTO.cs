@@ -1,16 +1,12 @@
-using ECommerce.ModulesHelpers.Crypt;
-
 namespace ECommerce.Modules.Customer;
 
 public readonly struct CustomerCreateDTO
 {
-    public readonly string Id;
     public readonly string Name;
     public readonly string FirstName;
     public readonly string LastName;
     public readonly string Email;
     public readonly string Password;
-    public readonly DateTime CreatedAt;
 
     public CustomerCreateDTO(
         string name,
@@ -19,13 +15,11 @@ public readonly struct CustomerCreateDTO
         string email,
         string password)
     {
-        Id = Guid.NewGuid().ToString();
         Name = name;
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        Password = CryptPassword.Hash(password);
-        CreatedAt = DateTime.UtcNow;
+        Password = password;
     }
 
     public static CustomerCreateDTO ExtractProperties(
