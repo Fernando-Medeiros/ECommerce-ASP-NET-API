@@ -14,7 +14,7 @@ public class CustomerPasswordRepository : ICustomerPasswordRepository
 
     public async Task<CustomerDTO?> FindCustomer(string? id, string? email)
     {
-        return await _customerRepository.Find(id, email);
+        return await _customerRepository.Find(new() { Id = id, Email = email });
     }
 
     public async Task UpdateCustomer(CustomerDTO dto)

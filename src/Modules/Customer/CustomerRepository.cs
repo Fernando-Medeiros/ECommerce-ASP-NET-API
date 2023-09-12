@@ -5,6 +5,7 @@ using ECommerce.Context;
 using ECommerce.Context.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 public class CustomerRepository : ICustomerRepository
 {
     private readonly DatabaseContext _context;
@@ -17,48 +18,48 @@ public class CustomerRepository : ICustomerRepository
         _mapper = mapper;
     }
 
-    public async Task<CustomerDTO?> Find(string? id, string? email)
+    public async Task<CustomerDTO?> Find(CustomerDTO dto)
     {
         Customer? result = null;
 
-        if (id != null)
+        if (dto.Id != null)
             result = await _context.Customers
                 .AsNoTracking()
-                .SingleOrDefaultAsync(c => c.Id == id);
+                .SingleOrDefaultAsync(c => c.Id == dto.Id);
 
-        else if (email != null)
+        else if (dto.Email != null)
             result = await _context.Customers
                 .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Email == email);
+                .FirstOrDefaultAsync(c => c.Email == dto.Email);
 
         return result == null ? null : _mapper.Map<CustomerDTO>(result);
     }
 
-    public async Task<CustomerDTO> Register(CustomerCreateDTO dto)
+    public async Task<CustomerDTO> Register(CustomerDTO customer)
     {
-        var customerEntity = _mapper.Map<Customer>(dto);
+        var entity = _mapper.Map<Customer>(customer);
 
-        _context.Customers.Add(customerEntity);
+        _context.Customers.Add(entity);
 
         await _context.SaveChangesAsync();
 
-        return _mapper.Map<CustomerDTO>(customerEntity);
+        return _mapper.Map<CustomerDTO>(entity);
     }
 
-    public async Task Update(CustomerDTO dto)
+    public async Task Update(CustomerDTO customer)
     {
-        var customerEntity = _mapper.Map<Customer>(dto);
+        var entity = _mapper.Map<Customer>(customer);
 
-        _context.Customers.Entry(customerEntity).State = EntityState.Modified;
+        _context.Customers.Entry(entity).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
     }
 
-    public async Task Remove(CustomerDTO dto)
+    public async Task Remove(CustomerDTO customer)
     {
-        var customerEntity = _mapper.Map<Customer>(dto);
+        var entity = _mapper.Map<Customer>(customer);
 
-        _context.Customers.Remove(customerEntity);
+        _context.Customers.Remove(entity);
 
         await _context.SaveChangesAsync();
     }

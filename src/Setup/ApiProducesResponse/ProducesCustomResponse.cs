@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Setup.ApiProducesResponse;
 
-public class ProducesCustomResponse : ProducesResponseTypeAttribute
+public abstract class ProducesCustomResponse : ProducesResponseTypeAttribute
 {
     public ProducesCustomResponse(
         int statusCode, Type? type = null)
@@ -15,7 +15,7 @@ public class Success : ProducesCustomResponse
 
 
 public class Created : ProducesCustomResponse
-{ public Created(Type? type) : base(201, type) { } }
+{ public Created(Type? type = null) : base(201, type) { } }
 
 
 public class NoContent : ProducesCustomResponse

@@ -36,7 +36,7 @@ public class SalesService : ISalesService
 
     public async Task Register(SalesCreateDTO dto)
     {
-        _ = await _customerRepository.Find(id: dto.CustomerId)
+        _ = await _customerRepository.Find(new() { Id = dto.CustomerId })
             ?? throw new NotFoundError("Customer Not Found");
 
         _ = await _productRepository.FindOne(id: dto.ProductId)

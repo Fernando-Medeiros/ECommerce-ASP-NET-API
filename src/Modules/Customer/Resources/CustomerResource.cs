@@ -12,13 +12,13 @@ public readonly struct CustomerResource
     public readonly string? Email { get; init; }
     public readonly DateOnly CreatedAt { get; init; }
 
-    public CustomerResource(CustomerDTO _)
+    public CustomerResource(CustomerDTO x)
     {
-        Id = _.Id;
-        Name = _.Name;
-        FirstName = _.FirstName;
-        LastName = _.LastName;
-        Email = _.Email;
-        CreatedAt = DateOnly.FromDateTime(_.CreatedAt!.Value);
+        Id = x.Id;
+        Name = x.Name;
+        FirstName = x.FirstName;
+        LastName = x.LastName;
+        Email = x.Email;
+        CreatedAt = DateOnly.FromDateTime(x.CreatedAt!.Value);
     }
 }

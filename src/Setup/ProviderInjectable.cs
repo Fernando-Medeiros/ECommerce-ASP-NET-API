@@ -19,7 +19,6 @@ public static partial class Setup
         b.Services.AddScoped<IAuthService, AuthService>();
 
         b.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-        b.Services.AddScoped<ICustomerService, CustomerService>();
 
         b.Services.AddScoped<ICustomerAddressRepository, CustomerAddressRepository>();
         b.Services.AddScoped<ICustomerAddressService, CustomerAddressService>();

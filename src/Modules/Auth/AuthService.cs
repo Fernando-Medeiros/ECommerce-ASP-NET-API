@@ -49,7 +49,7 @@ public class AuthService : IAuthService
 
     private async Task<CustomerDTO> FindCustomer(SignInDTO dto)
     {
-        return await _customerRepository.Find(dto.Id, dto.Email)
+        return await _customerRepository.Find(new() { Id = dto.Id, Email = dto.Email })
             ?? throw new NotFoundError("Customer Not Found");
     }
 
