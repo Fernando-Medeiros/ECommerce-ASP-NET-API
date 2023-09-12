@@ -1,8 +1,6 @@
-using ECommerce.Setup.ApiProducesResponse;
-
 namespace ECommerce.Exceptions;
 
-public class BadRequestError : HttpResponseException
+public class BadRequestError : HttpException
 {
     public BadRequestError(string message)
         : base(400, new ExceptionResponse(message, 400)) { }

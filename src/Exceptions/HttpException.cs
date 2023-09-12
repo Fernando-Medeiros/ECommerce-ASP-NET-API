@@ -1,12 +1,12 @@
 namespace ECommerce.Exceptions;
 
-public abstract class HttpResponseException : Exception
+public abstract class HttpException : Exception
 {
     public int Status { get; }
 
     public object? Value { get; }
 
-    public HttpResponseException(
+    public HttpException(
         int statusCode,
         object? value = null)
     {
