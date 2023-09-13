@@ -7,18 +7,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.Customer;
 
-[ApiController, Authorize]
+[ApiController]
 [Route("api/v1/customers")]
 public class CustomerController : ControllerBase
 {
     private readonly ICustomerRepository _repository;
+    private readonly IMapper _mapper;
 
-    public CustomerController(ICustomerRepository repository)
+    public CustomerController(
+        ICustomerRepository repository,
+        IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
     [HttpGet]
+    [Authorize]
     [NotFound, Unauthorized, Forbidden]
     [Success(typeof(CustomerResource))]
     public async Task<ActionResult> FindOne()
@@ -33,34 +38,40 @@ public class CustomerController : ControllerBase
         return Ok(resource);
     }
 
-    [HttpPost, AllowAnonymous]
+    [HttpPost]
     [Created, BadRequest]
     public async Task<ActionResult> Register(
-        [FromServices] IMapper _mapper,
         [FromServices] ICustomerMailEvent _mailEvent,
         [FromBody] CustomerCreateRequest request)
     {
+        var requestMapped = _mapper.Map<CustomerDTO>(request);
+
         await new RegisterCustomer(_repository, _mailEvent, _mapper)
-            .Execute(CustomerCreateDTO.ExtractProperties(request));
+            .Execute(requestMapped);
 
         return Created("", null);
     }
 
     [HttpPatch]
+    [Authorize]
     [NoContent, NotFound, BadRequest, Unauthorized, Forbidden]
     public async Task<ActionResult> Update(
-        [FromServices] IMapper _mapper,
         [FromBody] CustomerUpdateRequest request)
     {
         var customer = new CustomerIdentity(User);
 
+        var requestMapped = _mapper.Map<CustomerDTO>(request);
+
+        requestMapped.Id = customer.Id;
+
         await new UpdateCustomer(_repository, _mapper)
-            .Execute(CustomerUpdateDTO.ExtractProperties(request, customer.Id));
+            .Execute(requestMapped);
 
         return NoContent();
     }
 
     [HttpDelete]
+    [Authorize]
     [NoContent, NotFound, Unauthorized, Forbidden]
     public async Task<ActionResult> Remove()
     {
