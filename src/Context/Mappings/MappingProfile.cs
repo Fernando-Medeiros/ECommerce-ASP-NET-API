@@ -1,5 +1,4 @@
 using AutoMapper;
-using ECommerce.Modules.Customer;
 using ECommerce.Modules.CustomerCart;
 using ECommerce.Modules.CustomerAddress;
 using ECommerce.Modules.Product;
@@ -21,9 +20,6 @@ public class MappingProfile : Profile
 
         CreateMap<Category, CategoryDTO>().ReverseMap();
         CreateMap<Category, CategoryCreateDTO>().ReverseMap();
-
-        CreateMap<Customer, CustomerDTO>().ReverseMap();
-        CreateMap<CustomerDomain, CustomerDTO>().ReverseMap();
 
         CreateMap<Product, ProductDTO>().ReverseMap();
         CreateMap<Product, ProductCreateDTO>().ReverseMap();

@@ -35,7 +35,7 @@ public class CustomerDomain
         return this;
     }
 
-    public CustomerDomain Register(CustomerCreateDTO x)
+    public CustomerDomain Register(CustomerDTO x)
     {
         Id = Guid.NewGuid().ToString();
 
@@ -50,7 +50,7 @@ public class CustomerDomain
         return this;
     }
 
-    public CustomerDomain Update(CustomerUpdateDTO x)
+    public CustomerDomain Update(CustomerDTO x)
     {
         Name = x.Name ?? Name;
         FirstName = x.FirstName ?? FirstName;

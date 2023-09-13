@@ -15,7 +15,7 @@ public class UpdateCustomer
         _mapper = mapper;
     }
 
-    public async Task Execute(CustomerUpdateDTO dto)
+    public async Task Execute(CustomerDTO dto)
     {
         var currentCustomer = await _repository
             .FindOneOrNotFound(new() { Id = dto.Id });
@@ -27,8 +27,8 @@ public class UpdateCustomer
             .LoadState(currentCustomer)
             .Update(dto);
 
-        var customerDto = _mapper.Map<CustomerDTO>(customerDomain);
+        var customerMapped = _mapper.Map<CustomerDTO>(customerDomain);
 
-        await _repository.Update(customerDto);
+        await _repository.Update(customerMapped);
     }
 }
