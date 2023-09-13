@@ -20,19 +20,19 @@ public class RegisterCustomer
         RegisterCustomerEvent += mainEvent.OnRegisterCustomer;
     }
 
-    public async Task Execute(CustomerCreateDTO dto)
+    public async Task Execute(CustomerDTO dto)
     {
         await _repository.UniqueEmailConstraint(dto.Email);
 
-        CryptPassword.Hash(dto.Password);
+        dto.Password = CryptPassword.Hash(dto.Password!);
 
         var customerDomain = new CustomerDomain().Register(dto);
 
-        var customerDto = _mapper.Map<CustomerDTO>(customerDomain);
+        var customerMapped = _mapper.Map<CustomerDTO>(customerDomain);
 
-        await _repository.Register(customerDto);
+        await _repository.Register(customerMapped);
 
-        RegisterCustomerEvent.Invoke(this, customerDto);
+        RegisterCustomerEvent.Invoke(this, customerMapped);
     }
 
     private event EventHandler<CustomerDTO> RegisterCustomerEvent;
