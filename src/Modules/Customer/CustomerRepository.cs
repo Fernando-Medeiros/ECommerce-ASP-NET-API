@@ -9,10 +9,11 @@ using Microsoft.EntityFrameworkCore;
 public class CustomerRepository : ICustomerRepository
 {
     private readonly DatabaseContext _context;
-
     private readonly IMapper _mapper;
 
-    public CustomerRepository(DatabaseContext context, IMapper mapper)
+    public CustomerRepository(
+        DatabaseContext context,
+        IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -22,28 +23,26 @@ public class CustomerRepository : ICustomerRepository
     {
         Customer? result = null;
 
-        if (dto.Id != null)
+        if (dto.Id != null || dto.Email != null)
+        {
             result = await _context.Customers
                 .AsNoTracking()
-                .SingleOrDefaultAsync(c => c.Id == dto.Id);
+                .SingleOrDefaultAsync(
+                    c => dto.Id != null
+                    ? c.Id == dto.Id
+                    : c.Email == dto.Email);
+        }
 
-        else if (dto.Email != null)
-            result = await _context.Customers
-                .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Email == dto.Email);
-
-        return result == null ? null : _mapper.Map<CustomerDTO>(result);
+        return _mapper.Map<CustomerDTO?>(result);
     }
 
-    public async Task<CustomerDTO> Register(CustomerDTO customer)
+    public async Task Register(CustomerDTO customer)
     {
         var entity = _mapper.Map<Customer>(customer);
 
         _context.Customers.Add(entity);
 
         await _context.SaveChangesAsync();
-
-        return _mapper.Map<CustomerDTO>(entity);
     }
 
     public async Task Update(CustomerDTO customer)
