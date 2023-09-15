@@ -1,17 +1,17 @@
 namespace ECommerceDomain.DTOs;
 
-public class CustomerDTO
+public record CustomerDTO()
 {
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public string? Email { get; set; }
+    public string? Id { get; init; }
+    public string? Name { get; init; }
+    public string? FirstName { get; init; }
+    public string? LastName { get; init; }
+    public string? Email { get; init; }
 
-    public string? Password { get; set; }
-    public string? Role { get; set; }
+    public string? Password { get; init; }
+    public string? Role { get; init; }
 
-    public DateTimeOffset? VerifiedAt { get; set; }
-    public DateTimeOffset? UpdatedAt { get; set; }
-    public DateTimeOffset? CreatedAt { get; set; }
+    public DateTimeOffset? VerifiedAt { get; init; }
+    public DateTimeOffset? UpdatedAt { get; init; }
+    public DateTimeOffset? CreatedAt { get; init; }
 }
