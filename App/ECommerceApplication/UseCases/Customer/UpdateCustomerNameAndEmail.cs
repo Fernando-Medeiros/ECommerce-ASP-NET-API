@@ -1,12 +1,13 @@
 using AutoMapper;
 using ECommerceApplication.Contracts;
 using ECommerceApplication.Exceptions;
+using ECommerceApplication.Requests;
 using ECommerceDomain.DTOs;
 using ECommerceDomain.Entities;
 
 namespace ECommerceApplication.UseCases.Customer;
 
-public class UpdateCustomerNameAndEmail : IUseCase<CustomerDTO>
+public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest>
 {
     private readonly ICustomerRepository _repository;
     private readonly IUnitTransactionWork _transaction;
@@ -22,21 +23,25 @@ public class UpdateCustomerNameAndEmail : IUseCase<CustomerDTO>
         _mapper = mapper;
     }
 
-    public async Task Execute(CustomerDTO data)
+    public async Task Execute(UpdateCustomerRequest request)
     {
-        var customerCurrentState = await _repository.FindOne(new() { Id = data.Id })
-            ?? throw new CustomerNotFoundException();
+        var customerDto = _mapper.Map<CustomerDTO>(request);
 
-        if (data.Email != customerCurrentState.Email &&
-            await _repository.FindOne(new() { Email = data.Email }) != null)
+        var customerCurrentState = await _repository.FindOne(new() { Id = customerDto.Id })
+            ?? throw new CustomerNotFoundException()
+                .SetTarget(nameof(UpdateCustomerNameAndEmail));
+
+        if (request.Email != customerCurrentState.Email &&
+            await _repository.FindOne(new() { Email = request.Email }) != null)
         {
-            throw new UniqueEmailConstraintException();
+            throw new UniqueEmailConstraintException()
+                .SetTarget(nameof(UpdateCustomerNameAndEmail)); ;
         }
 
         var customerEntity = new CustomerEntity()
             .LoadState(customerCurrentState)
-            .UpdateName(data)
-            .UpdateEmail(data);
+            .UpdateName(customerDto)
+            .UpdateEmail(customerDto);
 
         var customerMapped = _mapper.Map<CustomerDTO>(customerEntity);
 
