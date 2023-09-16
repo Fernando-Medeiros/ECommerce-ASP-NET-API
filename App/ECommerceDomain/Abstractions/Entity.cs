@@ -4,7 +4,7 @@ namespace ECommerceDomain.Abstractions;
 
 public abstract class Entity
 {
-    public UUID Id { get; protected set; } = new();
-    public DateTimeOffset? UpdatedAt { get; protected set; }
-    public DateTimeOffset? CreatedAt { get; protected set; }
+    public UUID? Id { get; protected set; }
+    public Date? UpdatedOn { get; protected set; }
+    public Date? CreatedOn { get; protected set; }
 }
