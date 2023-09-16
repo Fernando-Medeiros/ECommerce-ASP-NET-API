@@ -16,6 +16,7 @@ public sealed class FindOneCustomer : IUseCase<CustomerDTO, CustomerDTO>
     public async Task<CustomerDTO> Execute(CustomerDTO data)
     {
         return await _repository.FindOne(data)
-            ?? throw new CustomerNotFoundException();
+            ?? throw new CustomerNotFoundException()
+                .SetTarget(nameof(FindOneCustomer));
     }
 }

@@ -18,7 +18,7 @@ dist
 */dist
 
 **/.env
-*/appsettings.development.json
+**/appsettings.development.json
 -------------------------------------------------------------
 
 # Mono auto generated files
