@@ -9,7 +9,7 @@ public class Customer
     public string? Email { get; set; }
     public string? Password { get; set; }
     public string? Role { get; set; }
-    public DateTimeOffset? VerifiedAt { get; set; }
-    public DateTimeOffset? UpdatedAt { get; set; }
-    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset? VerifiedOn { get; set; }
+    public DateTimeOffset? UpdatedOn { get; set; }
+    public DateTimeOffset CreatedOn { get; set; }
 }
