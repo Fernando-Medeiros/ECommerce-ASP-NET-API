@@ -1,12 +1,13 @@
 using AutoMapper;
 using ECommerceApplication.Contracts;
 using ECommerceApplication.Exceptions;
+using ECommerceApplication.Requests;
 using ECommerceDomain.DTOs;
 using ECommerceDomain.Entities;
 
 namespace ECommerceApplication.UseCases.Customer;
 
-public sealed class RegisterCustomer : IUseCase<CustomerDTO>
+public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest>
 {
     private readonly ICustomerRepository _repository;
     private readonly IUnitTransactionWork _transaction;
@@ -25,12 +26,17 @@ public sealed class RegisterCustomer : IUseCase<CustomerDTO>
         _crypt = crypt;
     }
 
-    public async Task Execute(CustomerDTO data)
+    public async Task Execute(CreateCustomerRequest request)
     {
-        if (await _repository.FindOne(new() { Email = data.Email }) != null)
-            throw new UniqueEmailConstraintException();
+        if (await _repository.FindOne(new() { Email = request.Email }) != null)
+        {
+            throw new UniqueEmailConstraintException()
+                .SetTarget(nameof(RegisterCustomer));
+        }
 
-        var customerDto = data with { Password = _crypt.Hash(data.Password) };
+        request.Password = _crypt.Hash(request.Password);
+
+        var customerDto = _mapper.Map<CustomerDTO>(request);
 
         var customerEntity = new CustomerEntity().Register(customerDto);
 
