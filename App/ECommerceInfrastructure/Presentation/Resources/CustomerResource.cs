@@ -11,7 +11,7 @@ public readonly struct CustomerResource
     public string? LastName { get; init; }
     [EmailAddress]
     public string? Email { get; init; }
-    public DateOnly CreatedAt { get; init; }
+    public DateOnly CreatedOn { get; init; }
 
     public CustomerResource(CustomerDTO x)
     {
@@ -20,6 +20,6 @@ public readonly struct CustomerResource
         FirstName = x.FirstName;
         LastName = x.LastName;
         Email = x.Email;
-        CreatedAt = DateOnly.FromDateTime(x.CreatedAt!.Value.DateTime);
+        CreatedOn = DateOnly.FromDateTime(x.CreatedOn!.Value.DateTime);
     }
 }

@@ -43,7 +43,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPatch]
-    // [Authorize]
+    [Authorize]
     [NoContent, NotFound, BadRequest, Unauthorized, Forbidden]
     public async Task<ActionResult> Update(
         [FromServices] UpdateCustomerNameAndEmail UpdateCustomerNameAndEmail,

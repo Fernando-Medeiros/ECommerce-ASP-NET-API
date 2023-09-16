@@ -38,8 +38,7 @@ public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest>
                 .SetTarget(nameof(UpdateCustomerNameAndEmail)); ;
         }
 
-        var customerEntity = new CustomerEntity()
-            .LoadState(customerCurrentState)
+        var customerEntity = new CustomerEntity(customerCurrentState)
             .UpdateName(customerDto)
             .UpdateEmail(customerDto);
 

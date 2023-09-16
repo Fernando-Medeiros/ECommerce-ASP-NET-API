@@ -2,18 +2,19 @@ namespace ECommerceDomain.Abstractions;
 
 public abstract class ValueObject<T>
 {
-    public T? Value { get; private set; }
+    public T? Value { get; init; }
 
-    public bool Required { get; private set; } = true;
+    public ValueObject(T? data, bool required = true)
+    {
+        if (required || data != null)
+            Validate(data);
 
-    public ValueObject<T> Set(T data) { Value = data; return this; }
-
-    public ValueObject<T> Optional() { Required = false; return this; }
-
+        Value = data;
+    }
 
     #region Abstractions
 
-    public abstract ValueObject<T> Validate(T data);
+    public abstract void Validate(T? data);
 
     #endregion
 

@@ -7,88 +7,92 @@ namespace ECommerceDomain.Entities;
 
 public sealed class CustomerEntity : Entity
 {
-    public Email Email { get; private set; } = new();
-    public FullName Name { get; private set; } = new();
-    public Password Password { get; private set; } = new();
-    public Role Role { get; private set; } = new();
+    public Email? Email { get; private set; }
+    public FullName? Name { get; private set; }
+    public Password? Password { get; private set; }
+    public Role? Role { get; private set; }
+    public Date? VerifiedOn { get; private set; }
 
-    public DateTimeOffset? VerifiedAt { get; private set; }
+    public CustomerEntity() { }
 
-    public CustomerEntity LoadState(CustomerDTO x)
+    public CustomerEntity(CustomerDTO x)
     {
-        Id.Validate(x.Id).Set(x.Id);
+        Id = new UUID(x.Id);
 
-        Email.Validate(x.Email).Set(x.Email);
-        Name.Name.Validate(x.Name).Set(x.Name);
-        Name.FirstName.Validate(x.FirstName).Set(x.FirstName);
-        Name.LastName.Validate(x.LastName).Set(x.LastName);
+        Name = new FullName(
+            new Name(x.Name),
+            new Name(x.FirstName),
+            new Name(x.LastName));
 
-        Password.Validate(x.Password).Set(x.Password);
+        Email = new Email(x.Email);
 
-        Role.Validate(x.Role).Set(x.Role);
+        Password = new Password(x.Password);
 
-        VerifiedAt = x?.VerifiedAt;
-        UpdatedAt = x?.UpdatedAt;
-        CreatedAt = x?.CreatedAt;
-        return this;
+        Role = new Role(x.Role);
+
+        VerifiedOn = new Date(x.VerifiedOn, required: false);
+        UpdatedOn = new Date(x.UpdatedOn, required: false);
+        CreatedOn = new Date(x.CreatedOn);
     }
 
     public CustomerEntity Register(CustomerDTO x)
     {
-        Id.Set(Guid.NewGuid().ToString());
+        Id = new UUID(Guid.NewGuid().ToString());
 
-        Email.Validate(x.Email).Set(x.Email);
+        Name = new FullName(
+            new Name(x.Name),
+            new Name(x.FirstName),
+            new Name(x.LastName));
 
-        Name.Name.Validate(x.Name).Set(x.Name);
-        Name.FirstName.Validate(x.FirstName).Set(x.FirstName);
-        Name.LastName.Validate(x.LastName).Set(x.LastName);
+        Email = new Email(x.Email);
 
-        Password.Validate(x.Password).Set(x.Password);
+        Password = new Password(x.Password);
 
-        Role.Set(nameof(ERoles.customer));
+        Role = new Role(nameof(ERoles.customer));
 
-        CreatedAt = DateTimeOffset.UtcNow;
+        CreatedOn = new Date(DateTimeOffset.UtcNow);
         return this;
     }
 
     public CustomerEntity UpdateName(CustomerDTO x)
     {
-        Name.Name.Optional().Validate(x.Name).Set(x.Name);
-        Name.FirstName.Optional().Validate(x.FirstName).Set(x.FirstName);
-        Name.LastName.Optional().Validate(x.LastName).Set(x.LastName);
+        Name = new FullName(
+            new Name(x.Name, required: false),
+            new Name(x.FirstName, required: false),
+            new Name(x.LastName, required: false));
 
-        UpdatedAt = DateTimeOffset.UtcNow;
+        UpdatedOn = new Date(DateTimeOffset.UtcNow);
         return this;
     }
 
     public CustomerEntity UpdateEmail(CustomerDTO x)
     {
-        Email.Optional().Validate(x.Email).Set(x.Email);
+        Email = new Email(x.Email, required: false);
 
-        UpdatedAt = DateTimeOffset.UtcNow;
+        UpdatedOn = new Date(DateTimeOffset.UtcNow);
         return this;
     }
 
     public CustomerEntity UpdatePassword(CustomerDTO x)
     {
-        Password.Optional().Validate(x.Password).Set(x.Password);
+        Password = new Password(x.Password, required: false);
 
-        UpdatedAt = DateTimeOffset.UtcNow;
+        UpdatedOn = new Date(DateTimeOffset.UtcNow);
         return this;
     }
 
     public CustomerEntity UpdateRole(CustomerDTO x)
     {
-        Role.Optional().Validate(x.Role).Set(x.Role);
+        Role = new Role(x.Role, required: false);
 
-        UpdatedAt = DateTimeOffset.UtcNow;
+        UpdatedOn = new Date(DateTimeOffset.UtcNow);
         return this;
     }
 
     public CustomerEntity AssignVerified()
     {
-        VerifiedAt = DateTimeOffset.UtcNow;
-        UpdatedAt = DateTimeOffset.UtcNow;
+        VerifiedOn = new Date(DateTimeOffset.UtcNow);
+        UpdatedOn = new Date(DateTimeOffset.UtcNow);
         return this;
     }
 }
