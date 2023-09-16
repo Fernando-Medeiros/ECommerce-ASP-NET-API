@@ -1,5 +1,6 @@
 using ECommerceDomain.Abstractions;
 using ECommerceDomain.DTOs;
+using ECommerceDomain.Enums;
 using ECommerceDomain.ValueObjects;
 
 namespace ECommerceDomain.Entities;
@@ -43,6 +44,8 @@ public sealed class CustomerEntity : Entity
         Name.LastName.Validate(x.LastName).Set(x.LastName);
 
         Password.Validate(x.Password).Set(x.Password);
+
+        Role.Set(nameof(ERoles.customer));
 
         CreatedAt = DateTimeOffset.UtcNow;
         return this;
