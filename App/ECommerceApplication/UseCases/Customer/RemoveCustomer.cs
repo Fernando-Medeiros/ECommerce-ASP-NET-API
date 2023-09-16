@@ -20,7 +20,8 @@ public sealed class RemoveCustomer : IUseCase<CustomerDTO>
     public async Task Execute(CustomerDTO data)
     {
         var customerDto = await _repository.FindOne(data)
-            ?? throw new CustomerNotFoundException();
+            ?? throw new CustomerNotFoundException()
+                .SetTarget(nameof(RemoveCustomer));
 
         _repository.Remove(customerDto);
 
