@@ -7,12 +7,13 @@ namespace ECommerceDomain.ValueObjects;
 
 public sealed class Name : ValueObject<string?>
 {
-    public override ValueObject<string?> Validate(string? name)
+    public Name(string? data, bool required = true) : base(data, required) { }
+
+    public override void Validate(string? name)
     {
-        if (Required && Regex.IsMatch(name ?? "", RegexTypes.Name) is false)
+        if (Regex.IsMatch(name ?? "", RegexTypes.Name) is false)
         {
             throw new NameFormatException().SetTarget(nameof(Name));
         }
-        return this;
     }
 }
