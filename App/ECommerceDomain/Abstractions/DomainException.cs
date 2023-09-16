@@ -2,11 +2,7 @@ namespace ECommerceDomain.Abstractions;
 
 public abstract class DomainException : Exception
 {
-    public int StatusCode { get; private set; }
-    public string? Error { get; private set; }
-    public string? Target { get; private set; }
-    public List<string> Details { get; private set; }
-    public DateTimeOffset? OccurredAt { get; private set; }
+    public DomainResponseException Value { get; private set; } = new();
 
     public DomainException(
         int status,
@@ -14,15 +10,17 @@ public abstract class DomainException : Exception
         string message,
         List<string> details) : base(message)
     {
-        Error = error;
-        Details = details;
-        StatusCode = status;
-        OccurredAt = DateTimeOffset.UtcNow;
+        Value.StatusCode = status;
+        Value.Error = error;
+        Value.Details = details;
+        Value.Message = message;
+        Value.StatusCode = status;
+        Value.OccurredAt = DateTimeOffset.UtcNow;
     }
 
     public DomainException SetTarget(string? target)
     {
-        Target = target;
+        Value.Target = target;
         return this;
     }
 }
