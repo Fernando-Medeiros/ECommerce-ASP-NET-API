@@ -5,7 +5,7 @@ using ECommerceDomain.Exceptions;
 
 namespace ECommerceDomain.ValueObjects;
 
-public sealed class Email : ValueObject<string?>
+public sealed record Email : ValueObject<string?>
 {
     public Email(string? data, bool required = true) : base(data, required) { }
 
