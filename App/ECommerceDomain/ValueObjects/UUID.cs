@@ -3,7 +3,7 @@ using ECommerceDomain.Exceptions;
 
 namespace ECommerceDomain.ValueObjects;
 
-public sealed class UUID : ValueObject<string?>
+public sealed record UUID : ValueObject<string?>
 {
     public UUID(string? data, bool required = true) : base(data, required) { }
 

@@ -1,8 +1,8 @@
 namespace ECommerceDomain.Abstractions;
 
-public abstract class ValueObject<T>
+public abstract record ValueObject<T>
 {
-    public T? Value { get; init; }
+    public T? Value { get; private init; }
 
     public ValueObject(T? data, bool required = true)
     {
@@ -20,9 +20,9 @@ public abstract class ValueObject<T>
 
     #region Operators
 
-    public static implicit operator T?(ValueObject<T?> valueObject)
+    public static implicit operator T?(ValueObject<T?> obj)
     {
-        return valueObject.Value;
+        return obj.Value;
     }
 
     #endregion

@@ -4,7 +4,7 @@ using ECommerceDomain.Exceptions;
 
 namespace ECommerceDomain.ValueObjects;
 
-public sealed class Role : ValueObject<string?>
+public sealed record Role : ValueObject<string?>
 {
     public Role(string? data, bool required = true) : base(data, required) { }
 

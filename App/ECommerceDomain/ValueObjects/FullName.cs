@@ -1,6 +1,6 @@
 namespace ECommerceDomain.ValueObjects;
 
-public sealed class FullName
+public sealed record FullName
 {
     public Name Name { get; init; }
     public Name FirstName { get; init; }
