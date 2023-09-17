@@ -9,7 +9,8 @@ public sealed class Date : ValueObject<DateTimeOffset?>
 
     public override void Validate(DateTimeOffset? data)
     {
-        if (data is not DateTimeOffset)
+        if (data == null ||
+            DateTimeOffset.TryParse(data.Value.ToString(), out _) is false)
             throw new DateFormatException()
                 .SetTarget(nameof(DateTimeOffset));
     }
