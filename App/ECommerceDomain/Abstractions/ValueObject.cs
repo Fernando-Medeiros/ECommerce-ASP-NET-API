@@ -6,24 +6,13 @@ public abstract record ValueObject<T>
 
     public ValueObject(T? data, bool required = true)
     {
-        if (required || data != null)
-            Validate(data);
+        if (required || data != null) Validate(data);
 
         Value = data;
     }
 
-    #region Abstractions
-
     public abstract void Validate(T? data);
 
-    #endregion
+    public static implicit operator T?(ValueObject<T?> obj) => obj.Value;
 
-    #region Operators
-
-    public static implicit operator T?(ValueObject<T?> obj)
-    {
-        return obj.Value;
-    }
-
-    #endregion
 }
