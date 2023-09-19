@@ -1,14 +1,15 @@
+using ECommerceDomain.ClusterObjects;
 using ECommerceDomain.Exceptions;
 using ECommerceDomain.ValueObjects;
 
-namespace TestsUnit.ECommerceDomain.ValueObjects;
+namespace TestsUnit.ECommerceDomain.ClusterObjects;
 
 public class FullNameTest
 {
     public static IEnumerable<object[]> SuccessData()
     {
         yield return new object[] { "Test", "Example", "Sample" };
-        yield return new object[] { "John", "Dee", "Dee" };
+        yield return new object[] { "John", "Dee", "Foo" };
         yield return new object[] { "Shun Lee", "speed", "legs" };
         yield return new object[] { "John Dee", "foo", "again" };
         yield return new object[] { "Julius Cesar", "crazy", "bitch" };
@@ -16,9 +17,9 @@ public class FullNameTest
 
     public static IEnumerable<object[]> ExceptionData()
     {
-        yield return new object[] { "Test", "", "" };
-        yield return new object[] { "16/", "09/", "2023/" };
-        yield return new object[] { "Example Test", "Dev", "2222" };
+        yield return new object[] { "John", "John", "John" };
+        yield return new object[] { "john", "Dee", "Dee" };
+        yield return new object[] { "john", "john", "Dee" };
     }
 
     [Theory]
@@ -38,7 +39,7 @@ public class FullNameTest
 
 
     [Theory]
-    [InlineData(null, null, null)]
+    [InlineData("John", "dee", null)]
     [MemberData(nameof(SuccessData))]
     public void Should_Update_FullName_Or_Not(
         string? name, string? firstName, string? lastName)
@@ -54,16 +55,17 @@ public class FullNameTest
     }
 
     [Theory]
+    [InlineData(null, null, null)]
     [MemberData(nameof(ExceptionData))]
     public void Should_Return_Exception_On_Create_FullName(
         string? name, string? firstName, string? lastName)
     {
-        Assert.Throws<NameFormatException>(() =>
+        Assert.Throws<FullNameFormatException>(() =>
         {
             new FullName(
-                name: new Name(name),
-                firstName: new Name(firstName),
-                lastName: new Name(lastName));
+                name: new Name(name, required: false),
+                firstName: new Name(firstName, required: false),
+                lastName: new Name(lastName, required: false));
         });
     }
 }

@@ -1,4 +1,5 @@
 using ECommerceDomain.Abstractions;
+using ECommerceDomain.ClusterObjects;
 using ECommerceDomain.DTOs;
 using ECommerceDomain.Enums;
 using ECommerceDomain.ValueObjects;
