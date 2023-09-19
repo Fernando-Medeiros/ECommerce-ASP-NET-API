@@ -11,7 +11,7 @@ public class CustomerEntityTest
         Id = Guid.NewGuid().ToString(),
         Name = "John",
         FirstName = "dee",
-        LastName = "dee",
+        LastName = "foo",
         Email = "example@mail.com",
         Password = BCrypt.Net.BCrypt.HashPassword("test123"),
         Role = nameof(ERoles.customer),
@@ -20,10 +20,10 @@ public class CustomerEntityTest
 
     private readonly CustomerDTO data = new()
     {
-        Name = "John dee",
-        FirstName = "foo",
+        Name = "John",
+        FirstName = "dev",
         LastName = "woodcutter",
-        Email = "john_dee@mail.com",
+        Email = "john_deve@mail.com",
         Password = BCrypt.Net.BCrypt.HashPassword("test777")
     };
 
