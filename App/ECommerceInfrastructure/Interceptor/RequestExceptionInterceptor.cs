@@ -18,7 +18,7 @@ public class RequestExceptionInterceptor : IActionFilter, IOrderedFilter
             var exception = new RequestValidationException()
                 .SetMessage(currentException.Message)
                 .SetDetails(currentException.Errors.Select(e => e.ErrorMessage).ToList())
-                .SetTarget(nameof(RequestExceptionInterceptor));
+                .Target(nameof(RequestExceptionInterceptor));
 
             context.Result = new ObjectResult(exception.Value)
             {

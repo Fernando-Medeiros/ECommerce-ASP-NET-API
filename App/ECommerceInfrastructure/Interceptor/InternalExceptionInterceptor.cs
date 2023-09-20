@@ -25,7 +25,7 @@ public class InternalExceptionInterceptor : IActionFilter, IOrderedFilter
                 .SetDetails(new() {
                     context?.Exception?.Source ?? "",
                     context?.Exception?.InnerException?.Message ?? "" })
-                .SetTarget(nameof(InternalExceptionInterceptor));
+                .Target(nameof(InternalExceptionInterceptor));
 
             context!.Result = new ObjectResult(exception.Value)
             {
