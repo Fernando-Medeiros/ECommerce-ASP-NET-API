@@ -13,7 +13,7 @@ public abstract class Identity
         return principal.Claims
             .SingleOrDefault(c => c.Type.Equals(keySelector))
                 ?? throw new JwtTokenIncompatibleException()
-                    .SetTarget("Token Properties");
+                    .Target("Token Properties");
 
     }
 
@@ -23,6 +23,6 @@ public abstract class Identity
     {
         if (scopes.Contains(Enum.Parse<ETokenScopes>(scope)) is false)
             throw new JwtTokenIncompatibleException()
-                .SetTarget("Token Scope");
+                .Target("Token Scope");
     }
 }
