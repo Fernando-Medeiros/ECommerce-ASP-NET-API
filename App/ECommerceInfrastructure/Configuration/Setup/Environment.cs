@@ -4,12 +4,12 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static void Environment(WebApplicationBuilder b)
+    public static WebApplicationBuilder Environment(this WebApplicationBuilder builder)
     {
         var Configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
             .AddJsonFile(
-                $"appsettings.{b.Environment.EnvironmentName.ToLower()}.json",
+                $"appsettings.{builder.Environment.EnvironmentName.ToLower()}.json",
                 optional: true)
             .AddEnvironmentVariables()
             .Build();
@@ -18,5 +18,7 @@ public static partial class Setup
         DatabaseEnvironment.LoadEnv(Configuration);
         MailEnvironment.LoadEnv(Configuration);
         RedirectEnvironment.LoadEnv(Configuration);
+
+        return builder;
     }
 }

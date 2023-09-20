@@ -2,7 +2,7 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static void Pipeline(WebApplication app)
+    public static WebApplication Pipeline(this WebApplication app)
     {
         app.UseAuthentication();
 
@@ -15,5 +15,7 @@ public static partial class Setup
         app.UseHttpsRedirection();
 
         app.MapControllers();
+
+        return app;
     }
 }
