@@ -1,6 +1,5 @@
+using ECommerceApplication.Configuration;
 using ECommerceApplication.Contracts;
-using ECommerceApplication.Requests;
-using ECommerceApplication.UseCases.Customer;
 using ECommerceInfrastructure.Authentication.Encrypt;
 using ECommerceInfrastructure.Authentication.Tokens;
 using ECommerceInfrastructure.Authentication.Tokens.Contracts;
@@ -11,28 +10,29 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static void Injectable(WebApplicationBuilder b)
+    public static WebApplicationBuilder Injectable(this WebApplicationBuilder builder)
     {
-        #region UseCases
-        b.Services.AddScoped<FindOneCustomer>();
-        b.Services.AddScoped<RegisterCustomer>();
-        b.Services.AddScoped<UpdateCustomerNameAndEmail>();
-        b.Services.AddScoped<RemoveCustomer>();
+        #region Application
+
+        InjectableServiceExtensions.UseCases
+            .ForEach(x => builder.Services.AddScoped(x));
+
+        InjectableServiceExtensions.RequestValidators
+            .ForEach(x => builder.Services.AddScoped(typeof(IValidator<>)
+                .MakeGenericType(x.RequestType), x.InstanceType));
+
         #endregion
 
         #region Persistence
-        b.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-        b.Services.AddScoped<IUnitTransactionWork, UnitTransactionWork>();
+        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+        builder.Services.AddScoped<IUnitTransactionWork, UnitTransactionWork>();
         #endregion
 
         #region  Authorization
-        b.Services.AddScoped<ICryptPassword, CryptPassword>();
-        b.Services.AddTransient<ITokenService, TokenService>();
+        builder.Services.AddScoped<ICryptPassword, CryptPassword>();
+        builder.Services.AddTransient<ITokenService, TokenService>();
         #endregion
 
-        #region Validators
-        b.Services.AddScoped<IValidator<CreateCustomerRequest>, CreateCustomerRequestValidator>();
-        b.Services.AddScoped<IValidator<UpdateCustomerRequest>, UpdateCustomerRequestValidator>();
-        #endregion
+        return builder;
     }
 }
