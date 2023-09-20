@@ -13,7 +13,7 @@ public sealed record Email : ValueObject<string?>
     {
         if (Regex.IsMatch(email ?? "", RegexTypes.Email) is false)
         {
-            throw new EmailFormatException().SetTarget(nameof(Email));
+            throw new EmailFormatException().Target(nameof(Email));
         }
     }
 }
