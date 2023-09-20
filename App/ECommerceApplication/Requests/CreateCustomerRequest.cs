@@ -1,6 +1,6 @@
 namespace ECommerceApplication.Requests;
 
-public class CreateCustomerRequest
+public sealed record CreateCustomerRequest
 {
     private string? _name;
     private string? _firstName;

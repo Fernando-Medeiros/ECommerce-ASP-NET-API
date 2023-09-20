@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace ECommerceApplication.Requests;
 
-public class CreateCustomerRequestValidator : AbstractValidator<CreateCustomerRequest>
+public sealed class CreateCustomerRequestValidator : AbstractValidator<CreateCustomerRequest>
 {
     public CreateCustomerRequestValidator()
     {
