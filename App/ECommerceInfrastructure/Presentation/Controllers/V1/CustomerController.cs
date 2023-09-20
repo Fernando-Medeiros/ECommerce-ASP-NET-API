@@ -54,7 +54,7 @@ public class CustomerController : ControllerBase
 
         var customer = new CustomerIdentity(User);
 
-        request.Id(customer.Id);
+        request.Id = customer.Id;
 
         await UpdateCustomerNameAndEmail.Execute(request);
 
