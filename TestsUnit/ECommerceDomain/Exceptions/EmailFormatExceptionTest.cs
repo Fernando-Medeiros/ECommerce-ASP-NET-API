@@ -8,7 +8,7 @@ public class EmailFormatExceptionTest
     public void Should_Create_Exception()
     {
         var result = new EmailFormatException()
-            .SetTarget(nameof(EmailFormatExceptionTest));
+            .Target(nameof(EmailFormatExceptionTest));
 
         Assert.NotNull(result.Value.Message);
         Assert.Equal(404, result.Value.StatusCode);
@@ -22,7 +22,7 @@ public class EmailFormatExceptionTest
         Assert.ThrowsAny<EmailFormatException>(() =>
         {
             throw new EmailFormatException()
-                .SetTarget(nameof(EmailFormatExceptionTest));
+                .Target(nameof(EmailFormatExceptionTest));
         });
     }
 }

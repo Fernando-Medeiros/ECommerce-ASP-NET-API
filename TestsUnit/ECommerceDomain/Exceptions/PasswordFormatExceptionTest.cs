@@ -8,7 +8,7 @@ public class PasswordFormatExceptionTest
     public void Should_Create_Exception()
     {
         var result = new PasswordFormatException()
-            .SetTarget(nameof(PasswordFormatExceptionTest));
+            .Target(nameof(PasswordFormatExceptionTest));
 
         Assert.NotNull(result.Value.Message);
         Assert.Equal(404, result.Value.StatusCode);
@@ -22,7 +22,7 @@ public class PasswordFormatExceptionTest
         Assert.ThrowsAny<PasswordFormatException>(() =>
         {
             throw new PasswordFormatException()
-                .SetTarget(nameof(PasswordFormatExceptionTest));
+                .Target(nameof(PasswordFormatExceptionTest));
         });
     }
 }
