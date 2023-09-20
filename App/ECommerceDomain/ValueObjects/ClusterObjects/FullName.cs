@@ -24,7 +24,7 @@ public sealed record FullName : ClusterObject
             Name.Equals(Name, LastName) ||
             Name.Equals(FirstName, LastName))
         {
-            throw new FullNameFormatException().SetTarget(nameof(FullName));
+            throw new FullNameFormatException().Target(nameof(FullName));
         }
     }
 }

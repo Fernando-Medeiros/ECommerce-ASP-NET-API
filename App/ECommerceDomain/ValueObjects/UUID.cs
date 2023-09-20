@@ -11,7 +11,7 @@ public sealed record UUID : ValueObject<string?>
     {
         if (Guid.TryParse(id, out _) is false)
         {
-            throw new UUIDFormatException().SetTarget(nameof(UUID));
+            throw new UUIDFormatException().Target(nameof(UUID));
         }
     }
 }

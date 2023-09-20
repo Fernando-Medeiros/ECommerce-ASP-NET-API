@@ -1,4 +1,3 @@
-using AutoMapper;
 using ECommerceApplication.Contracts;
 using ECommerceApplication.Exceptions;
 using ECommerceApplication.Requests;
@@ -11,40 +10,34 @@ public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest>
 {
     private readonly ICustomerRepository _repository;
     private readonly IUnitTransactionWork _transaction;
-    private readonly IMapper _mapper;
 
     public UpdateCustomerNameAndEmail(
         ICustomerRepository repository,
-        IUnitTransactionWork transaction,
-        IMapper mapper)
+        IUnitTransactionWork transaction)
     {
         _repository = repository;
         _transaction = transaction;
-        _mapper = mapper;
     }
 
-    public async Task Execute(UpdateCustomerRequest request)
+    public async Task Execute(UpdateCustomerRequest req)
     {
-        var customerDto = _mapper.Map<CustomerDTO>(request);
+        var currentState = await _repository.FindOne(new() { Id = req.Id })
+            ?? throw new CustomerNotFoundException().Target(nameof(UpdateCustomerNameAndEmail));
 
-        var customerCurrentState = await _repository.FindOne(new() { Id = customerDto.Id })
-            ?? throw new CustomerNotFoundException()
-                .SetTarget(nameof(UpdateCustomerNameAndEmail));
-
-        if (request.Email != customerCurrentState.Email &&
-            await _repository.FindOne(new() { Email = request.Email }) != null)
+        if (req.Email != currentState.Email &&
+            await _repository.FindOne(new() { Email = req.Email }) is not null)
         {
-            throw new UniqueEmailConstraintException()
-                .SetTarget(nameof(UpdateCustomerNameAndEmail)); ;
+            throw new UniqueEmailConstraintException().Target(nameof(UpdateCustomerNameAndEmail)); ;
         }
 
-        var customerEntity = new CustomerEntity(customerCurrentState)
-            .UpdateName(customerDto)
-            .UpdateEmail(customerDto);
+        CustomerDTO request = req.Mapper();
 
-        var customerMapped = _mapper.Map<CustomerDTO>(customerEntity);
+        CustomerDTO customer = new CustomerEntity(currentState)
+            .UpdateName(request)
+            .UpdateEmail(request)
+            .Mapper();
 
-        _repository.Update(customerMapped);
+        _repository.Update(customer);
 
         await _transaction.Commit();
     }

@@ -13,7 +13,7 @@ public sealed record Password : ValueObject<string?>
     {
         if (Regex.IsMatch(password ?? "", RegexTypes.PasswordHash) is false)
         {
-            throw new PasswordFormatException().SetTarget(nameof(Password));
+            throw new PasswordFormatException().Target(nameof(Password));
         }
     }
 }

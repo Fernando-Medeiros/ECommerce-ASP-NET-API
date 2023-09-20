@@ -12,7 +12,7 @@ public sealed record Role : ValueObject<string?>
     {
         if (Enum.TryParse<ERoles>(role ?? "", out _) is false)
         {
-            throw new RoleTypeException().SetTarget(nameof(Role));
+            throw new RoleTypeException().Target(nameof(Role));
         }
     }
 }

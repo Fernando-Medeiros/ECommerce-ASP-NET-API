@@ -13,6 +13,5 @@ public abstract record ValueObject<T>
 
     public abstract void Validate(T? data);
 
-    public static implicit operator T?(ValueObject<T?> obj) => obj.Value;
-
+    public static implicit operator T?(ValueObject<T?> obj) { return obj.Value; }
 }

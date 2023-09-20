@@ -13,7 +13,7 @@ public sealed record Name : ValueObject<string?>
     {
         if (Regex.IsMatch(name ?? "", RegexTypes.Name) is false)
         {
-            throw new NameFormatException().SetTarget(nameof(Name));
+            throw new NameFormatException().Target(nameof(Name));
         }
     }
 }

@@ -18,7 +18,7 @@ public abstract class DomainException : Exception
         Value.OccurredAt = DateTimeOffset.UtcNow;
     }
 
-    public DomainException SetTarget(string? target)
+    public DomainException Target(string? target)
     {
         Value.Target = target;
         return this;

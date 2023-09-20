@@ -1,4 +1,3 @@
-using ECommerceApplication.Mappers;
 using ECommerceInfrastructure.Configuration.Environment;
 using ECommerceInfrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -7,14 +6,14 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static void Database(WebApplicationBuilder b)
+    public static WebApplicationBuilder Database(this WebApplicationBuilder builder)
     {
-        b.Services.AddDbContext<DatabaseContext>(options =>
+        builder.Services.AddDbContext<DatabaseContext>(options =>
         {
             options.UseNpgsql(DatabaseEnvironment.ConnectionString);
         });
 
-        b.Services.AddAutoMapper(typeof(DatabaseMappers));
-        b.Services.AddAutoMapper(typeof(CustomerMapper));
+        builder.Services.AddAutoMapper(typeof(DatabaseMappers));
+        return builder;
     }
 }

@@ -4,9 +4,9 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static void Controller(WebApplicationBuilder b)
+    public static WebApplicationBuilder Controller(this WebApplicationBuilder builder)
     {
-        b.Services.AddControllers(opt =>
+        builder.Services.AddControllers(opt =>
             {
                 opt.Filters.Add<InternalExceptionInterceptor>();
                 opt.Filters.Add<DatabaseExceptionInterceptor>();
@@ -15,6 +15,7 @@ public static partial class Setup
             }
         );
 
-        b.Services.AddEndpointsApiExplorer();
+        builder.Services.AddEndpointsApiExplorer();
+        return builder;
     }
 }

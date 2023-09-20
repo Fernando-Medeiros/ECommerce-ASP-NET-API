@@ -8,7 +8,7 @@ public class DateFormatExceptionTest
     public void Should_Create_Exception()
     {
         var result = new DateFormatException()
-            .SetTarget(nameof(DateFormatExceptionTest));
+            .Target(nameof(DateFormatExceptionTest));
 
         Assert.NotNull(result.Value.Message);
         Assert.Equal(500, result.Value.StatusCode);
@@ -22,7 +22,7 @@ public class DateFormatExceptionTest
         Assert.ThrowsAny<DateFormatException>(() =>
         {
             throw new DateFormatException()
-                .SetTarget(nameof(DateFormatExceptionTest));
+                .Target(nameof(DateFormatExceptionTest));
         });
     }
 }

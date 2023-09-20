@@ -8,7 +8,7 @@ public class UUIDFormatExceptionTest
     public void Should_Create_Exception()
     {
         var result = new UUIDFormatException()
-            .SetTarget(nameof(UUIDFormatExceptionTest));
+            .Target(nameof(UUIDFormatExceptionTest));
 
         Assert.NotNull(result.Value.Message);
         Assert.Equal(500, result.Value.StatusCode);
@@ -22,7 +22,7 @@ public class UUIDFormatExceptionTest
         Assert.ThrowsAny<UUIDFormatException>(() =>
         {
             throw new UUIDFormatException()
-                .SetTarget(nameof(UUIDFormatExceptionTest));
+                .Target(nameof(UUIDFormatExceptionTest));
         });
     }
 }

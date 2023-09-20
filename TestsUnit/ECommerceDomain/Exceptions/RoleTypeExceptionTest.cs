@@ -8,7 +8,7 @@ public class RoleTypeExceptionTest
     public void Should_Create_Exception()
     {
         var result = new RoleTypeException()
-            .SetTarget(nameof(RoleTypeExceptionTest));
+            .Target(nameof(RoleTypeExceptionTest));
 
         Assert.NotNull(result.Value.Message);
         Assert.Equal(404, result.Value.StatusCode);
@@ -22,7 +22,7 @@ public class RoleTypeExceptionTest
         Assert.ThrowsAny<RoleTypeException>(() =>
         {
             throw new RoleTypeException()
-                .SetTarget(nameof(RoleTypeExceptionTest));
+                .Target(nameof(RoleTypeExceptionTest));
         });
     }
 }

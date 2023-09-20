@@ -8,7 +8,7 @@ public class NameFormatExceptionTest
     public void Should_Create_Exception()
     {
         var result = new NameFormatException()
-            .SetTarget(nameof(NameFormatExceptionTest));
+            .Target(nameof(NameFormatExceptionTest));
 
         Assert.NotNull(result.Value.Message);
         Assert.Equal(404, result.Value.StatusCode);
@@ -22,7 +22,7 @@ public class NameFormatExceptionTest
         Assert.ThrowsAny<NameFormatException>(() =>
         {
             throw new NameFormatException()
-                .SetTarget(nameof(NameFormatExceptionTest));
+                .Target(nameof(NameFormatExceptionTest));
         });
     }
 }

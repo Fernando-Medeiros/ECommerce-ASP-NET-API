@@ -1,12 +1,17 @@
+using System.Text.Json.Serialization;
+
 namespace ECommerceApplication.Requests;
 
-public class UpdateCustomerRequest
+public sealed record UpdateCustomerRequest
 {
     private string? _id;
     private string? _name;
     private string? _firstName;
     private string? _lastName;
     private string? _email;
+
+    [JsonIgnore]
+    public string? Id { get => _id; set => _id = value; }
 
     public string? Name
     {
@@ -28,6 +33,4 @@ public class UpdateCustomerRequest
         get => _email;
         set => _email = value?.Trim();
     }
-
-    public UpdateCustomerRequest Id(string id) { _id = id; return this; }
 }

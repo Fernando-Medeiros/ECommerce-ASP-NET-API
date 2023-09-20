@@ -1,4 +1,3 @@
-using AutoMapper;
 using ECommerceApplication.Contracts;
 using ECommerceApplication.Exceptions;
 using ECommerceApplication.Requests;
@@ -12,37 +11,33 @@ public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest>
     private readonly ICustomerRepository _repository;
     private readonly IUnitTransactionWork _transaction;
     private readonly ICryptPassword _crypt;
-    private readonly IMapper _mapper;
 
     public RegisterCustomer(
         ICustomerRepository repository,
         IUnitTransactionWork transaction,
-        ICryptPassword crypt,
-        IMapper mapper)
+        ICryptPassword crypt)
     {
         _repository = repository;
         _transaction = transaction;
-        _mapper = mapper;
         _crypt = crypt;
     }
 
-    public async Task Execute(CreateCustomerRequest request)
+    public async Task Execute(CreateCustomerRequest req)
     {
-        if (await _repository.FindOne(new() { Email = request.Email }) != null)
+        if (await _repository.FindOne(new() { Email = req.Email }) is not null)
         {
-            throw new UniqueEmailConstraintException()
-                .SetTarget(nameof(RegisterCustomer));
+            throw new UniqueEmailConstraintException().Target(nameof(RegisterCustomer));
         }
 
-        request.Password = _crypt.Hash(request.Password);
+        req.Password = _crypt.Hash(req.Password);
 
-        var customerDto = _mapper.Map<CustomerDTO>(request);
+        CustomerDTO request = req.Mapper();
 
-        var customerEntity = new CustomerEntity().Register(customerDto);
+        CustomerDTO customer = new CustomerEntity()
+            .Register(request)
+            .Mapper();
 
-        var customerMapped = _mapper.Map<CustomerDTO>(customerEntity);
-
-        _repository.Register(customerMapped);
+        _repository.Register(customer);
 
         await _transaction.Commit();
     }
