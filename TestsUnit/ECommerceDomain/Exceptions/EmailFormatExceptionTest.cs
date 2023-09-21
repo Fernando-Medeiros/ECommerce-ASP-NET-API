@@ -11,13 +11,13 @@ public class EmailFormatExceptionTest
             .Target(nameof(EmailFormatExceptionTest));
 
         Assert.NotNull(result.Value.Message);
-        Assert.Equal(404, result.Value.StatusCode);
+        Assert.Equal(400, result.Value.StatusCode);
         Assert.Equal(nameof(EmailFormatException), result.Value.Error);
         Assert.Equal(nameof(EmailFormatExceptionTest), result.Value.Target);
     }
 
     [Fact]
-    public void Should_Return_Exception()
+    public void Should_Throw_Exception()
     {
         Assert.ThrowsAny<EmailFormatException>(() =>
         {

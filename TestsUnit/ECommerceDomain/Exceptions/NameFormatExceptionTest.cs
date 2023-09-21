@@ -11,13 +11,13 @@ public class NameFormatExceptionTest
             .Target(nameof(NameFormatExceptionTest));
 
         Assert.NotNull(result.Value.Message);
-        Assert.Equal(404, result.Value.StatusCode);
+        Assert.Equal(400, result.Value.StatusCode);
         Assert.Equal(nameof(NameFormatException), result.Value.Error);
         Assert.Equal(nameof(NameFormatExceptionTest), result.Value.Target);
     }
 
     [Fact]
-    public void Should_Return_Exception()
+    public void Should_Throw_Exception()
     {
         Assert.ThrowsAny<NameFormatException>(() =>
         {
