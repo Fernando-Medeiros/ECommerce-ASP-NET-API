@@ -3,7 +3,6 @@ using ECommerceApplication.UseCases.Customer;
 using ECommerceInfrastructure.Authentication.Identities;
 using ECommerceInfrastructure.Configuration.ApiResponse;
 using ECommerceInfrastructure.Presentation.Resources;
-using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,11 +31,8 @@ public class CustomerController : ControllerBase
     [Created, BadRequest]
     public async Task<ActionResult> Register(
         [FromServices] RegisterCustomer registerCustomer,
-        [FromServices] IValidator<CreateCustomerRequest> validator,
         [FromBody] CreateCustomerRequest request)
     {
-        await validator.ValidateAndThrowAsync(request);
-
         await registerCustomer.Execute(request);
 
         return Created("", null);
@@ -47,11 +43,8 @@ public class CustomerController : ControllerBase
     [NoContent, NotFound, BadRequest, Unauthorized, Forbidden]
     public async Task<ActionResult> Update(
         [FromServices] UpdateCustomerNameAndEmail UpdateCustomerNameAndEmail,
-        [FromServices] IValidator<UpdateCustomerRequest> validator,
         [FromBody] UpdateCustomerRequest request)
     {
-        await validator.ValidateAndThrowAsync(request);
-
         var customer = new CustomerIdentity(User);
 
         request.Id = customer.Id;
