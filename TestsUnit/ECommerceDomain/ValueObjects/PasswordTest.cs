@@ -34,7 +34,7 @@ public class PasswordTest
 
     [Theory]
     [MemberData(nameof(ExceptionData))]
-    public void Should_Return_Exception_On_Create_Password(string? input)
+    public void Should_Throw_Exception_On_Create_Password(string? input)
     {
         Assert.Throws<PasswordFormatException>(() => new Password(input));
     }

@@ -42,7 +42,7 @@ public class NameTest
 
     [Theory]
     [MemberData(nameof(ExceptionData))]
-    public void Should_Return_Exception_On_Create_Name(string? input)
+    public void Should_Throw_Exception_On_Create_Name(string? input)
     {
         Assert.Throws<NameFormatException>(() => new Name(input));
     }

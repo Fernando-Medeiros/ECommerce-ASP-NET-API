@@ -34,7 +34,7 @@ public class UUIDTest
 
     [Theory]
     [MemberData(nameof(ExceptionData))]
-    public void Should_Return_Exception_On_Create_UUID(string? input)
+    public void Should_Throw_Exception_On_Create_UUID(string? input)
     {
         Assert.Throws<UUIDFormatException>(() => new UUID(input));
     }

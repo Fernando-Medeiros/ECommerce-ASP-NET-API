@@ -28,7 +28,7 @@ public class DateTest
 
     [Theory]
     [InlineData(null)]
-    public void Should_Return_Exception_On_Create_Date(DateTimeOffset? input)
+    public void Should_Throw_Exception_On_Create_Date(DateTimeOffset? input)
     {
         Assert.Throws<DateFormatException>(() => new Date(input));
     }
