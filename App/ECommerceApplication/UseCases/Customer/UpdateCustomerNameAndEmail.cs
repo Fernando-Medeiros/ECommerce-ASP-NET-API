@@ -21,6 +21,8 @@ public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest>
 
     public async Task Execute(UpdateCustomerRequest req)
     {
+        await req.ValidateAsync();
+
         var currentState = await _repository.FindOne(new() { Id = req.Id })
             ?? throw new CustomerNotFoundException().Target(nameof(UpdateCustomerNameAndEmail));
 

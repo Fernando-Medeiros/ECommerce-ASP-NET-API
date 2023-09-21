@@ -24,14 +24,14 @@ public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest>
 
     public async Task Execute(CreateCustomerRequest req)
     {
+        await req.ValidateAsync();
+
         if (await _repository.FindOne(new() { Email = req.Email }) is not null)
         {
             throw new UniqueEmailConstraintException().Target(nameof(RegisterCustomer));
         }
 
-        req.Password = _crypt.Hash(req.Password);
-
-        CustomerDTO request = req.Mapper();
+        CustomerDTO request = req.Mapper() with { Password = _crypt.Hash(req.Password) };
 
         CustomerDTO customer = new CustomerEntity()
             .Register(request)
