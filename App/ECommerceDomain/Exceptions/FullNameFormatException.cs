@@ -6,7 +6,7 @@ public sealed class FullNameFormatException : DomainException
 {
     public FullNameFormatException()
         : base(
-            status: 404,
+            status: 400,
             error: nameof(FullNameFormatException),
             message: "Invalid full name format",
             details: new() { "Name, first name and last name must be different" })

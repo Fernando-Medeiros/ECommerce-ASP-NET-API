@@ -7,7 +7,7 @@ public sealed class RoleTypeException : DomainException
 {
     public RoleTypeException()
         : base(
-            status: 404,
+            status: 400,
             error: nameof(RoleTypeException),
             message: "Invalid role type",
             details: new() { $"options: {Enum.GetNames<ERoles>()}" })
