@@ -1,3 +1,5 @@
+using ECommerceDomain.Validators;
+
 namespace ECommerceApplication.Requests;
 
 public sealed record CreateCustomerRequest
@@ -33,4 +35,52 @@ public sealed record CreateCustomerRequest
         get => _password;
         set => _password = value?.Trim();
     }
+
+    public async Task ValidateAsync() => await Task.WhenAll(
+        Task.Run(() =>
+        {
+            new CustomValidator<string?>(
+                data: Name, target: nameof(Name))
+                .NotNull()
+                .NotEmpty()
+                .Length(3, 20);
+        }),
+
+        Task.Run(() =>
+        {
+            new CustomValidator<string?>(
+                data: FirstName, target: nameof(FirstName))
+                .NotNull()
+                .NotEmpty()
+                .Length(3, 20);
+        }),
+
+    Task.Run(() =>
+    {
+        new CustomValidator<string?>(
+                data: LastName, target: nameof(LastName))
+                .NotNull()
+                .NotEmpty()
+                .Length(3, 20);
+    }),
+
+    Task.Run(() =>
+    {
+        new CustomValidator<string?>(
+                data: Email, target: nameof(Email))
+                .NotNull()
+                .NotEmpty()
+                .Length(6, 155)
+                .EmailAddress();
+    }),
+
+    Task.Run(() =>
+    {
+        new CustomValidator<string?>(
+                data: Password, target: nameof(Password))
+                .NotNull()
+                .NotEmpty()
+                .Length(8, 16)
+                .Password();
+    }));
 }

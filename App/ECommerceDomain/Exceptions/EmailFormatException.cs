@@ -6,7 +6,7 @@ public sealed class EmailFormatException : DomainException
 {
     public EmailFormatException()
         : base(
-            status: 404,
+            status: 400,
             error: nameof(EmailFormatException),
             message: "Invalid email format",
             details: new() {

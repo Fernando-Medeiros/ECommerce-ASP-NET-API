@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using ECommerceDomain.Validators;
 
 namespace ECommerceApplication.Requests;
 
@@ -33,4 +34,39 @@ public sealed record UpdateCustomerRequest
         get => _email;
         set => _email = value?.Trim();
     }
+
+    public async Task ValidateAsync() => await Task.WhenAll(
+        Task.Run(() =>
+        {
+            new CustomValidator<string?>(
+                data: Name, target: nameof(Name), required: false)
+                .NotEmpty()
+                .Length(3, 20);
+        }),
+
+        Task.Run(() =>
+        {
+            new CustomValidator<string?>(
+                data: FirstName, target: nameof(FirstName), required: false)
+                .NotEmpty()
+                .Length(3, 20);
+        }),
+
+        Task.Run(() =>
+        {
+            new CustomValidator<string?>(
+                data: LastName, target: nameof(LastName), required: false)
+                .NotEmpty()
+                .Length(3, 20);
+        }),
+
+        Task.Run(() =>
+        {
+            new CustomValidator<string?>(
+                data: Email, target: nameof(Email), required: false)
+                .NotEmpty()
+                .Length(6, 155)
+                .EmailAddress();
+        })
+    );
 }

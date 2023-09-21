@@ -4,7 +4,6 @@ using ECommerceInfrastructure.Authentication.Encrypt;
 using ECommerceInfrastructure.Authentication.Tokens;
 using ECommerceInfrastructure.Authentication.Tokens.Contracts;
 using ECommerceInfrastructure.Persistence.Repositories;
-using FluentValidation;
 
 namespace ECommerceInfrastructure.Configuration.Setup;
 
@@ -18,8 +17,7 @@ public static partial class Setup
             .ForEach(x => builder.Services.AddScoped(x));
 
         InjectableServiceExtensions.RequestValidators
-            .ForEach(x => builder.Services.AddScoped(typeof(IValidator<>)
-                .MakeGenericType(x.RequestType), x.InstanceType));
+            .ForEach(x => builder.Services.AddScoped(x));
 
         #endregion
 

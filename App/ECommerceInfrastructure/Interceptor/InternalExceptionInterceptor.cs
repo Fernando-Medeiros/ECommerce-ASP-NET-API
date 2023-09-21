@@ -1,6 +1,5 @@
 using ECommerceDomain.Abstractions;
 using ECommerceInfrastructure.Interceptor.Exceptions;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +16,7 @@ public class InternalExceptionInterceptor : IActionFilter, IOrderedFilter
     {
         if (
             context.Exception is not DomainException &&
-            context.Exception is not DbUpdateException &&
-            context.Exception is not ValidationException)
+            context.Exception is not DbUpdateException)
         {
             var exception = new InternalException()
                 .SetMessage(context?.Exception?.Message ?? "")

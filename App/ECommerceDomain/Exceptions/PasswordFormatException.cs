@@ -6,7 +6,7 @@ public sealed class PasswordFormatException : DomainException
 {
     public PasswordFormatException()
         : base(
-            status: 404,
+            status: 400,
             error: nameof(PasswordFormatException),
             message: "Invalid, password format",
             details: new() {

@@ -17,7 +17,7 @@ public class UUIDFormatExceptionTest
     }
 
     [Fact]
-    public void Should_Return_Exception()
+    public void Should_Throw_Exception()
     {
         Assert.ThrowsAny<UUIDFormatException>(() =>
         {

@@ -6,7 +6,7 @@ public sealed class NameFormatException : DomainException
 {
     public NameFormatException()
         : base(
-            status: 404,
+            status: 400,
             error: nameof(NameFormatException),
             message: "Invalid name format",
             details: new() {

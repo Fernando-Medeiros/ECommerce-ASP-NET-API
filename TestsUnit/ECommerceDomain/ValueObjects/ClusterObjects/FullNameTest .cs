@@ -57,7 +57,7 @@ public class FullNameTest
     [Theory]
     [InlineData(null, null, null)]
     [MemberData(nameof(ExceptionData))]
-    public void Should_Return_Exception_On_Create_FullName(
+    public void Should_Throw_Exception_On_Create_FullName(
         string? name, string? firstName, string? lastName)
     {
         Assert.Throws<FullNameFormatException>(() =>

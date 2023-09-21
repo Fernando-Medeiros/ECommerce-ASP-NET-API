@@ -13,9 +13,9 @@ public static class InjectableServiceExtensions
         typeof(UpdateCustomerNameAndEmail),
     };
 
-    public static readonly List<(Type RequestType, Type InstanceType)> RequestValidators = new()
+    public static readonly List<Type> RequestValidators = new()
     {
-        (typeof(CreateCustomerRequest), typeof(CreateCustomerRequestValidator)),
-        (typeof(UpdateCustomerRequest), typeof(UpdateCustomerRequestValidator)),
+        typeof(CreateCustomerRequest),
+        typeof(UpdateCustomerRequest),
     };
 }

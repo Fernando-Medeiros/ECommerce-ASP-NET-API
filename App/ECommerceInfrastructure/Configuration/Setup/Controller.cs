@@ -11,7 +11,6 @@ public static partial class Setup
                 opt.Filters.Add<InternalExceptionInterceptor>();
                 opt.Filters.Add<DatabaseExceptionInterceptor>();
                 opt.Filters.Add<HttpExceptionInterceptor>();
-                opt.Filters.Add<RequestExceptionInterceptor>();
             }
         );
 

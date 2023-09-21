@@ -37,7 +37,7 @@ public class RoleTest
 
     [Theory]
     [MemberData(nameof(ExceptionData))]
-    public void Should_Return_Exception_On_Create_Role(string? input)
+    public void Should_Throw_Exception_On_Create_Role(string? input)
     {
         Assert.Throws<RoleTypeException>(() => new Role(input));
     }
