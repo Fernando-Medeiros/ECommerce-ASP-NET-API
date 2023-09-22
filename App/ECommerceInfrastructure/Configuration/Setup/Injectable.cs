@@ -16,9 +16,6 @@ public static partial class Setup
         InjectableServiceExtensions.UseCases
             .ForEach(x => builder.Services.AddScoped(x));
 
-        InjectableServiceExtensions.RequestValidators
-            .ForEach(x => builder.Services.AddScoped(x));
-
         #endregion
 
         #region Persistence

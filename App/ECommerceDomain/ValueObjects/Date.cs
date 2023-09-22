@@ -9,9 +9,9 @@ public sealed record Date : ValueObject<DateTimeOffset?>
 
     public override void Validate(DateTimeOffset? data)
     {
-        if (data == null ||
-            DateTimeOffset.TryParse(data.Value.ToString(), out _) is false)
-            throw new DateFormatException()
-                .Target(nameof(DateTimeOffset));
+        if (data == null || DateTimeOffset.TryParse($"{data.Value}", out _) is false)
+        {
+            throw new DateFormatException().Target(nameof(DateTimeOffset));
+        }
     }
 }

@@ -1,4 +1,4 @@
-using ECommerceDomain.Abstractions;
+using ECommerceDomain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceInfrastructure.Configuration.ApiResponse;
@@ -7,7 +7,7 @@ public abstract class ProducesCustomResponse : ProducesResponseTypeAttribute
 {
     public ProducesCustomResponse(
         int statusCode, Type? type = null)
-        : base(type ?? typeof(DomainResponseException), statusCode) { }
+        : base(type ?? typeof(DomainResponseExceptionDTO), statusCode) { }
 }
 
 public class Success : ProducesCustomResponse

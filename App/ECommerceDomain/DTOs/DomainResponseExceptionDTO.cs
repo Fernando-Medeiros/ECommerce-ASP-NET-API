@@ -1,6 +1,6 @@
-namespace ECommerceDomain.Abstractions;
+namespace ECommerceDomain.DTOs;
 
-public class DomainResponseException
+public class DomainResponseExceptionDTO
 {
     public int StatusCode { get; set; }
     public string? Error { get; set; }
