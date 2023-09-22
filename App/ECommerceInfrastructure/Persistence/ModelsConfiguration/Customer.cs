@@ -43,5 +43,17 @@ public static class CustomerConfiguration
             .Property(c => c.Role)
             .HasMaxLength(50)
             .IsRequired();
+
+
+        x.Entity<Customer>()
+            .HasIndex(c => c.Id)
+            .IsUnique();
+
+        x.Entity<Customer>()
+            .HasIndex(c => c.Email)
+            .IsUnique();
+
+        x.Entity<Customer>()
+            .HasIndex(c => c.Role);
     }
 }
