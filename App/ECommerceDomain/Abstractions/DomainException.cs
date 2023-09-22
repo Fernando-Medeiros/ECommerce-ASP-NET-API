@@ -1,8 +1,10 @@
+using ECommerceDomain.DTOs;
+
 namespace ECommerceDomain.Abstractions;
 
 public abstract class DomainException : Exception
 {
-    public DomainResponseException Value { get; private set; } = new();
+    public DomainResponseExceptionDTO Value { get; private set; }
 
     public DomainException(
         int status,
@@ -10,12 +12,14 @@ public abstract class DomainException : Exception
         string message,
         List<string> details) : base(message)
     {
-        Value.StatusCode = status;
-        Value.Error = error;
-        Value.Details = details;
-        Value.Message = message;
-        Value.StatusCode = status;
-        Value.OccurredAt = DateTimeOffset.UtcNow;
+        Value = new()
+        {
+            StatusCode = status,
+            Error = error,
+            Details = details,
+            Message = message,
+            OccurredAt = DateTimeOffset.UtcNow,
+        };
     }
 
     public DomainException Target(string? target)
