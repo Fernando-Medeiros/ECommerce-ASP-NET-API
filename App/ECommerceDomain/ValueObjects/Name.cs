@@ -1,7 +1,6 @@
-using System.Text.RegularExpressions;
 using ECommerceDomain.Abstractions;
-using ECommerceDomain.Constants;
 using ECommerceDomain.Exceptions;
+using ECommerceDomain.Validators;
 
 namespace ECommerceDomain.ValueObjects;
 
@@ -11,7 +10,7 @@ public sealed record Name : ValueObject<string?>
 
     public override void Validate(string? name)
     {
-        if (Regex.IsMatch(name ?? "", RegexTypes.Name) is false)
+        if (RegexExtensions.NameIsMatch(name) is false)
         {
             throw new NameFormatException().Target(nameof(Name));
         }
