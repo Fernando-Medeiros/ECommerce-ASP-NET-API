@@ -6,14 +6,13 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static WebApplicationBuilder Database(this WebApplicationBuilder builder)
+    public static void Database(IServiceCollection services)
     {
-        builder.Services.AddDbContext<DatabaseContext>(options =>
+        services.AddDbContext<DatabaseContext>(options =>
         {
             options.UseNpgsql(DatabaseEnvironment.ConnectionString);
         });
 
-        builder.Services.AddAutoMapper(typeof(DatabaseMappers));
-        return builder;
+        services.AddAutoMapper(typeof(DatabaseMappers));
     }
 }

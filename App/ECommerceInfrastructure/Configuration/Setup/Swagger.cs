@@ -5,15 +5,14 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static WebApplicationBuilder Swagger(this WebApplicationBuilder builder)
+    public static void Swagger(IServiceCollection services)
     {
-        builder.Services.AddSwaggerGen(opt =>
+        services.AddSwaggerGen(opt =>
         {
             SwaggerSettings.AddTokenSecurityDefinition(opt);
 
             SwaggerSettings.GenSwaggerApiDoc(opt);
         });
-        return builder;
     }
 }
 

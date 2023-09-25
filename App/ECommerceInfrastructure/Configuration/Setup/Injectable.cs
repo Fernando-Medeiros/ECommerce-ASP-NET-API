@@ -9,25 +9,23 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static WebApplicationBuilder Injectable(this WebApplicationBuilder builder)
+    public static void Injectable(IServiceCollection services)
     {
         #region Application
 
         InjectableServiceExtensions.UseCases
-            .ForEach(x => builder.Services.AddScoped(x));
+            .ForEach(x => services.AddScoped(x));
 
         #endregion
 
         #region Persistence
-        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-        builder.Services.AddScoped<IUnitTransactionWork, UnitTransactionWork>();
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IUnitTransactionWork, UnitTransactionWork>();
         #endregion
 
         #region  Authorization
-        builder.Services.AddScoped<ICryptPassword, CryptPassword>();
-        builder.Services.AddTransient<ITokenService, TokenService>();
+        services.AddScoped<ICryptPassword, CryptPassword>();
+        services.AddTransient<ITokenService, TokenService>();
         #endregion
-
-        return builder;
     }
 }
