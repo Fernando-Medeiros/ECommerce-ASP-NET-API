@@ -16,7 +16,8 @@ public class InternalExceptionInterceptor : IActionFilter, IOrderedFilter
     {
         if (
             context.Exception is not DomainException &&
-            context.Exception is not DbUpdateException)
+            context.Exception is not DbUpdateException &&
+            context.Exception != null)
         {
             var exception = new InternalException()
                 .SetMessage(context?.Exception?.Message ?? "")
