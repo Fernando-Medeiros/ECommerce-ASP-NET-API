@@ -1,17 +1,16 @@
-using ECommerceInfrastructure.Configuration.Setup;
+namespace ECommerceInfrastructure;
 
-var builder = WebApplication.CreateBuilder(args)
-    .Environment()
-    .SmtpClient()
-    .AuthenticationMiddleware()
-    .AuthorizationMiddleware()
-    .Controller()
-    .Swagger()
-    .Database()
-    .Injectable();
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        CreateHostBuilder(args).Build().Run();
+    }
 
-var app = builder.Build()
-    .Development()
-    .Pipeline();
-
-app.Run();
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
+}

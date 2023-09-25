@@ -6,9 +6,9 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static WebApplicationBuilder SmtpClient(this WebApplicationBuilder builder)
+    public static void SmtpClient(IServiceCollection services)
     {
-        builder.Services
+        services
             .AddFluentEmail(
                 MailEnvironment.FromAddress,
                 MailEnvironment.FromName
@@ -26,6 +26,5 @@ public static partial class Setup
                     Password = MailEnvironment.Pass,
                 }
             });
-        return builder;
     }
 }

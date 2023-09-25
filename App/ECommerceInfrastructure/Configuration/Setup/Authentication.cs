@@ -7,9 +7,9 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static WebApplicationBuilder AuthenticationMiddleware(this WebApplicationBuilder builder)
+    public static void AuthenticationMiddleware(IServiceCollection services)
     {
-        builder.Services
+        services
             .AddAuthentication(opt =>
             {
                 string scheme = JwtBearerDefaults.AuthenticationScheme;
@@ -31,17 +31,15 @@ public static partial class Setup
                 };
             }
         );
-        return builder;
     }
 
-    public static WebApplicationBuilder AuthorizationMiddleware(this WebApplicationBuilder builder)
+    public static void AuthorizationMiddleware(IServiceCollection services)
     {
-        builder.Services.AddAuthorization(opt =>
+        services.AddAuthorization(opt =>
         {
             opt.AddPolicy("Customer", policy => policy.RequireRole("customer"));
             opt.AddPolicy("Employee", policy => policy.RequireRole("employee"));
             opt.AddPolicy("Manager", policy => policy.RequireRole("manager"));
         });
-        return builder;
     }
 }
