@@ -2,7 +2,7 @@ using ECommerceDomain.Abstractions;
 
 namespace ECommerceApplication.Exceptions;
 
-public class CustomerNotFoundException : DomainException
+public sealed class CustomerNotFoundException : DomainException
 {
     public CustomerNotFoundException() : base(
         status: 404,
