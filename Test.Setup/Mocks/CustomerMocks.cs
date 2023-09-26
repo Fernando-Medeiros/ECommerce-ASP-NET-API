@@ -50,6 +50,7 @@ public static class CustomerMocks
 
     public static readonly UpdateCustomerRequest UpdateRequest = new()
     {
+        Id = Guid.NewGuid().ToString(),
         Name = DataToUpdate.Name,
         FirstName = DataToUpdate.FirstName,
         LastName = DataToUpdate.LastName,
