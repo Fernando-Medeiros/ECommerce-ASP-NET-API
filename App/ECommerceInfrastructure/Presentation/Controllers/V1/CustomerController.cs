@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceInfrastructure.Presentation.Controllers.V1;
 
+[ApiController]
 [Route("api/v1/customers")]
 public sealed class CustomerController : CustomerControllerBase
 {

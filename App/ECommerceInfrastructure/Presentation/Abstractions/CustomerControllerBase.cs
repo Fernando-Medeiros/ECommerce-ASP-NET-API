@@ -8,7 +8,6 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace ECommerceInfrastructure.Presentation.Abstractions;
 
-[ApiController]
 [SwaggerTag("Register, Find, Update and Remove Customers")]
 public abstract class CustomerControllerBase : ControllerBase
 {
