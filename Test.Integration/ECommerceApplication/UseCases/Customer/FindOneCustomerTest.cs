@@ -9,25 +9,25 @@ namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
 public class FindOneCustomerTest
 {
-    readonly ICustomerRepository _repositoryMock = Substitute.For<ICustomerRepository>();
+    readonly ICustomerRepository _repository = Substitute.For<ICustomerRepository>();
 
-    readonly CustomerDTO expectedInput = new() { Id = CustomerMocks.Customer.Id };
+    readonly CustomerDTO CaseInput = new() { Id = CustomerMocks.Customer.Id };
 
-    private void CreateMock()
+    private void CreateStub(CustomerDTO input, CustomerDTO? output)
     {
-        _repositoryMock
-            .FindOne(Arg.Is(expectedInput))
-            .Returns(CustomerMocks.Customer);
+        _repository.FindOne(Arg.Is(input)).Returns(output);
     }
 
     [Fact]
     public async void Should_Return_One_Customer()
     {
-        CreateMock();
+        CreateStub(
+            input: CaseInput,
+            output: CustomerMocks.Customer);
 
-        var useCase = new FindOneCustomer(_repositoryMock);
+        var useCase = new FindOneCustomer(_repository);
 
-        var result = await useCase.Execute(expectedInput);
+        var result = await useCase.Execute(CaseInput);
 
         Assert.Equivalent(CustomerMocks.Customer, result);
     }
@@ -35,11 +35,15 @@ public class FindOneCustomerTest
     [Fact]
     public void Should_Throw_Exception()
     {
-        var useCase = new FindOneCustomer(_repositoryMock);
+        var useCase = new FindOneCustomer(_repository);
 
         Assert.ThrowsAsync<CustomerNotFoundException>(async () =>
         {
-            _ = await useCase.Execute(expectedInput);
+            CreateStub(
+                input: CaseInput,
+                output: null);
+
+            _ = await useCase.Execute(CaseInput);
         });
     }
 }
