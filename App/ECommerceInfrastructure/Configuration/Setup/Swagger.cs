@@ -12,6 +12,8 @@ public static partial class Setup
             SwaggerSettings.AddTokenSecurityDefinition(opt);
 
             SwaggerSettings.GenSwaggerApiDoc(opt);
+
+            opt.EnableAnnotations();
         });
     }
 }
