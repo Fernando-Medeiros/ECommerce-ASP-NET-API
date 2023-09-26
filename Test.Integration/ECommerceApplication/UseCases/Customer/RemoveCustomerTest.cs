@@ -7,9 +7,10 @@ using Test.Setup.Mocks;
 
 namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
-public class FindOneCustomerTest
+public class RemoveCustomerTest
 {
     readonly ICustomerRepository _repository = Substitute.For<ICustomerRepository>();
+    readonly IUnitTransactionWork _transaction = Substitute.For<IUnitTransactionWork>();
 
     readonly CustomerDTO CaseInput = new() { Id = CustomerMocks.Customer.Id };
 
@@ -19,23 +20,25 @@ public class FindOneCustomerTest
     }
 
     [Fact]
-    public async void Should_Return_One_Customer()
+    public async void Should_Remove_Customer()
     {
         CreateStub(
             input: CaseInput,
             output: CustomerMocks.Customer);
 
-        var useCase = new FindOneCustomer(_repository);
+        var useCase = new RemoveCustomer(
+            _repository,
+            _transaction);
 
-        var result = await useCase.Execute(CaseInput);
-
-        Assert.Equivalent(CustomerMocks.Customer, result);
+        await useCase.Execute(CaseInput);
     }
 
     [Fact]
     public void Should_Throw_Exception()
     {
-        var useCase = new FindOneCustomer(_repository);
+        var useCase = new RemoveCustomer(
+            _repository,
+            _transaction);
 
         Assert.ThrowsAsync<CustomerNotFoundException>(async () =>
         {
@@ -43,7 +46,7 @@ public class FindOneCustomerTest
                 input: CaseInput,
                 output: null);
 
-            _ = await useCase.Execute(CaseInput);
+            await useCase.Execute(CaseInput);
         });
     }
 }
