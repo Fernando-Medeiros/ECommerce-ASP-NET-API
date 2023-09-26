@@ -175,7 +175,7 @@ dotnet tool install --global dotnet-ef
 
 - Stress - RegisterCustomer
   ```sh
-  .scripts/tests/stress-RegisterCustomer.sh
+  .scripts/tests/load-RegisterCustomer.sh
   ```
 
 #### Others
