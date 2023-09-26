@@ -5,16 +5,14 @@
   - [Features](#features)
     - [Overview](#overview)
     - [Authorization - Authentication](#authorization---authentication)
-  - [DBOptions](#dboptions)
   - [Usage](#usage)
     - [Environment](#environment)
-    - [Docker](#docker)
-        - [MySQL or Postgres](#mysql-or-postgres)
-        - [Create the first migration](#create-the-first-migration)
-        - [Update Database](#update-database)
-        - [To access the MySQL instance](#to-access-the-mysql-instance)
-        - [To access the Postgres instance](#to-access-the-postgres-instance)
-        - [Change a customer to a Manager](#change-a-customer-to-a-manager)
+    - [Scripts](#scripts)
+      - [Docker](#docker)
+      - [Migration](#migration)
+      - [Database](#database)
+      - [Tests](#tests)
+      - [Others](#others)
   - [Entity Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
 
 
@@ -37,7 +35,7 @@
 - [x] CustomerIdentity
 
 > Authorization
-- [x] Roles [ *Manager, Employee* ]
+- [x] Roles [ *Customer, Manager, Employee* ]
 - [x] EmployeeIdentity
 
 
@@ -73,27 +71,26 @@
 | sales (**dev**) |                [ * ]                |      [ Manager]      |       |        | [ Access, Refresh ] |
 
 
-## DBOptions
-
-```xml
-# Postgres
-<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7^" />
-# Mysql
-<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7^" />
-```
-
 ## Usage
 
-> dotnet tool install --global dotnet-ef
+Run this command in the Linux terminal to enable the scripts to be executable
+```sh
+find ./.scripts -type f -name "*.sh" -exec chmod +x {} \;
+```
+
+Make sure you have dotnet-ef installed globally
+```sh
+dotnet tool install --global dotnet-ef
+```
 
 ### Environment
 
-[appsettings.development.Example](../src/appsettings.development.Example)
+[appsettings.development.Example](../App/ECommerceInfrastructure/appsettings.development.Example)
 
 ```sh
   # copy appsettings.development.Example to appsettings.development.json
-  # src/
-  cp appsettings.development.Example appsettings.development.json
+  cp App/ECommerceInfrastructure/appsettings.development.Example App/ECommerceInfrastructure/appsettings.development.json
+
 ```
 
 ```sh
@@ -117,63 +114,87 @@
   DB_DEFAULT_CONNECTION="Server=localhost;Database=ECommerce;UserId=root;Password=12345;"
 ```
 
-### Docker
+### Scripts
 
-[.docker](../.docker/docker-compose.yml)
+[.scripts/](../.scripts/)
 
-##### MySQL or Postgres
+#### Docker
+
+- Docker > Postgres
+  [.docker-compose](../.docker/postgres/docker-compose.yml)
+
   ```sh
-  # cd .docker/mysql/
-  docker-compose up -d
-  # cd .docker/postgres/
-  docker-compose up -d
+    .scripts/up-docker-compose.sh
   ```
 
-##### Create the first migration
+#### Migration
+
+- Create > Migration
   ```sh
-  # cd src/
-  dotnet ef migrations add initial
+    .scripts/add-migration.sh < Migration Name >
   ```
 
-##### Update Database
+- Remove > Migration
   ```sh
-  # cd src/
-  dotnet ef database update
+    .scripts/rm-migration.sh
   ```
 
-##### To access the MySQL instance
+- List > Migration
   ```sh
-  docker exec -it ecommerce-mysql mysql -uroot -p
-  # or
-  # cd .docker/mysql/
-  docker compose exec mysql mysql -uroot -p
+    .scripts/ls-migration.sh 
   ```
 
-##### To access the Postgres instance
+#### Database
+
+- Update > Database
   ```sh
-  docker exec -it ecommerce-postgres psql -U root ECommerce
-  # or
-  # cd .docker/postgres/
-  docker compose exec postgres psql -U root ECommerce
+  .scripts/up-database.sh 
   ```
 
-##### Change a customer to a Manager
+- Drop > Database
   ```sh
-  # Run the project and register a customer;
-  # After accessing the mysql or postgres instance
-  USE ECommerce;
-  
-  # Update
-  UPDATE Customers
-  SET Role = 'manager'
-  WHERE email = '<CUSTOMER EMAIL>';
+  .scripts/rm-database.sh 
+  ```
+
+- Using > Database > Select all
+  ```sh
+  .scripts/database/select.table.sh < Table Name >
+  ```
+
+- Using > Database > Count
+  ```sh
+  .scripts/database/count.table.sh < Table Name >
+  ```
+
+- Using > Database > Truncate
+  ```sh
+  .scripts/database/truncate.table.sh < Table Name >
+  ```
+
+#### Tests
+
+- Stress - RegisterCustomer
+  ```sh
+  .scripts/tests/stress-RegisterCustomer.sh
+  ```
+
+#### Others
+
+- Create and Publish > Release Preview
+  ```sh
+  .scripts/mk-release-and-publish-preview.sh
+  ```
+
+- Create > **ROOT USER**
+  ```sh
+  .scripts/add-database-root-user.sh
   ```
 
 ## Entity Relationship Diagram (ERD)
 
 - See:
-  - Entities -> [Models](../src/Models)
-  - Relationship -> [Database Context](../src/Context/DatabaseContext.cs)
+  - Entities -> [Models](../App/ECommerceInfrastructure/Persistence/Models/)
+  - Relationship -> [Database Context](../App/ECommerceInfrastructure/Persistence/Contexts/DatabaseContext.cs)
 > ERD print 04/09/23
 
 ![ERD](ERD-ECommerce.png)
