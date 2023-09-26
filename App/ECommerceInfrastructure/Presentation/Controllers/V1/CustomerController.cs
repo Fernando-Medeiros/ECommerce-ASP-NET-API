@@ -1,68 +1,53 @@
 using ECommerceApplication.Requests;
 using ECommerceApplication.UseCases.Customer;
 using ECommerceInfrastructure.Authentication.Identities;
-using ECommerceInfrastructure.Configuration.ApiResponse;
+using ECommerceInfrastructure.Presentation.Abstractions;
 using ECommerceInfrastructure.Presentation.Resources;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceInfrastructure.Presentation.Controllers.V1;
 
-[ApiController]
 [Route("api/v1/customers")]
-public class CustomerController : ControllerBase
+public sealed class CustomerController : CustomerControllerBase
 {
-    [HttpGet]
-    [Authorize]
-    [NotFound, Unauthorized, Forbidden]
-    [Success(typeof(CustomerResource))]
-    public async Task<ActionResult> FindOne(
-        [FromServices] FindOneCustomer findOneCustomer)
+    public override async Task<ActionResult> FindOne(
+            [FromServices] FindOneCustomer useCase)
     {
         var customer = new CustomerIdentity(User);
 
-        var customerDto = await findOneCustomer
-            .Execute(new() { Id = customer.Id });
+        var customerDto = await useCase.Execute(new() { Id = customer.Id });
 
         return Ok(new CustomerResource(customerDto));
     }
 
-    [HttpPost]
-    [Created, BadRequest]
-    public async Task<ActionResult> Register(
-        [FromServices] RegisterCustomer registerCustomer,
+    public override async Task<ActionResult> Register(
+        [FromServices] RegisterCustomer useCase,
         [FromBody] CreateCustomerRequest request)
     {
-        await registerCustomer.Execute(request);
+        await useCase.Execute(request);
 
         return Created("", null);
     }
 
-    [HttpPatch]
-    [Authorize]
-    [NoContent, NotFound, BadRequest, Unauthorized, Forbidden]
-    public async Task<ActionResult> Update(
-        [FromServices] UpdateCustomerNameAndEmail UpdateCustomerNameAndEmail,
+    public override async Task<ActionResult> Update(
+        [FromServices] UpdateCustomerNameAndEmail useCase,
         [FromBody] UpdateCustomerRequest request)
     {
         var customer = new CustomerIdentity(User);
 
         request.Id = customer.Id;
 
-        await UpdateCustomerNameAndEmail.Execute(request);
+        await useCase.Execute(request);
 
         return NoContent();
     }
 
-    [HttpDelete]
-    [Authorize]
-    [NoContent, NotFound, Unauthorized, Forbidden]
-    public async Task<ActionResult> Remove(
-        [FromServices] RemoveCustomer removeCustomer)
+    public override async Task<ActionResult> Remove(
+        [FromServices] RemoveCustomer useCase)
     {
         var customer = new CustomerIdentity(User);
 
-        await removeCustomer.Execute(new() { Id = customer.Id });
+        await useCase.Execute(new() { Id = customer.Id });
 
         return NoContent();
     }
