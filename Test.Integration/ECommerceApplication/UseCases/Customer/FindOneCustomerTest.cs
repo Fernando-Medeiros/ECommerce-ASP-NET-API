@@ -1,35 +1,26 @@
-using ECommerceApplication.Contracts;
 using ECommerceApplication.Exceptions;
 using ECommerceApplication.UseCases.Customer;
 using ECommerceDomain.DTOs;
-using NSubstitute;
-using Test.Setup.Mocks;
+using Test.Setup.Shared;
 
 namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
-public class FindOneCustomerTest
+public sealed class FindOneCustomerTest : SharedCustomerTest
 {
-    readonly ICustomerRepository _repository = Substitute.For<ICustomerRepository>();
-
-    readonly CustomerDTO CaseInput = new() { Id = CustomerMocks.Customer.Id };
-
-    private void CreateStub(CustomerDTO input, CustomerDTO? output)
-    {
-        _repository.FindOne(Arg.Is(input)).Returns(output);
-    }
+    readonly CustomerDTO CaseInput = new() { Id = Customer.Id };
 
     [Fact]
     public async void Should_Return_One_Customer()
     {
-        CreateStub(
+        MakeRepositoryStub(
             input: CaseInput,
-            output: CustomerMocks.Customer);
+            output: Customer);
 
         var useCase = new FindOneCustomer(_repository);
 
         var result = await useCase.Execute(CaseInput);
 
-        Assert.Equivalent(CustomerMocks.Customer, result);
+        Assert.Equivalent(Customer, result);
     }
 
     [Fact]
@@ -39,7 +30,7 @@ public class FindOneCustomerTest
 
         Assert.ThrowsAsync<CustomerNotFoundException>(async () =>
         {
-            CreateStub(
+            MakeRepositoryStub(
                 input: CaseInput,
                 output: null);
 

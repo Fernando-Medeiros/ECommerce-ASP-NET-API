@@ -5,29 +5,23 @@ using ECommerceApplication.UseCases.Customer;
 using ECommerceDomain.Abstractions;
 using ECommerceDomain.DTOs;
 using NSubstitute;
-using Test.Setup.Mocks;
+using Test.Setup.Shared;
 
 namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
-public class UpdateCustomerNameAndEmailTest
+public sealed class UpdateCustomerNameAndEmailTest : SharedCustomerTest
 {
-    readonly ICustomerRepository _repository = Substitute.For<ICustomerRepository>();
     readonly IUnitTransactionWork _transaction = Substitute.For<IUnitTransactionWork>();
 
-    readonly UpdateCustomerRequest CaseInput = CustomerMocks.UpdateRequest;
-
-    private void CreateStub(CustomerDTO input, CustomerDTO? output)
-    {
-        _repository.FindOne(Arg.Is(input)).Returns(output);
-    }
+    readonly UpdateCustomerRequest CaseInput = UpdateRequest;
 
     [Fact]
     public async void Should_Update_Customer_NameOrEmail()
     {
-        CreateStub(
+        MakeRepositoryStub(
             input: new CustomerDTO() { Id = CaseInput.Id },
-            output: CustomerMocks.Customer);
-        CreateStub(
+            output: Customer);
+        MakeRepositoryStub(
             input: new CustomerDTO() { Email = CaseInput.Email },
             output: null);
 
@@ -54,7 +48,7 @@ public class UpdateCustomerNameAndEmailTest
 
         Assert.ThrowsAsync<CustomerNotFoundException>(async () =>
         {
-            CreateStub(
+            MakeRepositoryStub(
                 input: new CustomerDTO() { Id = CaseInput.Id },
                 output: null);
 
@@ -63,12 +57,12 @@ public class UpdateCustomerNameAndEmailTest
 
         Assert.ThrowsAsync<UniqueEmailConstraintException>(async () =>
         {
-            CreateStub(
+            MakeRepositoryStub(
                 input: new CustomerDTO() { Id = CaseInput.Id },
-                output: CustomerMocks.Customer);
-            CreateStub(
+                output: Customer);
+            MakeRepositoryStub(
                 input: new CustomerDTO() { Email = CaseInput.Email },
-                output: CustomerMocks.Customer);
+                output: Customer);
 
             await useCase.Execute(CaseInput);
         });

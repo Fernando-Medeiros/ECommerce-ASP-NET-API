@@ -5,7 +5,7 @@ using ECommerceInfrastructure.Presentation.Resources;
 
 namespace Test.Setup.Mocks;
 
-public static class CustomerMocks
+public abstract class CustomerMocks
 {
     public static readonly CustomerDTO DataToRegister = new()
     {
@@ -50,7 +50,7 @@ public static class CustomerMocks
 
     public static readonly UpdateCustomerRequest UpdateRequest = new()
     {
-        Id = Guid.NewGuid().ToString(),
+        Id = Customer.Id,
         Name = DataToUpdate.Name,
         FirstName = DataToUpdate.FirstName,
         LastName = DataToUpdate.LastName,
