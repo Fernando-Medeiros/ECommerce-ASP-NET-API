@@ -3,28 +3,22 @@ using ECommerceApplication.Exceptions;
 using ECommerceApplication.UseCases.Customer;
 using ECommerceDomain.DTOs;
 using NSubstitute;
-using Test.Setup.Mocks;
+using Test.Setup.Shared;
 
 namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
-public class RemoveCustomerTest
+public sealed class RemoveCustomerTest : SharedCustomerTest
 {
-    readonly ICustomerRepository _repository = Substitute.For<ICustomerRepository>();
     readonly IUnitTransactionWork _transaction = Substitute.For<IUnitTransactionWork>();
 
-    readonly CustomerDTO CaseInput = new() { Id = CustomerMocks.Customer.Id };
-
-    private void CreateStub(CustomerDTO input, CustomerDTO? output)
-    {
-        _repository.FindOne(Arg.Is(input)).Returns(output);
-    }
+    readonly CustomerDTO CaseInput = new() { Id = Customer.Id };
 
     [Fact]
-    public async void Should_Remove_Customer()
+    public async void Should_Remove()
     {
-        CreateStub(
+        MakeRepositoryStub(
             input: CaseInput,
-            output: CustomerMocks.Customer);
+            output: Customer);
 
         var useCase = new RemoveCustomer(
             _repository,
@@ -42,7 +36,7 @@ public class RemoveCustomerTest
 
         Assert.ThrowsAsync<CustomerNotFoundException>(async () =>
         {
-            CreateStub(
+            MakeRepositoryStub(
                 input: CaseInput,
                 output: null);
 
