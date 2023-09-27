@@ -6,27 +6,22 @@ using ECommerceDomain.Abstractions;
 using ECommerceDomain.DTOs;
 using ECommerceInfrastructure.Authentication.Encrypt;
 using NSubstitute;
-using Test.Setup.Mocks;
+using Test.Setup.Shared;
 
 namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
-public class RegisterCustomerTest
+public sealed class RegisterCustomerTest : SharedCustomerTest
 {
-    readonly ICustomerRepository _repository = Substitute.For<ICustomerRepository>();
     readonly IUnitTransactionWork _transaction = Substitute.For<IUnitTransactionWork>();
+
     readonly ICryptPassword _crypt = new CryptPassword();
 
-    readonly CreateCustomerRequest CaseInput = CustomerMocks.CreateRequest;
-
-    private void CreateStub(CustomerDTO input, CustomerDTO? output)
-    {
-        _repository.FindOne(Arg.Is(input)).Returns(output);
-    }
+    readonly CreateCustomerRequest CaseInput = CreateRequest;
 
     [Fact]
-    public async void Should_Register_Customer()
+    public async void Should_Register()
     {
-        CreateStub(
+        MakeRepositoryStub(
             input: new CustomerDTO() { Email = CaseInput.Email },
             output: null);
 
@@ -55,9 +50,9 @@ public class RegisterCustomerTest
 
         Assert.ThrowsAsync<UniqueEmailConstraintException>(async () =>
         {
-            CreateStub(
+            MakeRepositoryStub(
                 input: new CustomerDTO() { Email = CaseInput.Email },
-                output: CustomerMocks.Customer);
+                output: Customer);
 
             await useCase.Execute(CaseInput);
         });
