@@ -23,7 +23,7 @@ public sealed class ServerFixtureE2E : ServerFixture
 
     public override async void Dispose()
     {
-        await RemoveOneAsync();
+        await TruncateTablesAsync();
         base.Dispose();
     }
 
@@ -33,7 +33,7 @@ public sealed class ServerFixtureE2E : ServerFixture
         await _context.SaveChangesAsync();
     }
 
-    private async Task RemoveOneAsync()
+    private async Task TruncateTablesAsync()
     {
         var _ = _table switch
         {
