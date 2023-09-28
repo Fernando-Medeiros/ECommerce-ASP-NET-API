@@ -5,11 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Test.Setup.Fixtures;
 
-public sealed class ServerFixture : IDisposable
+public class ServerFixture : IDisposable
 {
-    private readonly TestServer _server;
+    protected readonly TestServer _server;
 
-    public HttpClient Client { get; }
+    public readonly HttpClient Client;
 
     public ServerFixture(Action<IServiceCollection>? serviceOverride = null)
     {
@@ -25,7 +25,7 @@ public sealed class ServerFixture : IDisposable
         Client = _server.CreateClient();
     }
 
-    public void Dispose()
+    public virtual void Dispose()
     {
         Client.Dispose();
         _server.Dispose();

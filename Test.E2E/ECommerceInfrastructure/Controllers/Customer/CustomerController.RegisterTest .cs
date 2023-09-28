@@ -1,12 +1,10 @@
 using System.Net;
 using ECommerceApplication.Exceptions;
 using ECommerceApplication.Requests;
-using ECommerceDomain.DTOs;
-using Microsoft.Extensions.DependencyInjection;
 using Test.Setup.Fixtures;
 using Test.Setup.Shared;
 
-namespace Test.Integration.ECommerceInfrastructure.Presentation.Controllers;
+namespace Test.E2E.ECommerceInfrastructure.Controllers;
 
 public sealed class CustomerControllerRegisterTest : SharedCustomerTest
 {
@@ -20,11 +18,7 @@ public sealed class CustomerControllerRegisterTest : SharedCustomerTest
     [Fact]
     public async void Should_Register_Customer()
     {
-        MakeRepositoryStub(
-            input: new CustomerDTO() { Email = Payload.Email },
-            output: null);
-
-        using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
+        using var app = new ServerFixtureE2E(table: ETable.customer);
 
         var response = await app.Client.SendAsync(
             _requestFixture
@@ -34,15 +28,12 @@ public sealed class CustomerControllerRegisterTest : SharedCustomerTest
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
     }
 
-
     [Fact]
-    public async void Should_Return_BadRequest_Response()
+    public async void Should_Return_UniqueEmailConstraint_Response()
     {
-        MakeRepositoryStub(
-            input: new CustomerDTO() { Email = Payload.Email },
-            output: Mock.CustomerDTO);
+        using var app = new ServerFixtureE2E(table: ETable.customer);
 
-        using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
+        await app.InsertOneAsync(Mock.CustomerEntity);
 
         var response = await app.Client.SendAsync(
             _requestFixture

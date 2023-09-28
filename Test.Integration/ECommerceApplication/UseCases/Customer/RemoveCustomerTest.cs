@@ -9,16 +9,23 @@ namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
 public sealed class RemoveCustomerTest : SharedCustomerTest
 {
-    readonly IUnitTransactionWork _transaction = Substitute.For<IUnitTransactionWork>();
+    readonly IUnitTransactionWork _transaction;
 
-    readonly CustomerDTO CaseInput = new() { Id = Customer.Id };
+    readonly CustomerDTO CaseInput;
+
+    public RemoveCustomerTest()
+    {
+        _transaction = Substitute.For<IUnitTransactionWork>();
+
+        CaseInput = new() { Id = Mock.UniqueId };
+    }
 
     [Fact]
     public async void Should_Remove()
     {
         MakeRepositoryStub(
             input: CaseInput,
-            output: Customer);
+            output: Mock.CustomerDTO);
 
         var useCase = new RemoveCustomer(
             _repository,

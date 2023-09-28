@@ -7,20 +7,25 @@ namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
 public sealed class FindOneCustomerTest : SharedCustomerTest
 {
-    readonly CustomerDTO CaseInput = new() { Id = Customer.Id };
+    readonly CustomerDTO CaseInput;
+
+    public FindOneCustomerTest()
+    {
+        CaseInput = new() { Id = Mock.UniqueId };
+    }
 
     [Fact]
     public async void Should_Return_One_Customer()
     {
         MakeRepositoryStub(
             input: CaseInput,
-            output: Customer);
+            output: Mock.CustomerDTO);
 
         var useCase = new FindOneCustomer(_repository);
 
         var result = await useCase.Execute(CaseInput);
 
-        Assert.Equivalent(Customer, result);
+        Assert.Equivalent(Mock.CustomerDTO, result);
     }
 
     [Fact]

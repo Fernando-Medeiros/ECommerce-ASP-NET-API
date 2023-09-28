@@ -12,11 +12,18 @@ namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
 public sealed class RegisterCustomerTest : SharedCustomerTest
 {
-    readonly IUnitTransactionWork _transaction = Substitute.For<IUnitTransactionWork>();
+    readonly IUnitTransactionWork _transaction;
 
-    readonly ICryptPassword _crypt = new CryptPassword();
+    readonly ICryptPassword _crypt;
 
-    readonly CreateCustomerRequest CaseInput = CreateRequest;
+    readonly CreateCustomerRequest CaseInput;
+
+    public RegisterCustomerTest()
+    {
+        _transaction = Substitute.For<IUnitTransactionWork>();
+        _crypt = new CryptPassword();
+        CaseInput = Mock.CreateRequest;
+    }
 
     [Fact]
     public async void Should_Register()
@@ -52,7 +59,7 @@ public sealed class RegisterCustomerTest : SharedCustomerTest
         {
             MakeRepositoryStub(
                 input: new CustomerDTO() { Email = CaseInput.Email },
-                output: Customer);
+                output: Mock.CustomerDTO);
 
             await useCase.Execute(CaseInput);
         });

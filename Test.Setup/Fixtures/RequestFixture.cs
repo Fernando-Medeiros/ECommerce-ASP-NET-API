@@ -1,8 +1,8 @@
 using System.Text;
+using ECommerceDomain.DTOs;
 using ECommerceInfrastructure.Authentication.Tokens;
 using ECommerceInfrastructure.Authentication.Tokens.Enums;
 using Newtonsoft.Json;
-using Test.Setup.Mocks;
 
 namespace Test.Setup.Fixtures;
 
@@ -45,12 +45,11 @@ public sealed class RequestFixture
         return this;
     }
 
-    public RequestFixture FakeAuthorizationHeader()
+    public RequestFixture FakeAuthorizationHeader(CustomerDTO customer)
     {
         var tokenService = new TokenService();
 
-        string token = tokenService.Generate(
-            CustomerMocks.Customer, ETokenScopes.Access).Token;
+        string token = tokenService.Generate(customer, ETokenScopes.Access).Token;
 
         Headers.Add(new("Authorization", $"Bearer {token}"));
         return this;
