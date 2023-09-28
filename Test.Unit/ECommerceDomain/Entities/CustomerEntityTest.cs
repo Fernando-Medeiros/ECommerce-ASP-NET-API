@@ -6,11 +6,20 @@ namespace Test.Unit.ECommerceDomain.Entities;
 
 public class CustomerEntityTest
 {
-    private readonly CustomerDTO CurrentState = CustomerMocks.Customer;
+    private readonly CustomerDTO CurrentState;
 
-    private readonly CustomerDTO DataToRegister = CustomerMocks.DataToRegister;
+    private readonly CustomerDTO DataToRegister;
 
-    private readonly CustomerDTO DataToUpdate = CustomerMocks.DataToUpdate;
+    private readonly CustomerDTO DataToUpdate;
+
+    public CustomerEntityTest()
+    {
+        CustomerMocks Mock = new();
+
+        CurrentState = Mock.CustomerDTO;
+        DataToRegister = Mock.DataToRegister;
+        DataToUpdate = Mock.DataToUpdate;
+    }
 
     [Fact]
     public void Should_Register_New_Customer()
