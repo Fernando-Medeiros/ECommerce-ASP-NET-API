@@ -21,7 +21,7 @@ public sealed class RequestFixture
         MediaType = mediaType!;
     }
 
-    public HttpRequestMessage CreateRequest(HttpMethod method)
+    public HttpRequestMessage RequestMessage(HttpMethod method)
     {
         var request = new HttpRequestMessage(method, URL)
         {
@@ -37,7 +37,7 @@ public sealed class RequestFixture
         return request;
     }
 
-    public RequestFixture CreateJsonContent(object obj)
+    public RequestFixture JsonContent(object obj)
     {
         string json = JsonConvert.SerializeObject(obj);
 
@@ -45,7 +45,7 @@ public sealed class RequestFixture
         return this;
     }
 
-    public RequestFixture FakeAuthorizationHeader(CustomerDTO customer)
+    public RequestFixture AuthorizationHeader(CustomerDTO customer)
     {
         var tokenService = new TokenService();
 

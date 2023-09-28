@@ -28,8 +28,8 @@ public sealed class CustomerControllerRegisterTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .CreateJsonContent(Payload)
-            .CreateRequest(HttpMethod.Post));
+            .JsonContent(Payload)
+            .RequestMessage(HttpMethod.Post));
 
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
     }
@@ -46,8 +46,8 @@ public sealed class CustomerControllerRegisterTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .CreateJsonContent(Payload)
-            .CreateRequest(HttpMethod.Post));
+            .JsonContent(Payload)
+            .RequestMessage(HttpMethod.Post));
 
         var responseContent = await _responseFixture
             .Deserialize<UniqueEmailConstraintException?>(response);

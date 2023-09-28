@@ -24,9 +24,9 @@ public sealed class CustomerControllerUpdateTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader(Mock.CustomerDTO)
-            .CreateJsonContent(Payload)
-            .CreateRequest(HttpMethod.Patch));
+            .AuthorizationHeader(Mock.CustomerDTO)
+            .JsonContent(Payload)
+            .RequestMessage(HttpMethod.Patch));
 
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
     }
@@ -38,9 +38,9 @@ public sealed class CustomerControllerUpdateTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader(Mock.CustomerDTO)
-            .CreateJsonContent(Payload)
-            .CreateRequest(HttpMethod.Patch));
+            .AuthorizationHeader(Mock.CustomerDTO)
+            .JsonContent(Payload)
+            .RequestMessage(HttpMethod.Patch));
 
         var responseContent = await _responseFixture
             .Deserialize<CustomerNotFoundException?>(response);

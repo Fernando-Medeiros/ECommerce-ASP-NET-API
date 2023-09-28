@@ -20,8 +20,8 @@ public sealed class CustomerControllerRemoveTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader(Mock.CustomerDTO)
-            .CreateRequest(HttpMethod.Delete));
+            .AuthorizationHeader(Mock.CustomerDTO)
+            .RequestMessage(HttpMethod.Delete));
 
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
     }
@@ -33,7 +33,7 @@ public sealed class CustomerControllerRemoveTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .CreateRequest(HttpMethod.Delete));
+            .RequestMessage(HttpMethod.Delete));
 
         Assert.Equal(HttpStatusCode.Unauthorized, response?.StatusCode);
     }
@@ -49,8 +49,8 @@ public sealed class CustomerControllerRemoveTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader(Mock.CustomerDTO)
-            .CreateRequest(HttpMethod.Delete));
+            .AuthorizationHeader(Mock.CustomerDTO)
+            .RequestMessage(HttpMethod.Delete));
 
         var responseContent = await _responseFixture
             .Deserialize<CustomerNotFoundException?>(response);

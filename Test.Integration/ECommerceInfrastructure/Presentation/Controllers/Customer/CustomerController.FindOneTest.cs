@@ -21,8 +21,8 @@ public sealed class CustomerControllerFindOneTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader(Mock.CustomerDTO)
-            .CreateRequest(HttpMethod.Get)
+            .AuthorizationHeader(Mock.CustomerDTO)
+            .RequestMessage(HttpMethod.Get)
         );
 
         var responseContent = await _responseFixture
@@ -39,7 +39,7 @@ public sealed class CustomerControllerFindOneTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .CreateRequest(HttpMethod.Get)
+            .RequestMessage(HttpMethod.Get)
         );
 
         Assert.Equal(HttpStatusCode.Unauthorized, response?.StatusCode);
@@ -56,8 +56,8 @@ public sealed class CustomerControllerFindOneTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader(Mock.CustomerDTO)
-            .CreateRequest(HttpMethod.Get)
+            .AuthorizationHeader(Mock.CustomerDTO)
+            .RequestMessage(HttpMethod.Get)
         );
 
         var responseContent = await _responseFixture
