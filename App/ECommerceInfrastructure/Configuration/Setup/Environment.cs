@@ -7,7 +7,7 @@ public static partial class Setup
     public static void Environment()
     {
         var Configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.json", optional: true)
             .AddJsonFile("appsettings.development.json", optional: true)
             .AddEnvironmentVariables()
             .Build();
