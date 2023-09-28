@@ -10,7 +10,12 @@ namespace Test.Integration.ECommerceInfrastructure.Presentation.Controllers;
 
 public sealed class CustomerControllerRegisterTest : SharedCustomerTest
 {
-    readonly CreateCustomerRequest Payload = CreateRequest;
+    readonly CreateCustomerRequest Payload;
+
+    public CustomerControllerRegisterTest()
+    {
+        Payload = Mock.CreateRequest;
+    }
 
     [Fact]
     public async void Should_Register_Customer()
@@ -35,7 +40,7 @@ public sealed class CustomerControllerRegisterTest : SharedCustomerTest
     {
         MakeRepositoryStub(
             input: new CustomerDTO() { Email = Payload.Email },
-            output: Customer);
+            output: Mock.CustomerDTO);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 

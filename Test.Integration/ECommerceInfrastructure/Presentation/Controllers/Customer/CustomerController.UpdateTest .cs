@@ -10,14 +10,19 @@ namespace Test.Integration.ECommerceInfrastructure.Presentation.Controllers;
 
 public sealed class CustomerControllerUpdateTest : SharedCustomerTest
 {
-    readonly UpdateCustomerRequest Payload = UpdateRequest;
+    readonly UpdateCustomerRequest Payload;
+
+    public CustomerControllerUpdateTest()
+    {
+        Payload = Mock.UpdateRequest;
+    }
 
     [Fact]
     public async void Should_Update_NameOrEmail()
     {
         MakeRepositoryStub(
-            input: new CustomerDTO() { Id = Payload.Id },
-            output: Customer);
+            input: new CustomerDTO() { Id = Mock.UniqueId },
+            output: Mock.CustomerDTO);
         MakeRepositoryStub(
             input: new CustomerDTO() { Email = Payload.Email },
             output: null);
@@ -26,7 +31,7 @@ public sealed class CustomerControllerUpdateTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader()
+            .FakeAuthorizationHeader(Mock.CustomerDTO)
             .CreateJsonContent(Payload)
             .CreateRequest(HttpMethod.Patch));
 
@@ -49,14 +54,14 @@ public sealed class CustomerControllerUpdateTest : SharedCustomerTest
     public async void Should_Return_NotFound_Response()
     {
         MakeRepositoryStub(
-            input: new CustomerDTO() { Id = Payload.Id },
+            input: new CustomerDTO() { Id = Mock.UniqueId },
             output: null);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader()
+            .FakeAuthorizationHeader(Mock.CustomerDTO)
             .CreateJsonContent(Payload)
             .CreateRequest(HttpMethod.Patch));
 

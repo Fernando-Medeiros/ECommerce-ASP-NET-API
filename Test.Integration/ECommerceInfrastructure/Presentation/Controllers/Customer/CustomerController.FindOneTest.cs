@@ -14,14 +14,14 @@ public sealed class CustomerControllerFindOneTest : SharedCustomerTest
     public async void Should_Return_CustomerResource()
     {
         MakeRepositoryStub(
-            input: new CustomerDTO() { Id = Customer.Id },
-            output: Customer);
+            input: new CustomerDTO() { Id = Mock.UniqueId },
+            output: Mock.CustomerDTO);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader()
+            .FakeAuthorizationHeader(Mock.CustomerDTO)
             .CreateRequest(HttpMethod.Get)
         );
 
@@ -29,7 +29,7 @@ public sealed class CustomerControllerFindOneTest : SharedCustomerTest
             .Deserialize<CustomerResource?>(response);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.Equivalent(Resource, responseContent);
+        Assert.Equivalent(Mock.CustomerResource, responseContent);
     }
 
     [Fact]
@@ -49,14 +49,14 @@ public sealed class CustomerControllerFindOneTest : SharedCustomerTest
     public async void Should_Return_NotFound_Response()
     {
         MakeRepositoryStub(
-            input: new CustomerDTO() { Id = Customer.Id },
+            input: new CustomerDTO() { Id = Mock.UniqueId },
             output: null);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader()
+            .FakeAuthorizationHeader(Mock.CustomerDTO)
             .CreateRequest(HttpMethod.Get)
         );
 

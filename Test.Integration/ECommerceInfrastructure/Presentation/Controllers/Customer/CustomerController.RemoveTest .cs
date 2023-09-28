@@ -13,14 +13,14 @@ public sealed class CustomerControllerRemoveTest : SharedCustomerTest
     public async void Should_Remove_Customer()
     {
         MakeRepositoryStub(
-            input: new CustomerDTO() { Id = Customer.Id },
-            output: Customer);
+            input: new CustomerDTO() { Id = Mock.UniqueId },
+            output: Mock.CustomerDTO);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader()
+            .FakeAuthorizationHeader(Mock.CustomerDTO)
             .CreateRequest(HttpMethod.Delete));
 
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
@@ -42,14 +42,14 @@ public sealed class CustomerControllerRemoveTest : SharedCustomerTest
     public async void Should_Return_NotFound_Response()
     {
         MakeRepositoryStub(
-            input: new CustomerDTO() { Id = Customer.Id },
+            input: new CustomerDTO() { Id = Mock.UniqueId },
             output: null);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .FakeAuthorizationHeader()
+            .FakeAuthorizationHeader(Mock.CustomerDTO)
             .CreateRequest(HttpMethod.Delete));
 
         var responseContent = await _responseFixture

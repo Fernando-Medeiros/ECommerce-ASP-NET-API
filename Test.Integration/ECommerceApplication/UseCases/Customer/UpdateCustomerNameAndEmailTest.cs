@@ -11,16 +11,23 @@ namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
 public sealed class UpdateCustomerNameAndEmailTest : SharedCustomerTest
 {
-    readonly IUnitTransactionWork _transaction = Substitute.For<IUnitTransactionWork>();
+    readonly IUnitTransactionWork _transaction;
 
-    readonly UpdateCustomerRequest CaseInput = UpdateRequest;
+    readonly UpdateCustomerRequest CaseInput;
+
+    public UpdateCustomerNameAndEmailTest()
+    {
+        _transaction = Substitute.For<IUnitTransactionWork>();
+
+        CaseInput = Mock.UpdateRequest;
+    }
 
     [Fact]
     public async void Should_Update_Customer_NameOrEmail()
     {
         MakeRepositoryStub(
-            input: new CustomerDTO() { Id = CaseInput.Id },
-            output: Customer);
+            input: new CustomerDTO() { Id = Mock.UniqueId },
+            output: Mock.CustomerDTO);
         MakeRepositoryStub(
             input: new CustomerDTO() { Email = CaseInput.Email },
             output: null);
@@ -49,7 +56,7 @@ public sealed class UpdateCustomerNameAndEmailTest : SharedCustomerTest
         Assert.ThrowsAsync<CustomerNotFoundException>(async () =>
         {
             MakeRepositoryStub(
-                input: new CustomerDTO() { Id = CaseInput.Id },
+                input: new CustomerDTO() { Id = Mock.UniqueId },
                 output: null);
 
             await useCase.Execute(CaseInput);
@@ -58,11 +65,11 @@ public sealed class UpdateCustomerNameAndEmailTest : SharedCustomerTest
         Assert.ThrowsAsync<UniqueEmailConstraintException>(async () =>
         {
             MakeRepositoryStub(
-                input: new CustomerDTO() { Id = CaseInput.Id },
-                output: Customer);
+                input: new CustomerDTO() { Id = Mock.UniqueId },
+                output: Mock.CustomerDTO);
             MakeRepositoryStub(
                 input: new CustomerDTO() { Email = CaseInput.Email },
-                output: Customer);
+                output: Mock.CustomerDTO);
 
             await useCase.Execute(CaseInput);
         });
