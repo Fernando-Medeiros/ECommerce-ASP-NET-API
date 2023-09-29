@@ -10,13 +10,17 @@ public class DatabaseContext : DbContext
         DbContextOptions<DatabaseContext> options) : base(options) { }
 
     #region Tables
+
     public DbSet<Customer> Customers { get; set; }
+
     #endregion
 
     #region Override
+
     override protected void OnModelCreating(ModelBuilder builder)
     {
         CustomerConfiguration.Builder(builder);
     }
+
     #endregion
 }
