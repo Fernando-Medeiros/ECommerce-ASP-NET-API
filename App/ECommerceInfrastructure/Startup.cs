@@ -1,4 +1,5 @@
 using ECommerceInfrastructure.Configuration.Setup;
+using ECommerceInfrastructure.Queue.LogQueue;
 
 namespace ECommerceInfrastructure;
 
@@ -15,15 +16,17 @@ public class Startup
     {
         Setup.Environment();
 
-        Setup.SmtpClient(services);
-
         Setup.AuthenticationMiddleware(services);
 
         Setup.AuthorizationMiddleware(services);
 
+        Setup.Swagger(services);
+
+        Setup.Mappers(services);
+
         Setup.Controller(services);
 
-        Setup.Swagger(services);
+        Setup.SmtpClient(services);
 
         Setup.Database(services);
 
@@ -37,6 +40,8 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseHttpsRedirection();
+
         app.UseSwagger();
 
         app.UseSwaggerUI();
@@ -47,7 +52,7 @@ public class Startup
 
         app.UseAuthorization();
 
-        app.UseHttpsRedirection();
+        app.UseMiddleware<LogQueueMiddleware>();
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
