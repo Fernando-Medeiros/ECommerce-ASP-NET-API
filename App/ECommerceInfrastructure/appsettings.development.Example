@@ -1,8 +1,9 @@
 {
+  "AllowedHosts": "*",
   "Logging": {
     "LogLevel": {
       "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
+      "Microsoft.AspNetCore": "Information"
     }
   },
   "PRIVATE_KEY": "ff267f0ac44a7ef41b200c90349230722ae25969f40d9134dc5%b3c08fb4835c821DgcÇvc$daV*Hv2p$54%&C@cD084",

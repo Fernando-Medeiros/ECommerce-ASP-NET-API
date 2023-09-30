@@ -131,44 +131,44 @@ dotnet tool install --global dotnet-ef
 
 - Create > Migration
   ```sh
-    .scripts/add-migration.sh < Migration Name >
+    .scripts/migration/add.sh < Name > < Context >
   ```
 
-- Remove > Migration
+- Remove Last > Migration
   ```sh
-    .scripts/rm-migration.sh
+    .scripts/migration/remove.sh < Context >
   ```
 
 - List > Migration
   ```sh
-    .scripts/ls-migration.sh 
+    .scripts/migration/list.sh  < Context >
   ```
 
 #### Database
 
 - Update > Database
   ```sh
-  .scripts/up-database.sh 
+  .scripts/database/update.sh < Context >
   ```
 
 - Drop > Database
   ```sh
-  .scripts/rm-database.sh 
+  .scripts/database/drop.sh < Context >
   ```
 
 - Using > Database > Select all
   ```sh
-  .scripts/database/select.table.sh < Table Name >
+  .scripts/cmd/select.table.sh < Name >
   ```
 
 - Using > Database > Count
   ```sh
-  .scripts/database/count.table.sh < Table Name >
+  .scripts/cmd/count.table.sh < Name >
   ```
 
 - Using > Database > Truncate
   ```sh
-  .scripts/database/truncate.table.sh < Table Name >
+  .scripts/cmd/truncate.table.sh < Name >
   ```
 
 #### Tests
