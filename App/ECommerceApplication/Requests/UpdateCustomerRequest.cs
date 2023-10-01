@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using ECommerceDomain.Validators;
+using ECommerceDomain.Validations;
 
 namespace ECommerceApplication.Requests;
 
@@ -38,7 +38,7 @@ public sealed record UpdateCustomerRequest
     public async Task ValidateAsync() => await Task.WhenAll(
         Task.Run(() =>
         {
-            new CustomValidator<string?>(
+            new CustomValidation<string?>(
                 data: Name, target: nameof(Name), required: false)
                 .NotEmpty()
                 .Length(3, 20);
@@ -46,7 +46,7 @@ public sealed record UpdateCustomerRequest
 
         Task.Run(() =>
         {
-            new CustomValidator<string?>(
+            new CustomValidation<string?>(
                 data: FirstName, target: nameof(FirstName), required: false)
                 .NotEmpty()
                 .Length(3, 20);
@@ -54,7 +54,7 @@ public sealed record UpdateCustomerRequest
 
         Task.Run(() =>
         {
-            new CustomValidator<string?>(
+            new CustomValidation<string?>(
                 data: LastName, target: nameof(LastName), required: false)
                 .NotEmpty()
                 .Length(3, 20);
@@ -62,7 +62,7 @@ public sealed record UpdateCustomerRequest
 
         Task.Run(() =>
         {
-            new CustomValidator<string?>(
+            new CustomValidation<string?>(
                 data: Email, target: nameof(Email), required: false)
                 .NotEmpty()
                 .Length(6, 155)

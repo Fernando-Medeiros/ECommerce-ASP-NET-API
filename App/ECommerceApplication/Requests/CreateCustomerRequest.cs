@@ -1,4 +1,4 @@
-using ECommerceDomain.Validators;
+using ECommerceDomain.Validations;
 
 namespace ECommerceApplication.Requests;
 
@@ -39,7 +39,7 @@ public sealed record CreateCustomerRequest
     public async Task ValidateAsync() => await Task.WhenAll(
         Task.Run(() =>
         {
-            new CustomValidator<string?>(
+            new CustomValidation<string?>(
                 data: Name, target: nameof(Name))
                 .NotNull()
                 .NotEmpty()
@@ -48,7 +48,7 @@ public sealed record CreateCustomerRequest
 
         Task.Run(() =>
         {
-            new CustomValidator<string?>(
+            new CustomValidation<string?>(
                 data: FirstName, target: nameof(FirstName))
                 .NotNull()
                 .NotEmpty()
@@ -57,7 +57,7 @@ public sealed record CreateCustomerRequest
 
     Task.Run(() =>
     {
-        new CustomValidator<string?>(
+        new CustomValidation<string?>(
                 data: LastName, target: nameof(LastName))
                 .NotNull()
                 .NotEmpty()
@@ -66,7 +66,7 @@ public sealed record CreateCustomerRequest
 
     Task.Run(() =>
     {
-        new CustomValidator<string?>(
+        new CustomValidation<string?>(
                 data: Email, target: nameof(Email))
                 .NotNull()
                 .NotEmpty()
@@ -76,7 +76,7 @@ public sealed record CreateCustomerRequest
 
     Task.Run(() =>
     {
-        new CustomValidator<string?>(
+        new CustomValidation<string?>(
                 data: Password, target: nameof(Password))
                 .NotNull()
                 .NotEmpty()
