@@ -4,7 +4,7 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static void Mappers(IServiceCollection services)
+    public static void Mapping(IServiceCollection services)
     {
         services.AddAutoMapper(typeof(DatabaseMappers));
     }

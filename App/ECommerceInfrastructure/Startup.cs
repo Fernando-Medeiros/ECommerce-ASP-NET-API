@@ -16,13 +16,13 @@ public class Startup
     {
         Setup.Environment();
 
-        Setup.AuthenticationMiddleware(services);
+        Setup.AuthenticationSchemes(services);
 
-        Setup.AuthorizationMiddleware(services);
+        Setup.AuthorizationPolicies(services);
 
         Setup.Swagger(services);
 
-        Setup.Mappers(services);
+        Setup.Mapping(services);
 
         Setup.Controller(services);
 

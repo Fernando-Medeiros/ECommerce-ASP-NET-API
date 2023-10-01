@@ -7,7 +7,7 @@ namespace ECommerceInfrastructure.Configuration.Setup;
 
 public static partial class Setup
 {
-    public static void AuthenticationMiddleware(IServiceCollection services)
+    public static void AuthenticationSchemes(IServiceCollection services)
     {
         services
             .AddAuthentication(opt =>
@@ -31,15 +31,5 @@ public static partial class Setup
                 };
             }
         );
-    }
-
-    public static void AuthorizationMiddleware(IServiceCollection services)
-    {
-        services.AddAuthorization(opt =>
-        {
-            opt.AddPolicy("Customer", policy => policy.RequireRole("customer"));
-            opt.AddPolicy("Employee", policy => policy.RequireRole("employee"));
-            opt.AddPolicy("Manager", policy => policy.RequireRole("manager"));
-        });
     }
 }
