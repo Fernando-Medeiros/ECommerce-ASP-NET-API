@@ -1,6 +1,6 @@
 using ECommerceApplication.Requests;
 using ECommerceApplication.UseCases.Customer;
-using ECommerceInfrastructure.Configuration.ApiResponse;
+using ECommerceInfrastructure.Configuration.ProducesResponse;
 using ECommerceInfrastructure.Presentation.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
