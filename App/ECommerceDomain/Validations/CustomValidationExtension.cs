@@ -1,20 +1,20 @@
 using System.Collections.ObjectModel;
 using ECommerceDomain.Exceptions;
 
-namespace ECommerceDomain.Validators;
+namespace ECommerceDomain.Validations;
 
-public static class ValidatorExtensions
+public static class CustomValidationExtension
 {
-    static readonly string Target = nameof(ValidatorExtensions);
+    static readonly string Target = nameof(CustomValidationExtension);
 
-    public static CustomValidator<T> NotNull<T>(this CustomValidator<T> v)
+    public static CustomValidation<T> NotNull<T>(this CustomValidation<T> v)
     {
-        if (v.Value == null)
+        if (v.Value is null)
             throw new NotNullException(v.Target).Target(Target);
         return v;
     }
 
-    public static CustomValidator<T> NotEmpty<T>(this CustomValidator<T> v)
+    public static CustomValidation<T> NotEmpty<T>(this CustomValidation<T> v)
     {
         bool IsEmpty = false;
 
@@ -28,7 +28,7 @@ public static class ValidatorExtensions
         return v;
     }
 
-    public static CustomValidator<T> Length<T>(this CustomValidator<T> v, int min, int max)
+    public static CustomValidation<T> Length<T>(this CustomValidation<T> v, int min, int max)
     {
         int len = $"{v.Value}".Length;
 
@@ -38,18 +38,18 @@ public static class ValidatorExtensions
         return v;
     }
 
-    public static CustomValidator<T> EmailAddress<T>(this CustomValidator<T> v)
+    public static CustomValidation<T> EmailAddress<T>(this CustomValidation<T> v)
     {
-        if (v.IsRequired() && !RegexExtensions.EmailIsMatch(v.Value))
+        if (v.IsRequired() && CustomRegexExtension.EmailIsMatch(v.Value) is false)
 
             throw new EmailFormatException().Target(Target);
         return v;
     }
 
 
-    public static CustomValidator<T> Password<T>(this CustomValidator<T> v)
+    public static CustomValidation<T> Password<T>(this CustomValidation<T> v)
     {
-        if (v.IsRequired() && !RegexExtensions.PasswordIsMatch(v.Value))
+        if (v.IsRequired() && CustomRegexExtension.PasswordIsMatch(v.Value) is false)
 
             throw new PasswordFormatException().Target(Target);
         return v;

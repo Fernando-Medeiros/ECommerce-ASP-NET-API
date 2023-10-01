@@ -1,9 +1,9 @@
 using System.Text.RegularExpressions;
 using ECommerceDomain.Constants;
 
-namespace ECommerceDomain.Validators;
+namespace ECommerceDomain.Validations;
 
-public static partial class RegexExtensions
+public static partial class CustomRegexExtension
 {
     [GeneratedRegex(RegexTypes.Name)]
     private static partial Regex Name();
@@ -18,14 +18,14 @@ public static partial class RegexExtensions
     private static partial Regex PasswordHash();
 
     public static bool NameIsMatch<T>(T? value) =>
-        RegexExtensions.Name().IsMatch($"{value}");
+        CustomRegexExtension.Name().IsMatch($"{value}");
 
     public static bool EmailIsMatch<T>(T? value) =>
-        RegexExtensions.Email().IsMatch($"{value}");
+        CustomRegexExtension.Email().IsMatch($"{value}");
 
     public static bool PasswordIsMatch<T>(T? value) =>
-        RegexExtensions.Password().IsMatch($"{value}");
+        CustomRegexExtension.Password().IsMatch($"{value}");
 
     public static bool PasswordHashIsMatch<T>(T? value) =>
-        RegexExtensions.PasswordHash().IsMatch($"{value}");
+        CustomRegexExtension.PasswordHash().IsMatch($"{value}");
 }
