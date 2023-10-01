@@ -12,12 +12,9 @@ public static partial class Setup
             .AddEnvironmentVariables()
             .Build();
 
-        AuthEnvironment.LoadEnv(Configuration);
-
-        DatabaseEnvironment.LoadEnv(Configuration);
-
-        MailEnvironment.LoadEnv(Configuration);
-
-        RedirectEnvironment.LoadEnv(Configuration);
+        DatabaseEnv.AddEnvironmentVariables(Configuration);
+        MailEnv.AddEnvironmentVariables(Configuration);
+        TokenEnv.AddEnvironmentVariables(Configuration);
+        RedirectEnv.AddEnvironmentVariables(Configuration);
     }
 }

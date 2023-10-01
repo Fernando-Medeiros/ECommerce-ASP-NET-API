@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceInfrastructure.Authentication.Tokens;
 
-public class TokenService : ITokenService
+public sealed class TokenService : ITokenService
 {
     private readonly JwtSecurityTokenHandler _jwtHandler;
 
@@ -36,7 +36,7 @@ public class TokenService : ITokenService
 
     private static SigningCredentials Credentials()
     {
-        byte[] key = Encoding.ASCII.GetBytes(AuthEnvironment.PrivateKey!);
+        byte[] key = Encoding.ASCII.GetBytes(TokenEnv.PrivateKey!);
 
         return new(
             key: new SymmetricSecurityKey(key),
@@ -47,10 +47,10 @@ public class TokenService : ITokenService
     {
         double expires = scope switch
         {
-            ETokenScopes.Access => AuthEnvironment.AccessTokenExp,
-            ETokenScopes.Refresh => AuthEnvironment.RefreshTokenExp,
-            ETokenScopes.RecoverPassword => AuthEnvironment.RecoverPasswordTokenExp,
-            ETokenScopes.AuthenticateEmail => AuthEnvironment.AuthenticateEmailTokenExp,
+            ETokenScopes.Access => TokenEnv.AccessTokenExp,
+            ETokenScopes.Refresh => TokenEnv.RefreshTokenExp,
+            ETokenScopes.RecoverPassword => TokenEnv.RecoverPasswordTokenExp,
+            ETokenScopes.AuthenticateEmail => TokenEnv.AuthenticateEmailTokenExp,
             _ => 0
         };
         return DateTime.UtcNow.AddHours(expires);
