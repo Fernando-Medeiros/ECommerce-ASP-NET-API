@@ -6,7 +6,7 @@ public abstract record ValueObject<T>
 
     public ValueObject(T? data, bool required = true)
     {
-        if (required || data != null) Validate(data);
+        if (required || data is T) Validate(data);
 
         Value = data;
     }

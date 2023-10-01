@@ -10,7 +10,7 @@ public sealed record Role : ValueObject<string?>
 
     public override void Validate(string? role)
     {
-        if (Enum.TryParse<ERoles>(role ?? "", out _) is false)
+        if (Enum.TryParse<ERoles>($"{role}", out _) is false)
         {
             throw new RoleTypeException().Target(nameof(Role));
         }
