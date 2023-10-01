@@ -16,7 +16,7 @@ public sealed class TokenService : ITokenService
 
     public TokenService() => _jwtHandler = new();
 
-    public TokenDTO Generate(CustomerDTO customer, ETokenScopes scope)
+    public TokenDTO Generate(CustomerDTO customer, ETokenScope scope)
     {
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
@@ -29,7 +29,7 @@ public sealed class TokenService : ITokenService
 
         string token = _jwtHandler.WriteToken(securityToken);
 
-        return new TokenDTO(token, ETokenTypes.Bearer, scope);
+        return new TokenDTO(token, ETokenType.Bearer, scope);
     }
 
     #region Private
@@ -43,14 +43,14 @@ public sealed class TokenService : ITokenService
             algorithm: SecurityAlgorithms.HmacSha256Signature);
     }
 
-    private static DateTime ExpiresAt(ETokenScopes scope)
+    private static DateTime ExpiresAt(ETokenScope scope)
     {
         double expires = scope switch
         {
-            ETokenScopes.Access => TokenEnv.AccessTokenExp,
-            ETokenScopes.Refresh => TokenEnv.RefreshTokenExp,
-            ETokenScopes.RecoverPassword => TokenEnv.RecoverPasswordTokenExp,
-            ETokenScopes.AuthenticateEmail => TokenEnv.AuthenticateEmailTokenExp,
+            ETokenScope.Access => TokenEnv.AccessTokenExp,
+            ETokenScope.Refresh => TokenEnv.RefreshTokenExp,
+            ETokenScope.RecoverPassword => TokenEnv.RecoverPasswordTokenExp,
+            ETokenScope.AuthenticateEmail => TokenEnv.AuthenticateEmailTokenExp,
             _ => 0
         };
         return DateTime.UtcNow.AddHours(expires);

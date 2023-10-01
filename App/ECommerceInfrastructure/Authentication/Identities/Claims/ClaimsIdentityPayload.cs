@@ -7,7 +7,7 @@ namespace ECommerceInfrastructure.Authentication.Identities.Claims;
 public sealed class ClaimsIdentityPayload : ClaimsIdentity
 {
     public ClaimsIdentityPayload(
-        CustomerDTO customer, ETokenScopes tokenScope)
+        CustomerDTO customer, ETokenScope tokenScope)
     {
         this.AddClaim(new Claim(ClaimsTypes.Id, customer.Id!));
 

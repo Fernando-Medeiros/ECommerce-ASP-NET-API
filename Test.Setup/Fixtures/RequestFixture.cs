@@ -49,7 +49,7 @@ public sealed class RequestFixture
     {
         var tokenService = new TokenService();
 
-        string token = tokenService.Generate(customer, ETokenScopes.Access).Token;
+        string token = tokenService.Generate(customer, ETokenScope.Access).Token;
 
         Headers.Add(new("Authorization", $"Bearer {token}"));
         return this;

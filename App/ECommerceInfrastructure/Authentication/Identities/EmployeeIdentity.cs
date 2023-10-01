@@ -16,6 +16,6 @@ public sealed class EmployeeIdentity : Identity
         Role = ExtractProperty(ClaimsTypes.Role, principal).Value;
         Scope = ExtractProperty(ClaimsTypes.Scope, principal).Value;
 
-        CheckTokenScope(Scope, new() { ETokenScopes.Access, ETokenScopes.Refresh });
+        CheckTokenScope(Scope, new() { ETokenScope.Access, ETokenScope.Refresh });
     }
 }

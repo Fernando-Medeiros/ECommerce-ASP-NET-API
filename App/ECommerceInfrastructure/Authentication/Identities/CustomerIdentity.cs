@@ -14,10 +14,10 @@ public sealed class CustomerIdentity : Identity
         Id = ExtractProperty(ClaimsTypes.Id, principal).Value;
         Scope = ExtractProperty(ClaimsTypes.Scope, principal).Value;
 
-        CheckTokenScope(Scope, new() { ETokenScopes.Access, ETokenScopes.Refresh });
+        CheckTokenScope(Scope, new() { ETokenScope.Access, ETokenScope.Refresh });
     }
 
-    public CustomerIdentity(ClaimsPrincipal principal, List<ETokenScopes> scopes)
+    public CustomerIdentity(ClaimsPrincipal principal, List<ETokenScope> scopes)
     {
         Id = ExtractProperty(ClaimsTypes.Id, principal).Value;
         Scope = ExtractProperty(ClaimsTypes.Scope, principal).Value;

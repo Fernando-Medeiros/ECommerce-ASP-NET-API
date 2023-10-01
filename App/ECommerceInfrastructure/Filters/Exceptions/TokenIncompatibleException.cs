@@ -13,8 +13,8 @@ public sealed class TokenIncompatibleException : DomainException
             message: "Access denied, token incompatible",
             details: new() {
                 $"properties: {string.Join(", ", ClaimsTypes.Id, ClaimsTypes.Scope, nameof(ClaimsTypes.Role))}",
-                $"token types: {string.Join(", ", Enum.GetNames<ETokenTypes>())}",
-                $"token scopes: {string.Join(", ", Enum.GetNames<ETokenScopes>())}"
+                $"token types: {string.Join(", ", Enum.GetNames<ETokenType>())}",
+                $"token scopes: {string.Join(", ", Enum.GetNames<ETokenScope>())}"
             })
     { }
 }

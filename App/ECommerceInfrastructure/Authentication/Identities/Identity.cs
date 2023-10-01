@@ -10,19 +10,17 @@ public abstract class Identity
         string keySelector,
         ClaimsPrincipal principal)
     {
-        return principal.Claims
-            .SingleOrDefault(c => c.Type.Equals(keySelector))
-                ?? throw new TokenIncompatibleException()
-                    .Target("Token Properties");
-
+        return principal.Claims.SingleOrDefault(c => c.Type.Equals(keySelector))
+                ?? throw new TokenIncompatibleException().Target("Token Properties");
     }
 
     private protected static void CheckTokenScope(
         string scope,
-        List<ETokenScopes> scopes)
+        List<ETokenScope> scopes)
     {
-        if (scopes.Contains(Enum.Parse<ETokenScopes>(scope)) is false)
-            throw new TokenIncompatibleException()
-                .Target("Token Scope");
+        if (scopes.Contains(Enum.Parse<ETokenScope>(scope)) is false)
+        {
+            throw new TokenIncompatibleException().Target("Token Scope");
+        }
     }
 }

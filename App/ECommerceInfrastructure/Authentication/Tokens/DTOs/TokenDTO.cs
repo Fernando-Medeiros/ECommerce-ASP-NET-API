@@ -5,13 +5,13 @@ namespace ECommerceInfrastructure.Authentication.Tokens.DTOs;
 public readonly struct TokenDTO
 {
     public readonly string Token { get; init; }
-    public readonly ETokenTypes Type { get; init; }
-    public readonly ETokenScopes Scope { get; init; }
+    public readonly ETokenType Type { get; init; }
+    public readonly ETokenScope Scope { get; init; }
 
     public TokenDTO(
         string token,
-        ETokenTypes type,
-        ETokenScopes scope)
+        ETokenType type,
+        ETokenScope scope)
     {
         Token = token;
         Type = type;
