@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceInfrastructure.Persistence.Repositories;
 
-public class CustomerRepository : ICustomerRepository
+public sealed class CustomerRepository : ICustomerRepository
 {
     private readonly DatabaseContext _context;
     private readonly IMapper _mapper;
@@ -24,12 +24,12 @@ public class CustomerRepository : ICustomerRepository
     {
         Customer? result = null;
 
-        if (dto.Id != null || dto.Email != null)
+        if (dto.Id is string || dto.Email is string)
         {
             result = await _context.Customers
                 .AsNoTracking()
                 .FirstOrDefaultAsync(
-                    c => dto.Id != null
+                    c => dto.Id is string
                     ? c.Id == dto.Id
                     : c.Email == dto.Email);
         }

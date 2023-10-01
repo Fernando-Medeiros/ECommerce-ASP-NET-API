@@ -3,7 +3,7 @@ using ECommerceInfrastructure.Persistence.Contexts;
 
 namespace ECommerceInfrastructure.Persistence.Repositories;
 
-public class UnitTransactionWork : IUnitTransactionWork
+public sealed class UnitTransactionWork : IUnitTransactionWork
 {
     private readonly DatabaseContext _context;
 
