@@ -1,4 +1,4 @@
-using ECommerceInfrastructure.Interceptor;
+using ECommerceInfrastructure.Filters;
 
 namespace ECommerceInfrastructure.Configuration.Setup;
 
@@ -8,9 +8,9 @@ public static partial class Setup
     {
         services.AddControllers(opt =>
             {
-                opt.Filters.Add<InternalExceptionInterceptor>();
-                opt.Filters.Add<DatabaseExceptionInterceptor>();
-                opt.Filters.Add<HttpExceptionInterceptor>();
+                opt.Filters.Add<InternalExceptionFilter>();
+                opt.Filters.Add<DatabaseUpdateExceptionFilter>();
+                opt.Filters.Add<DomainExceptionFilter>();
             }
         );
         services.AddEndpointsApiExplorer();

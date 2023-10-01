@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerceInfrastructure.Interceptor;
+namespace ECommerceInfrastructure.Filters;
 
-public class DatabaseExceptionInterceptor : IActionFilter, IOrderedFilter
+public sealed class DatabaseUpdateExceptionFilter : IActionFilter, IOrderedFilter
 {
     public int Order => int.MaxValue - 9;
 

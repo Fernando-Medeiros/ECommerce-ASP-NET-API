@@ -7,7 +7,7 @@ public abstract class ProducesCustomResponse : ProducesResponseTypeAttribute
 {
     public ProducesCustomResponse(
         int statusCode, Type? type = null)
-        : base(type ?? typeof(DomainResponseExceptionDTO), statusCode) { }
+        : base(type ?? typeof(ResponseExceptionDTO), statusCode) { }
 }
 
 public class Success : ProducesCustomResponse
