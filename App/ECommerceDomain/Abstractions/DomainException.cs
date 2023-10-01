@@ -4,7 +4,7 @@ namespace ECommerceDomain.Abstractions;
 
 public abstract class DomainException : Exception
 {
-    public DomainResponseExceptionDTO Value { get; private set; }
+    public ResponseExceptionDTO Value { get; private set; }
 
     public DomainException(
         int status,
@@ -12,19 +12,18 @@ public abstract class DomainException : Exception
         string message,
         List<string> details) : base(message)
     {
-        Value = new()
-        {
-            StatusCode = status,
-            Error = error,
-            Details = details,
-            Message = message,
-            OccurredAt = DateTimeOffset.UtcNow,
-        };
+        Value = new(
+            StatusCode: status,
+            Error: error,
+            Details: details,
+            Message: message,
+            OccurredAt: DateTime.UtcNow
+        );
     }
 
-    public DomainException Target(string? target)
+    public DomainException Target(string target)
     {
-        Value.Target = target;
+        Value = Value with { Target = target };
         return this;
     }
 }
