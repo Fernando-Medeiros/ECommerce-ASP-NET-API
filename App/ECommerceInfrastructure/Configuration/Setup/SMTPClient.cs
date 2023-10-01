@@ -10,20 +10,20 @@ public static partial class Setup
     {
         services
             .AddFluentEmail(
-                MailEnvironment.FromAddress,
-                MailEnvironment.FromName
+                MailEnv.FromAddress,
+                MailEnv.FromName
                 )
             .AddRazorRenderer()
             .AddSmtpSender(new SmtpClient()
             {
-                Host = MailEnvironment.Host!,
-                Port = MailEnvironment.Port,
+                Host = MailEnv.Host!,
+                Port = MailEnv.Port,
                 UseDefaultCredentials = false,
-                EnableSsl = MailEnvironment.Encryption,
+                EnableSsl = MailEnv.Encryption,
                 Credentials = new NetworkCredential
                 {
-                    UserName = MailEnvironment.User,
-                    Password = MailEnvironment.Pass,
+                    UserName = MailEnv.User,
+                    Password = MailEnv.Pass,
                 }
             });
     }

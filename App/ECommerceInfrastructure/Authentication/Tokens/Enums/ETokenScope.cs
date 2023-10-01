@@ -1,6 +1,6 @@
 namespace ECommerceInfrastructure.Authentication.Tokens.Enums;
 
-public enum ETokenScopes
+public enum ETokenScope
 {
     Access = 1,
     Refresh = 2,

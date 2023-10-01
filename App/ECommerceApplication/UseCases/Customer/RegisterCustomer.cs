@@ -26,7 +26,7 @@ public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest>
     {
         await req.ValidateAsync();
 
-        if (await _repository.FindOne(new() { Email = req.Email }) is not null)
+        if (await _repository.FindOne(new(Email: req.Email)) is CustomerDTO)
         {
             throw new UniqueEmailConstraintException().Target(nameof(RegisterCustomer));
         }

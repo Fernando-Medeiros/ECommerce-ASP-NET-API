@@ -1,6 +1,6 @@
 using ECommerceDomain.Abstractions;
 using ECommerceDomain.Exceptions;
-using ECommerceDomain.Validators;
+using ECommerceDomain.Validations;
 
 namespace ECommerceDomain.ValueObjects;
 
@@ -10,7 +10,7 @@ public sealed record Password : ValueObject<string?>
 
     public override void Validate(string? password)
     {
-        if (RegexExtensions.PasswordHashIsMatch(password) is false)
+        if (CustomRegexExtension.PasswordHashIsMatch(password) is false)
         {
             throw new PasswordFormatException().Target(nameof(Password));
         }

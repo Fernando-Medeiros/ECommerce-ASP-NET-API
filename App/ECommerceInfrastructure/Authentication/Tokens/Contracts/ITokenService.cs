@@ -6,5 +6,5 @@ namespace ECommerceInfrastructure.Authentication.Tokens.Contracts;
 
 public interface ITokenService
 {
-    public TokenDTO Generate(CustomerDTO dto, ETokenScopes scope);
+    public TokenDTO Generate(CustomerDTO dto, ETokenScope scope);
 }

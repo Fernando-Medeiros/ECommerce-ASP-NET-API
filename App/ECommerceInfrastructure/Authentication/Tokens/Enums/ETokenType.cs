@@ -1,6 +1,6 @@
 namespace ECommerceInfrastructure.Authentication.Tokens.Enums;
 
-public enum ETokenTypes
+public enum ETokenType
 {
     Bearer = 1
 }

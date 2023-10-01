@@ -1,6 +1,6 @@
 using ECommerceDomain.Abstractions;
 using ECommerceDomain.Exceptions;
-using ECommerceDomain.Validators;
+using ECommerceDomain.Validations;
 
 namespace ECommerceDomain.ValueObjects;
 
@@ -10,7 +10,7 @@ public sealed record Email : ValueObject<string?>
 
     public override void Validate(string? email)
     {
-        if (RegexExtensions.EmailIsMatch(email) is false)
+        if (CustomRegexExtension.EmailIsMatch(email) is false)
         {
             throw new EmailFormatException().Target(nameof(Email));
         }

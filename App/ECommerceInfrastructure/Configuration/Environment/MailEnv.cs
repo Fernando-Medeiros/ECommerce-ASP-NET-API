@@ -1,6 +1,6 @@
 namespace ECommerceInfrastructure.Configuration.Environment;
 
-public static class MailEnvironment
+public static class MailEnv
 {
     public static string? User { get; private set; }
     public static string? Pass { get; private set; }
@@ -10,7 +10,7 @@ public static class MailEnvironment
     public static string? FromName { get; private set; }
     public static string? FromAddress { get; private set; }
 
-    public static void LoadEnv(IConfiguration x)
+    public static void AddEnvironmentVariables(IConfiguration x)
     {
         User = x.GetValue<string>("MAIL_USER");
         Pass = x.GetValue<string>("MAIL_PASS");

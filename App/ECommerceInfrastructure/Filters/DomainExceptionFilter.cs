@@ -2,9 +2,9 @@ using ECommerceDomain.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ECommerceInfrastructure.Interceptor;
+namespace ECommerceInfrastructure.Filters;
 
-public class HttpExceptionInterceptor : IActionFilter, IOrderedFilter
+public sealed class DomainExceptionFilter : IActionFilter, IOrderedFilter
 {
     public int Order => int.MaxValue - 8;
 

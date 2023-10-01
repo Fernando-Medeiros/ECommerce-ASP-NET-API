@@ -1,10 +1,10 @@
 using ECommerceDomain.Abstractions;
 
-namespace ECommerceDomain.Validators;
+namespace ECommerceDomain.Validations;
 
-public sealed record CustomValidator<T> : Validator<T>
+public sealed record CustomValidation<T> : Validation<T>
 {
-    public CustomValidator(
+    public CustomValidation(
         T? data,
         string target,
         bool required = true) : base(data, target, required) { }

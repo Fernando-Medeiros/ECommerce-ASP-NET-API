@@ -10,13 +10,13 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceInfrastructure.Authentication.Tokens;
 
-public class TokenService : ITokenService
+public sealed class TokenService : ITokenService
 {
     private readonly JwtSecurityTokenHandler _jwtHandler;
 
     public TokenService() => _jwtHandler = new();
 
-    public TokenDTO Generate(CustomerDTO customer, ETokenScopes scope)
+    public TokenDTO Generate(CustomerDTO customer, ETokenScope scope)
     {
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
@@ -29,28 +29,28 @@ public class TokenService : ITokenService
 
         string token = _jwtHandler.WriteToken(securityToken);
 
-        return new TokenDTO(token, ETokenTypes.Bearer, scope);
+        return new TokenDTO(token, ETokenType.Bearer, scope);
     }
 
     #region Private
 
     private static SigningCredentials Credentials()
     {
-        byte[] key = Encoding.ASCII.GetBytes(AuthEnvironment.PrivateKey!);
+        byte[] key = Encoding.ASCII.GetBytes(TokenEnv.PrivateKey!);
 
         return new(
             key: new SymmetricSecurityKey(key),
             algorithm: SecurityAlgorithms.HmacSha256Signature);
     }
 
-    private static DateTime ExpiresAt(ETokenScopes scope)
+    private static DateTime ExpiresAt(ETokenScope scope)
     {
         double expires = scope switch
         {
-            ETokenScopes.Access => AuthEnvironment.AccessTokenExp,
-            ETokenScopes.Refresh => AuthEnvironment.RefreshTokenExp,
-            ETokenScopes.RecoverPassword => AuthEnvironment.RecoverPasswordTokenExp,
-            ETokenScopes.AuthenticateEmail => AuthEnvironment.AuthenticateEmailTokenExp,
+            ETokenScope.Access => TokenEnv.AccessTokenExp,
+            ETokenScope.Refresh => TokenEnv.RefreshTokenExp,
+            ETokenScope.RecoverPassword => TokenEnv.RecoverPasswordTokenExp,
+            ETokenScope.AuthenticateEmail => TokenEnv.AuthenticateEmailTokenExp,
             _ => 0
         };
         return DateTime.UtcNow.AddHours(expires);
