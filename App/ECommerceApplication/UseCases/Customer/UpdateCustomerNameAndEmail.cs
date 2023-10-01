@@ -23,11 +23,11 @@ public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest>
     {
         await req.ValidateAsync();
 
-        var currentState = await _repository.FindOne(new() { Id = req.Id })
+        var currentState = await _repository.FindOne(new(Id: req.Id))
             ?? throw new CustomerNotFoundException().Target(nameof(UpdateCustomerNameAndEmail));
 
         if (req.Email != currentState.Email &&
-            await _repository.FindOne(new() { Email = req.Email }) is not null)
+            await _repository.FindOne(new(Email: req.Email)) is CustomerDTO)
         {
             throw new UniqueEmailConstraintException().Target(nameof(UpdateCustomerNameAndEmail)); ;
         }
