@@ -1,6 +1,6 @@
 namespace ECommerceInfrastructure.Configuration.Environment;
 
-public static class TokenEnv
+public static class TokenEnvironment
 {
     public static string? PrivateKey { get; private set; }
     public static double AccessTokenExp { get; private set; }
@@ -8,7 +8,7 @@ public static class TokenEnv
     public static double RecoverPasswordTokenExp { get; private set; }
     public static double AuthenticateEmailTokenExp { get; private set; }
 
-    public static void AddEnvironmentVariables(IConfiguration x)
+    public static void Configure(IConfiguration x)
     {
         PrivateKey = x.GetValue<string>("PRIVATE_KEY")!;
         AccessTokenExp = x.GetValue<double>("TOKEN_ACCESS_EXP");

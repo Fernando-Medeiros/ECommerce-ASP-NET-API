@@ -36,7 +36,7 @@ public sealed class TokenService : ITokenService
 
     private static SigningCredentials Credentials()
     {
-        byte[] key = Encoding.ASCII.GetBytes(TokenEnv.PrivateKey!);
+        byte[] key = Encoding.ASCII.GetBytes(TokenEnvironment.PrivateKey!);
 
         return new(
             key: new SymmetricSecurityKey(key),
@@ -47,10 +47,10 @@ public sealed class TokenService : ITokenService
     {
         double expires = scope switch
         {
-            ETokenScope.Access => TokenEnv.AccessTokenExp,
-            ETokenScope.Refresh => TokenEnv.RefreshTokenExp,
-            ETokenScope.RecoverPassword => TokenEnv.RecoverPasswordTokenExp,
-            ETokenScope.AuthenticateEmail => TokenEnv.AuthenticateEmailTokenExp,
+            ETokenScope.Access => TokenEnvironment.AccessTokenExp,
+            ETokenScope.Refresh => TokenEnvironment.RefreshTokenExp,
+            ETokenScope.RecoverPassword => TokenEnvironment.RecoverPasswordTokenExp,
+            ETokenScope.AuthenticateEmail => TokenEnvironment.AuthenticateEmailTokenExp,
             _ => 0
         };
         return DateTime.UtcNow.AddHours(expires);

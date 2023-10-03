@@ -19,7 +19,7 @@ public static partial class Setup
             })
             .AddJwtBearer(opt =>
             {
-                byte[] key = Encoding.ASCII.GetBytes(TokenEnv.PrivateKey!);
+                byte[] key = Encoding.ASCII.GetBytes(TokenEnvironment.PrivateKey!);
 
                 opt.RequireHttpsMetadata = false;
                 opt.SaveToken = true;
