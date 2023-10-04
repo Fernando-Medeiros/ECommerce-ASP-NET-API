@@ -4,9 +4,9 @@ namespace ECommerceInfrastructure.Queue.LogQueue;
 
 public static class LogQueueHandler
 {
-    static readonly List<LogRequest> QueueRequest = new();
+    private static readonly List<LogRequest> QueueRequest = new();
 
-    static readonly List<LogResponse> QueueResponse = new();
+    private static readonly List<LogResponse> QueueResponse = new();
 
     #region Request
 
