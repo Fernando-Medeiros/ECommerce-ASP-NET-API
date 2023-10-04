@@ -8,17 +8,20 @@ namespace ECommerceApplication.UseCases.Customer;
 
 public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest>
 {
-    private readonly ICustomerRepository _repository;
-    private readonly IUnitTransactionWork _transaction;
-    private readonly ICryptPassword _crypt;
+    readonly ICustomerRepository _repository;
+    readonly IUnitTransactionWork _transaction;
+    readonly ICustomerMailEvent _mailEvent;
+    readonly ICryptPassword _crypt;
 
     public RegisterCustomer(
         ICustomerRepository repository,
         IUnitTransactionWork transaction,
+        ICustomerMailEvent mailEvent,
         ICryptPassword crypt)
     {
         _repository = repository;
         _transaction = transaction;
+        _mailEvent = mailEvent;
         _crypt = crypt;
     }
 
@@ -40,5 +43,7 @@ public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest>
         _repository.Register(customer);
 
         await _transaction.Commit();
+
+        _mailEvent.OnRegisterCustomer(customer);
     }
 }
