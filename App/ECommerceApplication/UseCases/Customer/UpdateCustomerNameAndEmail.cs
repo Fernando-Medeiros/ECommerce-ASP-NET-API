@@ -8,8 +8,8 @@ namespace ECommerceApplication.UseCases.Customer;
 
 public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest>
 {
-    private readonly ICustomerRepository _repository;
-    private readonly IUnitTransactionWork _transaction;
+    readonly ICustomerRepository _repository;
+    readonly IUnitTransactionWork _transaction;
 
     public UpdateCustomerNameAndEmail(
         ICustomerRepository repository,

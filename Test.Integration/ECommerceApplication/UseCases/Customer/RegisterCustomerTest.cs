@@ -13,7 +13,7 @@ namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 public sealed class RegisterCustomerTest : SharedCustomerTest
 {
     readonly IUnitTransactionWork _transaction;
-
+    readonly ICustomerMailEvent _mailEvent;
     readonly ICryptPassword _crypt;
 
     readonly CreateCustomerRequest CaseInput;
@@ -21,6 +21,7 @@ public sealed class RegisterCustomerTest : SharedCustomerTest
     public RegisterCustomerTest()
     {
         _transaction = Substitute.For<IUnitTransactionWork>();
+        _mailEvent = Substitute.For<ICustomerMailEvent>();
         _crypt = new CryptPassword();
         CaseInput = Mock.CreateRequest;
     }
@@ -35,6 +36,7 @@ public sealed class RegisterCustomerTest : SharedCustomerTest
         var useCase = new RegisterCustomer(
             _repository,
             _transaction,
+            _mailEvent,
             _crypt);
 
         await useCase.Execute(CaseInput);
@@ -46,6 +48,7 @@ public sealed class RegisterCustomerTest : SharedCustomerTest
         var useCase = new RegisterCustomer(
             _repository,
             _transaction,
+            _mailEvent,
             _crypt);
 
         Assert.ThrowsAsync<DomainException>(async () =>

@@ -33,6 +33,6 @@ public static class LogQueueFilter
 
     private static string? GetRouteValue(HttpContext ctx, string keySelector)
     {
-        return (string?)ctx.Request.RouteValues.GetValueOrDefault(keySelector);
+        return (string?)ctx.Request.RouteValues.GetValueOrDefault(keySelector) ?? "Not Implemented";
     }
 }
