@@ -23,8 +23,10 @@ public sealed class MailService : IMailService
 
     private static string ResolvePath(string temp)
     {
-        string path = $"/App/ECommerceMailService/Templates/{temp}.cshtml";
+        string[] split = Directory
+            .GetCurrentDirectory()
+            .Split(new[] { "ECommerce" }, StringSplitOptions.None);
 
-        return Directory.GetCurrentDirectory() + path;
+        return split[0] + $"ECommerce/App/ECommerceMailService/Templates/{temp}.cshtml";
     }
 }
