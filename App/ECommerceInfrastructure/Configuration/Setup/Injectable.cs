@@ -5,6 +5,8 @@ using ECommerceInfrastructure.Authentication.Tokens;
 using ECommerceInfrastructure.Authentication.Tokens.Contracts;
 using ECommerceInfrastructure.Persistence.Repositories;
 using ECommerceInfrastructure.Queue.LogQueue;
+using ECommerceInfrastructure.Queue.MailQueue;
+using ECommerceInfrastructure.Queue.MailQueue.MailEvents;
 
 namespace ECommerceInfrastructure.Configuration.Setup;
 
@@ -26,11 +28,16 @@ public static partial class Setup
 
         #region  Authorization
         services.AddScoped<ICryptPassword, CryptPassword>();
-        services.AddTransient<ITokenService, TokenService>();
+        services.AddScoped<ITokenService, TokenService>();
+        #endregion
+
+        #region Events
+        services.AddScoped<ICustomerMailEvent, CustomerMailEvent>();
         #endregion
 
         #region  Hosted
         services.AddHostedService<LogQueuePersistence>();
+        services.AddHostedService<MailQueueDispatch>();
         #endregion
     }
 }
