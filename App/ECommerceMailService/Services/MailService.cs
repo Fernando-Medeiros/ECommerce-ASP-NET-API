@@ -17,7 +17,7 @@ public sealed class MailService : IMailService
         return await _fluentEmail
             .To(template.To)
             .Subject(template.Subject)
-            .UsingTemplateFromFile(ResolvePath(template.Subject), template.Model)
+            .UsingTemplateFromFile(ResolvePath(template.Template), template.Model)
             .SendAsync(cancellationToken);
     }
 
