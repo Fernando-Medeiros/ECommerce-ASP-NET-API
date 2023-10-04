@@ -6,5 +6,5 @@ public sealed record RecoverPasswordVM(
     string Token,
     string UserName)
 {
-    internal string? RedirectURL = MailEnvironment.ResetPasswordURL;
+    public string? RedirectURL = MailEnvironment.ResetPasswordURL;
 }

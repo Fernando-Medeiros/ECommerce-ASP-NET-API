@@ -6,5 +6,5 @@ public sealed record AuthenticateEmailVM(
     string Token,
     string UserName)
 {
-    internal string? RedirectURL = MailEnvironment.AuthenticateEmailURL;
+    public string? RedirectURL = MailEnvironment.AuthenticateEmailURL;
 }
