@@ -6,8 +6,8 @@ namespace ECommerceApplication.UseCases.Customer;
 
 public sealed class RemoveCustomer : IUseCase<CustomerDTO>
 {
-    private readonly ICustomerRepository _repository;
-    private readonly IUnitTransactionWork _transaction;
+    readonly ICustomerRepository _repository;
+    readonly IUnitTransactionWork _transaction;
 
     public RemoveCustomer(
         ICustomerRepository repository,

@@ -6,7 +6,7 @@ namespace ECommerceApplication.UseCases.Customer;
 
 public sealed class FindOneCustomer : IUseCase<CustomerDTO, CustomerDTO>
 {
-    private readonly ICustomerRepository _repository;
+    readonly ICustomerRepository _repository;
 
     public FindOneCustomer(ICustomerRepository repository)
     {
