@@ -1,5 +1,7 @@
+using ECommerceInfrastructure.Configuration.Environment;
 using ECommerceInfrastructure.Configuration.Setup;
 using ECommerceInfrastructure.Queue.LogQueue;
+using ECommerceMailService.Configuration;
 
 namespace ECommerceInfrastructure;
 
@@ -12,9 +14,24 @@ public class Startup
 
     public IConfiguration Configuration { get; }
 
+    public void ConfigureEnvironment()
+    {
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: true)
+            .AddJsonFile("appsettings.development.json", optional: true)
+            .AddEnvironmentVariables()
+            .Build();
+
+        DatabaseEnvironment.Configure(configuration);
+
+        MailEnvironment.Configure(configuration);
+
+        TokenEnvironment.Configure(configuration);
+    }
+
     public void ConfigureServices(IServiceCollection services)
     {
-        Setup.Environment();
+        ConfigureEnvironment();
 
         Setup.AuthenticationSchemes(services);
 
@@ -26,7 +43,9 @@ public class Startup
 
         Setup.Controller(services);
 
-        Setup.SmtpClient(services);
+        MailSetup.SmtpClient(services);
+
+        MailSetup.Injectable(services);
 
         Setup.Database(services);
 

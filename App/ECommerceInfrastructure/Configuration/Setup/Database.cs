@@ -10,12 +10,12 @@ public static partial class Setup
     {
         services.AddDbContext<DatabaseContext>(options =>
         {
-            options.UseNpgsql(DatabaseEnv.DefaultConnection);
+            options.UseNpgsql(DatabaseEnvironment.DefaultConnection);
         });
 
         services.AddDbContext<LoggerContext>(options =>
         {
-            options.UseNpgsql(DatabaseEnv.DefaultConnection);
+            options.UseNpgsql(DatabaseEnvironment.DefaultConnection);
         });
     }
 }
