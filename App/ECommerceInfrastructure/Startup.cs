@@ -22,11 +22,9 @@ public class Startup
             .AddEnvironmentVariables()
             .Build();
 
-        DatabaseEnvironment.Configure(configuration);
-
-        MailEnvironment.Configure(configuration);
-
+        PersistenceEnvironment.Configure(configuration);
         TokenEnvironment.Configure(configuration);
+        MailEnvironment.Configure(configuration);
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -47,7 +45,7 @@ public class Startup
 
         MailSetup.Injectable(services);
 
-        Setup.Database(services);
+        Setup.Persistence(services);
 
         Setup.Injectable(services);
     }
