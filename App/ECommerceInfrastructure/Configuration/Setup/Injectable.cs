@@ -27,8 +27,8 @@ public static partial class Setup
         #endregion
 
         #region  Authorization
-        services.AddScoped<ICryptPassword, CryptPassword>();
-        services.AddScoped<ITokenService, TokenService>();
+        services.AddSingleton<ICryptPassword, CryptPassword>();
+        services.AddSingleton<ITokenService, TokenService>();
         #endregion
 
         #region Events
