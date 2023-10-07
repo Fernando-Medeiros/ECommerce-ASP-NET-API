@@ -6,7 +6,7 @@ using ECommerceDomain.Entities;
 
 namespace ECommerceApplication.UseCases.Customer;
 
-public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest>
+public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest, bool>
 {
     readonly ICustomerRepository _repository;
     readonly IUnitTransactionWork _transaction;
@@ -25,11 +25,13 @@ public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest>
         _crypt = crypt;
     }
 
-    public async Task Execute(CreateCustomerRequest req)
+    public async Task<bool> Execute(
+        CreateCustomerRequest req,
+        CancellationToken cancellationToken = default)
     {
         await req.ValidateAsync();
 
-        if (await _repository.FindOne(new(Email: req.Email)) is CustomerDTO)
+        if (await _repository.FindOne(new(Email: req.Email), cancellationToken) is CustomerDTO)
         {
             throw new UniqueEmailConstraintException().Target(nameof(RegisterCustomer));
         }
@@ -42,8 +44,10 @@ public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest>
 
         _repository.Register(customer);
 
-        await _transaction.Commit();
+        await _transaction.Commit(cancellationToken);
 
-        _mailEvent.OnRegisterCustomer(customer);
+        _mailEvent.OnRegisterCustomer(customer, cancellationToken);
+
+        return Task.CompletedTask.IsCompletedSuccessfully;
     }
 }

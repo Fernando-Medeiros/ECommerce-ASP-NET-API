@@ -14,8 +14,10 @@ public sealed class CustomerMailEvent : ICustomerMailEvent
 
     public CustomerMailEvent(ITokenService service) => _tokenService = service;
 
-    public void OnRegisterCustomer(CustomerDTO customer)
+    public void OnRegisterCustomer(CustomerDTO customer, CancellationToken cancellationToken)
     {
+        if (cancellationToken.IsCancellationRequested) return;
+
         var payload = _tokenService.Generate(customer, ETokenScope.AuthenticateEmail);
 
         ITemplate template = new OnRegisterCustomerTemplate(
@@ -25,8 +27,10 @@ public sealed class CustomerMailEvent : ICustomerMailEvent
         MailQueueHandler.InsertTemplate(template);
     }
 
-    public void OnRecoverPassword(CustomerDTO customer)
+    public void OnRecoverPassword(CustomerDTO customer, CancellationToken cancellationToken)
     {
+        if (cancellationToken.IsCancellationRequested) return;
+
         var payload = _tokenService.Generate(customer, ETokenScope.RecoverPassword);
 
         ITemplate template = new OnRecoverPasswordTemplate(

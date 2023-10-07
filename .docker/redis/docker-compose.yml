@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+    redis:
+        container_name: ecommerce-redis
+        image: bitnami/redis:latest
+        ports:
+            - 6379:6379
+        environment:
+            - REDIS_PASSWORD="12345"
+            - REDIS_PORT_NUMBER=6379
+        volumes:
+            - redis_data:/bitnami/redis/database
+
+volumes:
+    redis_data:

@@ -9,8 +9,10 @@ public sealed class UnitTransactionWork : IUnitTransactionWork
 
     public UnitTransactionWork(DatabaseContext context) => _context = context;
 
-    public async Task Commit()
+    public async Task Commit(CancellationToken cancellationToken)
     {
-        await _context.SaveChangesAsync();
+        if (cancellationToken.IsCancellationRequested) return;
+
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

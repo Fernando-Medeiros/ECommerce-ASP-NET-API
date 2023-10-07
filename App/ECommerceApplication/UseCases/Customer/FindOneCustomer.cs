@@ -13,9 +13,11 @@ public sealed class FindOneCustomer : IUseCase<CustomerDTO, CustomerDTO>
         _repository = repository;
     }
 
-    public async Task<CustomerDTO> Execute(CustomerDTO data)
+    public async Task<CustomerDTO> Execute(
+        CustomerDTO req,
+        CancellationToken cancellationToken = default)
     {
-        return await _repository.FindOne(data)
+        return await _repository.FindOne(new(Id: req.Id), cancellationToken)
             ?? throw new CustomerNotFoundException().Target(nameof(FindOneCustomer));
     }
 }

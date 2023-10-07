@@ -11,7 +11,7 @@ public sealed class CustomerControllerFindOneTest : SharedCustomerTest
     [Fact]
     public async void Should_Return_CustomerResource()
     {
-        using var app = new ServerFixtureE2E(table: ETable.customer);
+        using var app = new ServerFixtureE2E();
 
         await app.InsertOneAsync(Mock.CustomerEntity);
 

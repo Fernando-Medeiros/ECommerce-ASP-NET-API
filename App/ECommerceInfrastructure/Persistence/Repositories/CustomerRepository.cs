@@ -1,6 +1,8 @@
+using System.Linq.Expressions;
 using AutoMapper;
 using ECommerceApplication.Contracts;
 using ECommerceDomain.DTOs;
+using ECommerceInfrastructure.Persistence.Cache;
 using ECommerceInfrastructure.Persistence.Contexts;
 using ECommerceInfrastructure.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
@@ -9,32 +11,29 @@ namespace ECommerceInfrastructure.Persistence.Repositories;
 
 public sealed class CustomerRepository : ICustomerRepository
 {
+    private readonly CustomerCacheRepository _cache;
     private readonly DatabaseContext _context;
     private readonly IMapper _mapper;
 
     public CustomerRepository(
+        CustomerCacheRepository cache,
         DatabaseContext context,
         IMapper mapper)
     {
+        _cache = cache;
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<CustomerDTO?> FindOne(CustomerDTO dto)
+    public async Task<CustomerDTO?> FindOne(CustomerDTO request, CancellationToken cancellationToken)
     {
-        Customer? result = null;
-
-        if (dto.Id is string || dto.Email is string)
+        return request switch
         {
-            result = await _context.Customers
-                .AsNoTracking()
-                .FirstOrDefaultAsync(
-                    c => dto.Id is string
-                    ? c.Id == dto.Id
-                    : c.Email == dto.Email);
-        }
+            { Id: string id } => await FindByAsync(id, c => c.Id == id, cancellationToken),
 
-        return _mapper.Map<CustomerDTO?>(result);
+            { Email: string email } => await FindByAsync(email, c => c.Email == email, cancellationToken),
+            _ => null
+        };
     }
 
     public void Register(CustomerDTO customer)
@@ -56,5 +55,28 @@ public sealed class CustomerRepository : ICustomerRepository
         var entity = _mapper.Map<Customer>(customer);
 
         _context.Customers.Remove(entity);
+    }
+
+    private async Task<CustomerDTO?> FindByAsync(
+        string? value,
+        Expression<Func<Customer, bool>> predicate,
+        CancellationToken cancellationToken)
+    {
+        if (value is null) return null;
+
+        Customer? customer = await _cache.FindAsync(value, cancellationToken);
+
+        if (customer is null)
+        {
+            customer = await _context.Customers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(predicate, cancellationToken);
+
+            if (customer is Customer)
+            {
+                await _cache.InsertAsync(value, customer, cancellationToken);
+            }
+        }
+        return _mapper.Map<CustomerDTO?>(customer);
     }
 }

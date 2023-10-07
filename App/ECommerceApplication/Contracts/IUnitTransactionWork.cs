@@ -2,5 +2,5 @@ namespace ECommerceApplication.Contracts;
 
 public interface IUnitTransactionWork
 {
-    public Task Commit();
+    public Task Commit(CancellationToken cancellationToken);
 }
