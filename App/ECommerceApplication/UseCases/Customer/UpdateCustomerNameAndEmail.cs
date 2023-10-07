@@ -6,7 +6,7 @@ using ECommerceDomain.Entities;
 
 namespace ECommerceApplication.UseCases.Customer;
 
-public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest>
+public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest, bool>
 {
     readonly ICustomerRepository _repository;
     readonly IUnitTransactionWork _transaction;
@@ -19,15 +19,17 @@ public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest>
         _transaction = transaction;
     }
 
-    public async Task Execute(UpdateCustomerRequest req)
+    public async Task<bool> Execute(
+        UpdateCustomerRequest req,
+        CancellationToken cancellationToken = default)
     {
         await req.ValidateAsync();
 
-        var currentState = await _repository.FindOne(new(Id: req.Id))
+        var currentState = await _repository.FindOne(new(Id: req.Id), cancellationToken)
             ?? throw new CustomerNotFoundException().Target(nameof(UpdateCustomerNameAndEmail));
 
         if (req.Email != currentState.Email &&
-            await _repository.FindOne(new(Email: req.Email)) is CustomerDTO)
+            await _repository.FindOne(new(Email: req.Email), cancellationToken) is CustomerDTO)
         {
             throw new UniqueEmailConstraintException().Target(nameof(UpdateCustomerNameAndEmail)); ;
         }
@@ -41,6 +43,8 @@ public sealed class UpdateCustomerNameAndEmail : IUseCase<UpdateCustomerRequest>
 
         _repository.Update(customer);
 
-        await _transaction.Commit();
+        await _transaction.Commit(cancellationToken);
+
+        return Task.CompletedTask.IsCompletedSuccessfully;
     }
 }
