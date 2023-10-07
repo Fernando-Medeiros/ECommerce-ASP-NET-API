@@ -20,5 +20,6 @@
   "MAIL_FROM_ADDRESS": "noreply@ecommerce.com",
   "MAIL_USER": "YOUR_GMAIL@gmail.com",
   "MAIL_PASS": "YOUR_SECRET_PASSWORD",
-  "DB_DEFAULT_CONNECTION": "Server=localhost;Database=ECommerce;UserId=root;Password=12345;"
+  "DB_DEFAULT_CONNECTION": "Server=localhost;Database=ECommerce;UserId=root;Password=12345;",
+  "CACHE_CONNECTION": "localhost:6379,password=12345"
 }
