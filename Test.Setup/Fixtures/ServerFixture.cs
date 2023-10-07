@@ -1,6 +1,4 @@
-using ECommerceApplication.Contracts;
 using ECommerceInfrastructure;
-using ECommerceInfrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,10 +13,7 @@ public class ServerFixture : IDisposable
 
     public ServerFixture(Action<IServiceCollection>? serviceOverride = null)
     {
-        var builder = new WebHostBuilder()
-            .UseStartup<Startup>()
-            .ConfigureTestServices(x =>
-                x.AddSingleton<IUnitTransactionWork, UnitTransactionWork>());
+        var builder = new WebHostBuilder().UseStartup<Startup>();
 
         if (serviceOverride is Action<IServiceCollection>)
         {

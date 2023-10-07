@@ -18,7 +18,7 @@ public sealed class CustomerControllerRegisterTest : SharedCustomerTest
     [Fact]
     public async void Should_Register_Customer()
     {
-        using var app = new ServerFixtureE2E(table: ETable.customer);
+        using var app = new ServerFixtureE2E();
 
         var response = await app.Client.SendAsync(
             _requestFixture
@@ -31,7 +31,7 @@ public sealed class CustomerControllerRegisterTest : SharedCustomerTest
     [Fact]
     public async void Should_Return_UniqueEmailConstraint_Response()
     {
-        using var app = new ServerFixtureE2E(table: ETable.customer);
+        using var app = new ServerFixtureE2E();
 
         await app.InsertOneAsync(Mock.CustomerEntity);
 

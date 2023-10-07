@@ -10,7 +10,7 @@ public sealed class CustomerControllerRemoveTest : SharedCustomerTest
     [Fact]
     public async void Should_Remove_Customer()
     {
-        using var app = new ServerFixtureE2E(table: ETable.customer);
+        using var app = new ServerFixtureE2E();
 
         await app.InsertOneAsync(Mock.CustomerEntity);
 
