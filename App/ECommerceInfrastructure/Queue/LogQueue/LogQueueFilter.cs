@@ -1,4 +1,4 @@
-using ECommerceInfrastructure.Persistence.Models;
+using ECommercePersistence.Models;
 
 namespace ECommerceInfrastructure.Queue.LogQueue;
 

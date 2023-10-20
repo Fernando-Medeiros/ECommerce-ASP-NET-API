@@ -5,4 +5,4 @@ context=$2
 
 cd App/ECommerceInfrastructure
 
-dotnet ef migrations add $name -o Persistence/Migrations/"$context"Migrations -c $context
+dotnet ef migrations add $name -o Migrations/"$context"Migrations -c $context

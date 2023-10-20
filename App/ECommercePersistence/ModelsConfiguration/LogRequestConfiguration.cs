@@ -1,52 +1,50 @@
-using ECommerceInfrastructure.Persistence.Models;
+using ECommercePersistence.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerceInfrastructure.Persistence.ModelsConfiguration;
+namespace ECommercePersistence.ModelsConfiguration;
 
-public static class LogResponseConfiguration
+public static class LogRequestConfiguration
 {
     public static void Builder(ModelBuilder x)
     {
-        x.Entity<LogResponse>().HasKey(e => e.Id);
+        x.Entity<LogRequest>().HasKey(e => e.Id);
 
-        x.Entity<LogResponse>()
+        x.Entity<LogRequest>()
             .Property(e => e.Id)
             .ValueGeneratedOnAdd();
 
-        x.Entity<LogResponse>()
+        x.Entity<LogRequest>()
             .Property(e => e.Scheme)
             .HasMaxLength(15)
             .IsRequired();
 
-        x.Entity<LogResponse>()
+        x.Entity<LogRequest>()
             .Property(e => e.HttpMethod)
             .HasMaxLength(15)
             .IsRequired();
 
-        x.Entity<LogResponse>()
+        x.Entity<LogRequest>()
             .Property(e => e.Controller)
             .HasMaxLength(50)
             .IsRequired();
 
-        x.Entity<LogResponse>()
+        x.Entity<LogRequest>()
             .Property(e => e.Action)
             .HasMaxLength(50)
             .IsRequired();
 
-        x.Entity<LogResponse>()
+        x.Entity<LogRequest>()
             .Property(e => e.Path)
             .HasMaxLength(100)
             .IsRequired();
 
-        x.Entity<LogResponse>().Property(e => e.StatusCode).IsRequired();
-
-        x.Entity<LogResponse>().Property(e => e.CreatedOn).IsRequired();
+        x.Entity<LogRequest>().Property(e => e.CreatedOn).IsRequired();
 
 
-        x.Entity<LogResponse>()
+        x.Entity<LogRequest>()
             .HasIndex(e => e.Controller);
 
-        x.Entity<LogResponse>()
+        x.Entity<LogRequest>()
             .HasIndex(e => e.Action);
     }
 }

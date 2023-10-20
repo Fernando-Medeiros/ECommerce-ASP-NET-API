@@ -1,4 +1,4 @@
-using ECommerceInfrastructure.Persistence.Models;
+using ECommercePersistence.Models;
 
 namespace ECommerceInfrastructure.Queue.LogQueue;
 
@@ -10,7 +10,7 @@ public static class LogQueueHandler
 
     #region Request
 
-    public static bool HasLogRequest() => QueueRequest.Count > 0;
+    public static bool HasLogRequest() => QueueRequest.Any();
 
     public static void InsertRequest(LogRequest item) => QueueRequest.Add(item);
 
@@ -27,7 +27,7 @@ public static class LogQueueHandler
 
     #region Response
 
-    public static bool HasLogResponse() => QueueResponse.Count > 0;
+    public static bool HasLogResponse() => QueueResponse.Any();
 
     public static void InsertResponse(LogResponse item) => QueueResponse.Add(item);
 

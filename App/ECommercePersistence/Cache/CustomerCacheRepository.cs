@@ -1,7 +1,7 @@
-using ECommerceInfrastructure.Persistence.Models;
+using ECommercePersistence.Models;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace ECommerceInfrastructure.Persistence.Cache;
+namespace ECommercePersistence.Cache;
 
 public sealed class CustomerCacheRepository : CacheRepository<Customer>
 {

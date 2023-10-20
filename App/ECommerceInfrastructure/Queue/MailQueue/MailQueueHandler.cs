@@ -6,7 +6,7 @@ public static class MailQueueHandler
 {
     private static readonly List<ITemplate> QueueTemplate = new();
 
-    public static bool HasTemplate() => QueueTemplate.Count > 0;
+    public static bool HasTemplate() => QueueTemplate.Any();
 
     public static void InsertTemplate(ITemplate item) => QueueTemplate.Add(item);
 
