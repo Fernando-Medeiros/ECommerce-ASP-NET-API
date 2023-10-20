@@ -1,5 +1,5 @@
 using System.Net;
-using ECommerceApplication.Exceptions;
+using ECommerceCommon.Exceptions;
 using ECommerceInfrastructure.Presentation.Resources;
 using Test.Setup.Fixtures;
 using Test.Setup.Shared;

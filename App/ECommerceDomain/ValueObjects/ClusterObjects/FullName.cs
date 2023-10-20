@@ -1,5 +1,5 @@
+using ECommerceCommon.Exceptions;
 using ECommerceDomain.Abstractions;
-using ECommerceDomain.Exceptions;
 using ECommerceDomain.ValueObjects;
 
 namespace ECommerceDomain.ClusterObjects;

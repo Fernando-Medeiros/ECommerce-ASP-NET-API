@@ -1,4 +1,4 @@
-using ECommerceDomain.Validations;
+using ECommerceCommon.Validations;
 
 namespace ECommerceApplication.Requests;
 

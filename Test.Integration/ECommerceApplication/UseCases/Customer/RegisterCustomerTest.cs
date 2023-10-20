@@ -1,8 +1,8 @@
 using ECommerceApplication.Contracts;
-using ECommerceApplication.Exceptions;
+using ECommerceCommon.Exceptions;
 using ECommerceApplication.Requests;
 using ECommerceApplication.UseCases.Customer;
-using ECommerceDomain.Abstractions;
+using ECommerceCommon.Abstractions;
 using ECommerceDomain.DTOs;
 using ECommerceInfrastructure.Authentication.Encrypt;
 using NSubstitute;
@@ -51,7 +51,7 @@ public sealed class RegisterCustomerTest : SharedCustomerTest
             _mailEvent,
             _crypt);
 
-        Assert.ThrowsAsync<DomainException>(async () =>
+        Assert.ThrowsAsync<CustomException>(async () =>
         {
             var invalidCaseInput = CaseInput with { Email = "$$$@mail.com" };
 

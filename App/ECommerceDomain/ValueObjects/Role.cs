@@ -1,6 +1,6 @@
+using ECommerceCommon.Exceptions;
 using ECommerceDomain.Abstractions;
 using ECommerceDomain.Enums;
-using ECommerceDomain.Exceptions;
 
 namespace ECommerceDomain.ValueObjects;
 

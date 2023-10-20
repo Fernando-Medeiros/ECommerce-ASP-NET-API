@@ -1,6 +1,6 @@
 using ECommerceApplication.Contracts;
-using ECommerceApplication.Exceptions;
 using ECommerceApplication.Requests;
+using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTOs;
 using ECommerceDomain.Entities;
 
