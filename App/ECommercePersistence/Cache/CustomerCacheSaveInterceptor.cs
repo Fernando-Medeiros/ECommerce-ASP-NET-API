@@ -1,8 +1,8 @@
-using ECommerceInfrastructure.Persistence.Models;
+using ECommercePersistence.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace ECommerceInfrastructure.Persistence.Cache;
+namespace ECommercePersistence.Cache;
 
 public sealed class CustomerCacheSaveInterceptor : SaveChangesInterceptor
 {

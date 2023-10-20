@@ -2,6 +2,7 @@ using ECommerceInfrastructure.Configuration.Environment;
 using ECommerceInfrastructure.Configuration.Setup;
 using ECommerceInfrastructure.Queue.LogQueue;
 using ECommerceMailService.Configuration;
+using ECommercePersistence;
 
 namespace ECommerceInfrastructure;
 
@@ -37,15 +38,13 @@ public class Startup
 
         Setup.Swagger(services);
 
-        Setup.Mapping(services);
-
         Setup.Controller(services);
 
         MailSetup.SmtpClient(services);
 
         MailSetup.Injectable(services);
 
-        Setup.Persistence(services);
+        PersistenceSetup.Configure(services);
 
         Setup.Injectable(services);
     }

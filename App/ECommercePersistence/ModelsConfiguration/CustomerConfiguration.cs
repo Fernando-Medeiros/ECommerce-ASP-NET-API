@@ -1,7 +1,7 @@
-using ECommerceInfrastructure.Persistence.Models;
+using ECommercePersistence.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerceInfrastructure.Persistence.ModelsConfiguration;
+namespace ECommercePersistence.ModelsConfiguration;
 
 public static class CustomerConfiguration
 {

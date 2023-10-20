@@ -1,8 +1,8 @@
 using ECommerceApplication.Requests;
 using ECommerceDomain.DTOs;
 using ECommerceDomain.Enums;
-using ECommerceInfrastructure.Persistence.Models;
 using ECommerceInfrastructure.Presentation.Resources;
+using ECommercePersistence.Models;
 
 namespace Test.Setup.Mocks;
 

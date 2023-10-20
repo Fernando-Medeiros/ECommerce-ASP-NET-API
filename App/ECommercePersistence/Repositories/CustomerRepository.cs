@@ -2,12 +2,12 @@ using System.Linq.Expressions;
 using AutoMapper;
 using ECommerceApplication.Contracts;
 using ECommerceDomain.DTOs;
-using ECommerceInfrastructure.Persistence.Cache;
-using ECommerceInfrastructure.Persistence.Contexts;
-using ECommerceInfrastructure.Persistence.Models;
+using ECommercePersistence.Cache;
+using ECommercePersistence.Contexts;
+using ECommercePersistence.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerceInfrastructure.Persistence.Repositories;
+namespace ECommercePersistence.Repositories;
 
 public sealed class CustomerRepository : ICustomerRepository
 {

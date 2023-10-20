@@ -16,17 +16,17 @@ public sealed class MailQueueDispatch : BackgroundService
         _logger = logger;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken token)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        while (token.IsCancellationRequested is false)
         {
             using var scope = _serviceProvider.CreateScope();
 
             var _mailService = scope.ServiceProvider.GetRequiredService<IMailService>();
 
-            await SendQueueAsync(_mailService, stoppingToken);
+            await SendQueueAsync(_mailService, token);
 
-            await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+            await Task.Delay(TimeSpan.FromMinutes(1), token);
         }
     }
 

@@ -1,8 +1,8 @@
-using ECommerceInfrastructure.Persistence.Models;
-using ECommerceInfrastructure.Persistence.ModelsConfiguration;
+using ECommercePersistence.Models;
+using ECommercePersistence.ModelsConfiguration;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerceInfrastructure.Persistence.Contexts;
+namespace ECommercePersistence.Contexts;
 
 public class LoggerContext : DbContext
 {

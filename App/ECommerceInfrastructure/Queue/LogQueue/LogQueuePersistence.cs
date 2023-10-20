@@ -1,4 +1,4 @@
-using ECommerceInfrastructure.Persistence.Contexts;
+using ECommercePersistence.Contexts;
 
 namespace ECommerceInfrastructure.Queue.LogQueue;
 
@@ -16,9 +16,9 @@ public sealed class LogQueuePersistence : BackgroundService
         _logger = logger;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken token)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        while (token.IsCancellationRequested is false)
         {
             using var scope = _serviceProvider.CreateScope();
 
@@ -26,9 +26,9 @@ public sealed class LogQueuePersistence : BackgroundService
 
             InsertLogs(context);
 
-            await context.SaveChangesAsync(stoppingToken);
+            await context.SaveChangesAsync(token);
 
-            await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+            await Task.Delay(TimeSpan.FromMinutes(1), token);
         }
     }
 

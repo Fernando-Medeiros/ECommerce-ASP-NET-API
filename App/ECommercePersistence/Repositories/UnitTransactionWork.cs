@@ -1,7 +1,7 @@
 using ECommerceApplication.Contracts;
-using ECommerceInfrastructure.Persistence.Contexts;
+using ECommercePersistence.Contexts;
 
-namespace ECommerceInfrastructure.Persistence.Repositories;
+namespace ECommercePersistence.Repositories;
 
 public sealed class UnitTransactionWork : IUnitTransactionWork
 {

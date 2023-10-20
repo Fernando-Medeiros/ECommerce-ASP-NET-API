@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace ECommerceInfrastructure.Persistence.Cache;
+namespace ECommercePersistence.Cache;
 
 public abstract class CacheRepository<TExpected>
 {

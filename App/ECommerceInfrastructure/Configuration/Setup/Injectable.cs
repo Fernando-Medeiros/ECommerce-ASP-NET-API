@@ -3,7 +3,6 @@ using ECommerceApplication.Contracts;
 using ECommerceInfrastructure.Authentication.Encrypt;
 using ECommerceInfrastructure.Authentication.Tokens;
 using ECommerceInfrastructure.Authentication.Tokens.Contracts;
-using ECommerceInfrastructure.Persistence.Repositories;
 using ECommerceInfrastructure.Queue.LogQueue;
 using ECommerceInfrastructure.Queue.MailQueue;
 using ECommerceInfrastructure.Queue.MailQueue.MailEvents;
@@ -19,11 +18,6 @@ public static partial class Setup
         InjectableServiceExtensions.UseCases
             .ForEach(x => services.AddScoped(x));
 
-        #endregion
-
-        #region Persistence
-        services.AddScoped<ICustomerRepository, CustomerRepository>();
-        services.AddScoped<IUnitTransactionWork, UnitTransactionWork>();
         #endregion
 
         #region  Authorization

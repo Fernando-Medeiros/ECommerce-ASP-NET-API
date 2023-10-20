@@ -1,4 +1,4 @@
-namespace ECommerceInfrastructure.Persistence.Models;
+namespace ECommercePersistence.Models;
 
 public class LogResponse
 {
