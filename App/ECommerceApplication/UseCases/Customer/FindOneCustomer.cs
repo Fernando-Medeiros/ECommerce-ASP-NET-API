@@ -1,5 +1,5 @@
 using ECommerceApplication.Contracts;
-using ECommerceApplication.Exceptions;
+using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTOs;
 
 namespace ECommerceApplication.UseCases.Customer;

@@ -1,5 +1,5 @@
 using ECommerceApplication.Requests;
-using ECommerceDomain.Exceptions;
+using ECommerceCommon.Exceptions;
 
 namespace Test.Unit.ECommerceApplication.Requests;
 

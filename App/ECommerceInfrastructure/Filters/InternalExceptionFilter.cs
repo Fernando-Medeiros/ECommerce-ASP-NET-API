@@ -1,4 +1,4 @@
-using ECommerceDomain.Abstractions;
+using ECommerceCommon.Abstractions;
 using ECommerceInfrastructure.Filters.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -15,7 +15,7 @@ public sealed class InternalExceptionFilter : IActionFilter, IOrderedFilter
     public void OnActionExecuted(ActionExecutedContext context)
     {
         if (
-            context?.Exception?.GetType() != typeof(DomainException) &&
+            context?.Exception?.GetType() != typeof(CustomException) &&
             context?.Exception?.GetType() != typeof(DbUpdateException) &&
             context?.Exception?.GetType() == typeof(Exception))
         {

@@ -1,4 +1,4 @@
-using ECommerceApplication.Exceptions;
+using ECommerceCommon.Exceptions;
 using ECommerceApplication.UseCases.Customer;
 using ECommerceDomain.DTOs;
 using Test.Setup.Shared;

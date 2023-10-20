@@ -1,10 +1,10 @@
-using ECommerceDomain.Abstractions;
+using ECommerceCommon.Abstractions;
 using ECommerceInfrastructure.Authentication.Identities.Claims;
 using ECommerceInfrastructure.Authentication.Tokens.Enums;
 
 namespace ECommerceInfrastructure.Filters.Exceptions;
 
-public sealed class TokenIncompatibleException : DomainException
+public sealed class TokenIncompatibleException : CustomException
 {
     public TokenIncompatibleException()
         : base(

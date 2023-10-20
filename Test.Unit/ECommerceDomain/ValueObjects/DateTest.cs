@@ -1,4 +1,4 @@
-using ECommerceDomain.Exceptions;
+using ECommerceCommon.Exceptions;
 using ECommerceDomain.ValueObjects;
 
 namespace Test.Unit.ECommerceDomain.ValueObjects;

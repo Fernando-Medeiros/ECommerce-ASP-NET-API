@@ -1,5 +1,5 @@
 using System.Net;
-using ECommerceApplication.Exceptions;
+using ECommerceCommon.Exceptions;
 using ECommerceApplication.Requests;
 using ECommerceDomain.DTOs;
 using Microsoft.Extensions.DependencyInjection;

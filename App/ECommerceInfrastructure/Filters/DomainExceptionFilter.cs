@@ -1,4 +1,4 @@
-using ECommerceDomain.Abstractions;
+using ECommerceCommon.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -12,7 +12,7 @@ public sealed class DomainExceptionFilter : IActionFilter, IOrderedFilter
 
     public void OnActionExecuted(ActionExecutedContext context)
     {
-        if (context.Exception is DomainException currentException)
+        if (context.Exception is CustomException currentException)
         {
             context.Result = new ObjectResult(currentException.Value)
             {
