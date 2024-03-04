@@ -18,9 +18,9 @@ public class NotEmptyExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<NotEmptyException>(() =>
+        await Assert.ThrowsAnyAsync<NotEmptyException>(() =>
         {
             throw new NotEmptyException(target: "Name")
                 .Target(nameof(NotEmptyExceptionTest));

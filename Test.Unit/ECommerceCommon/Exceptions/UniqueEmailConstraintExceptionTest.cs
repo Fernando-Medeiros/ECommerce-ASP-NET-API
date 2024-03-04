@@ -17,9 +17,9 @@ public class UniqueEmailConstraintExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<UniqueEmailConstraintException>(() =>
+        await Assert.ThrowsAnyAsync<UniqueEmailConstraintException>(() =>
         {
             throw new UniqueEmailConstraintException()
                 .Target(nameof(UniqueEmailConstraintExceptionTest));

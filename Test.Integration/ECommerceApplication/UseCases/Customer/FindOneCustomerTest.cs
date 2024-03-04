@@ -29,11 +29,11 @@ public sealed class FindOneCustomerTest : SharedCustomerTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
         var useCase = new FindOneCustomer(_repository);
 
-        Assert.ThrowsAsync<CustomerNotFoundException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomerNotFoundException>(async () =>
         {
             MakeRepositoryStub(
                 input: CaseInput,

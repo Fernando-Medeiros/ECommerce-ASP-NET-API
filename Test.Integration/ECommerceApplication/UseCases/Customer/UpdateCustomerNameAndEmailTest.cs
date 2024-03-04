@@ -40,20 +40,20 @@ public sealed class UpdateCustomerNameAndEmailTest : SharedCustomerTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
         var useCase = new UpdateCustomerNameAndEmail(
             _repository,
             _transaction);
 
-        Assert.ThrowsAsync<CustomException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
         {
             var invalidCaseInput = CaseInput with { Email = "$$$@mail.com" };
 
             await useCase.Execute(invalidCaseInput);
         });
 
-        Assert.ThrowsAsync<CustomerNotFoundException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomerNotFoundException>(async () =>
         {
             MakeRepositoryStub(
                 input: new CustomerDTO() { Id = Mock.UniqueId },
@@ -62,7 +62,7 @@ public sealed class UpdateCustomerNameAndEmailTest : SharedCustomerTest
             await useCase.Execute(CaseInput);
         });
 
-        Assert.ThrowsAsync<UniqueEmailConstraintException>(async () =>
+        await Assert.ThrowsAnyAsync<UniqueEmailConstraintException>(async () =>
         {
             MakeRepositoryStub(
                 input: new CustomerDTO() { Id = Mock.UniqueId },

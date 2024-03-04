@@ -17,9 +17,9 @@ public class UUIDFormatExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<UUIDFormatException>(() =>
+        await Assert.ThrowsAnyAsync<UUIDFormatException>(() =>
         {
             throw new UUIDFormatException()
                 .Target(nameof(UUIDFormatExceptionTest));

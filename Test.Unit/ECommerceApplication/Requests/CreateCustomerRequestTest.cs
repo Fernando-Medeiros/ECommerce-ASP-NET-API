@@ -1,4 +1,5 @@
 using ECommerceApplication.Requests;
+using ECommerceCommon.Abstractions;
 using ECommerceCommon.Exceptions;
 
 namespace Test.Unit.ECommerceApplication.Requests;
@@ -32,72 +33,72 @@ public class CreateCustomerRequestTest
     [Theory]
     [InlineData(null, "", "dd")]
     [InlineData(null, "", "example example example")]
-    public void Should_Throw_Exception_On_Validate_Name(
+    public async void Should_Throw_Exception_On_Validate_Name(
         string? value1, string? value2, string? value3)
     {
-        Assert.ThrowsAsync<NotNullException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Name = value1 }.ValidateAsync());
 
-        Assert.ThrowsAsync<NotEmptyException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Name = value2 }.ValidateAsync());
 
-        Assert.ThrowsAsync<LengthException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Name = value3 }.ValidateAsync());
 
-        Assert.ThrowsAsync<NotNullException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { FirstName = value1 }.ValidateAsync());
 
-        Assert.ThrowsAsync<NotEmptyException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { FirstName = value2 }.ValidateAsync());
 
-        Assert.ThrowsAsync<LengthException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { FirstName = value3 }.ValidateAsync());
 
-        Assert.ThrowsAsync<NotNullException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { LastName = value1 }.ValidateAsync());
 
-        Assert.ThrowsAsync<NotEmptyException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { LastName = value2 }.ValidateAsync());
 
-        Assert.ThrowsAsync<LengthException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { LastName = value3 }.ValidateAsync());
     }
 
     [Theory]
     [InlineData(null, "", "55555", "@mail.com")]
     [InlineData(null, "", "22", "@m.com")]
-    public void Should_Throw_Exception_On_Validate_Email(
+    public async void Should_Throw_Exception_On_Validate_Email(
         string? value1, string? value2, string? value3, string value4)
     {
-        Assert.ThrowsAsync<NotNullException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Email = value1 }.ValidateAsync());
 
-        Assert.ThrowsAsync<NotEmptyException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Email = value2 }.ValidateAsync());
 
-        Assert.ThrowsAsync<LengthException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Email = value3 }.ValidateAsync());
 
-        Assert.ThrowsAsync<EmailFormatException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Email = value4 }.ValidateAsync());
     }
 
     [Theory]
     [InlineData(null, "", "7777777", "example$$")]
     [InlineData(null, "", "22", "example**$#%,!")]
-    public void Should_Throw_Exception_On_Validate_Password(
+    public async void Should_Throw_Exception_On_Validate_Password(
         string? value1, string? value2, string? value3, string value4)
     {
-        Assert.ThrowsAsync<NotNullException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Password = value1 }.ValidateAsync());
 
-        Assert.ThrowsAsync<NotEmptyException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Password = value2 }.ValidateAsync());
 
-        Assert.ThrowsAsync<LengthException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Password = value3 }.ValidateAsync());
 
-        Assert.ThrowsAsync<PasswordFormatException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomException>(async () =>
             await new CreateCustomerRequest() { Password = value4 }.ValidateAsync());
     }
 }

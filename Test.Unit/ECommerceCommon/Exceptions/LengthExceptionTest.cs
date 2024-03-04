@@ -1,6 +1,6 @@
 using ECommerceCommon.Exceptions;
 
-namespace Test.Unit.ECommerceCommon.Exceptions;
+namespace ECommerceTest.Unit.ECommerceCommon.Exceptions;
 
 public class LengthExceptionTest
 {
@@ -18,9 +18,9 @@ public class LengthExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<LengthException>(() =>
+        await Assert.ThrowsAnyAsync<LengthException>(() =>
         {
             throw new LengthException(target: "Name", min: 3, max: 20)
                 .Target(nameof(LengthExceptionTest));

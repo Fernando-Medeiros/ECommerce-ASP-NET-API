@@ -17,9 +17,9 @@ public class RoleTypeExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<RoleTypeException>(() =>
+        await Assert.ThrowsAnyAsync<RoleTypeException>(() =>
         {
             throw new RoleTypeException()
                 .Target(nameof(RoleTypeExceptionTest));
