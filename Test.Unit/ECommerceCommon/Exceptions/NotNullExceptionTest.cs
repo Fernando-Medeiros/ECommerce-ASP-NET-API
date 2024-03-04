@@ -18,9 +18,9 @@ public class NotNullExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<NotNullException>(() =>
+        await Assert.ThrowsAnyAsync<NotNullException>(() =>
         {
             throw new NotNullException(target: "Name")
                 .Target(nameof(NotNullExceptionTest));

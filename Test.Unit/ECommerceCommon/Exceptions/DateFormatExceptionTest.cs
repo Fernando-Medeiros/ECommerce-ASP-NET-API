@@ -17,9 +17,9 @@ public class DateFormatExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<DateFormatException>(() =>
+        await Assert.ThrowsAnyAsync<DateFormatException>(() =>
         {
             throw new DateFormatException()
                 .Target(nameof(DateFormatExceptionTest));

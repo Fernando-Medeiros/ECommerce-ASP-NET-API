@@ -1,6 +1,6 @@
 using ECommerceCommon.Exceptions;
 
-namespace Test.Unit.ECommerceCommon.Exceptions;
+namespace ECommerceTest.Unit.ECommerceCommon.Exceptions;
 
 public class FullNameFormatExceptionTest
 {
@@ -17,9 +17,9 @@ public class FullNameFormatExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<NameFormatException>(() =>
+        await Assert.ThrowsAnyAsync<NameFormatException>(() =>
         {
             throw new NameFormatException()
                 .Target(nameof(FullNameFormatExceptionTest));

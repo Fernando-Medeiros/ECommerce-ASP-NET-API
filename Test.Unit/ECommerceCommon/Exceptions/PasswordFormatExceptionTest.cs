@@ -17,9 +17,9 @@ public class PasswordFormatExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<PasswordFormatException>(() =>
+        await Assert.ThrowsAnyAsync<PasswordFormatException>(() =>
         {
             throw new PasswordFormatException()
                 .Target(nameof(PasswordFormatExceptionTest));

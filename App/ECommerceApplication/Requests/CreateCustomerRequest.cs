@@ -37,23 +37,23 @@ public sealed record CreateCustomerRequest
     }
 
     public async Task ValidateAsync() => await Task.WhenAll(
-        Task.Run(() =>
-        {
-            new CustomValidation<string?>(
+    Task.Run(() =>
+    {
+        new CustomValidation<string?>(
                 data: Name, target: nameof(Name))
                 .NotNull()
                 .NotEmpty()
                 .Length(3, 20);
-        }),
+    }),
 
-        Task.Run(() =>
-        {
-            new CustomValidation<string?>(
+    Task.Run(() =>
+    {
+        new CustomValidation<string?>(
                 data: FirstName, target: nameof(FirstName))
                 .NotNull()
                 .NotEmpty()
                 .Length(3, 20);
-        }),
+    }),
 
     Task.Run(() =>
     {

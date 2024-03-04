@@ -1,6 +1,6 @@
 using ECommerceCommon.Exceptions;
 
-namespace Test.Unit.ECommerceCommon.Exceptions;
+namespace ECommerceTest.Unit.ECommerceCommon.Exceptions;
 
 public class CustomerNotFoundExceptionTest
 {
@@ -17,9 +17,9 @@ public class CustomerNotFoundExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<CustomerNotFoundException>(() =>
+        await Assert.ThrowsAnyAsync<CustomerNotFoundException>(() =>
         {
             throw new CustomerNotFoundException()
                 .Target(nameof(CustomerNotFoundExceptionTest));

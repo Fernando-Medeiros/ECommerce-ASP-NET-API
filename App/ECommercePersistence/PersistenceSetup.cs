@@ -19,7 +19,6 @@ public static partial class PersistenceSetup
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IUnitTransactionWork, UnitTransactionWork>();
-
         services.AddAutoMapper(typeof(DatabaseMappings));
     }
 

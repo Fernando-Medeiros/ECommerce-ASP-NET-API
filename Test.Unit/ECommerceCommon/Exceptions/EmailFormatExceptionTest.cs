@@ -17,9 +17,9 @@ public class EmailFormatExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<EmailFormatException>(() =>
+        await Assert.ThrowsAnyAsync<EmailFormatException>(() =>
         {
             throw new EmailFormatException()
                 .Target(nameof(EmailFormatExceptionTest));

@@ -35,13 +35,13 @@ public sealed class RemoveCustomerTest : SharedCustomerTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
         var useCase = new RemoveCustomer(
             _repository,
             _transaction);
 
-        Assert.ThrowsAsync<CustomerNotFoundException>(async () =>
+        await Assert.ThrowsAnyAsync<CustomerNotFoundException>(async () =>
         {
             MakeRepositoryStub(
                 input: CaseInput,

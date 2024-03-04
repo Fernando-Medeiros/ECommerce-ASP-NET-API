@@ -17,9 +17,9 @@ public class NameFormatExceptionTest
     }
 
     [Fact]
-    public void Should_Throw_Exception()
+    public async void Should_Throw_Exception()
     {
-        Assert.ThrowsAny<NameFormatException>(() =>
+        await Assert.ThrowsAnyAsync<NameFormatException>(() =>
         {
             throw new NameFormatException()
                 .Target(nameof(NameFormatExceptionTest));

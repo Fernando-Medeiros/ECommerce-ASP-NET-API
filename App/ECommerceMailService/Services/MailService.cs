@@ -25,8 +25,8 @@ public sealed class MailService : IMailService
     {
         string[] split = Directory
             .GetCurrentDirectory()
-            .Split(new[] { "ECommerce" }, StringSplitOptions.None);
+            .Split(["ECommerce"], StringSplitOptions.None);
 
-        return split[0] + $"ECommerce/App/ECommerceMailService/Templates/{temp}.cshtml";
+        return split[0] + $"/ECommerce/App/ECommerceMailService/Templates/{temp}.cshtml";
     }
 }
