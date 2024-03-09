@@ -38,29 +38,25 @@ public sealed record UpdateCustomerRequest
     public async Task ValidateAsync() => await Task.WhenAll(
         Task.Run(() =>
         {
-            new CustomValidation<string?>(
-                data: Name, target: nameof(Name), required: false)
+            new CustomValidation<string?>(Name, nameof(Name), Required: false)
                 .NotEmpty()
                 .Length(3, 20);
         }),
         Task.Run(() =>
         {
-            new CustomValidation<string?>(
-                data: FirstName, target: nameof(FirstName), required: false)
+            new CustomValidation<string?>(FirstName, nameof(FirstName), Required: false)
                 .NotEmpty()
                 .Length(3, 20);
         }),
         Task.Run(() =>
         {
-            new CustomValidation<string?>(
-                data: LastName, target: nameof(LastName), required: false)
+            new CustomValidation<string?>(LastName, nameof(LastName), Required: false)
                 .NotEmpty()
                 .Length(3, 20);
         }),
         Task.Run(() =>
         {
-            new CustomValidation<string?>(
-                data: Email, target: nameof(Email), required: false)
+            new CustomValidation<string?>(Email, nameof(Email), Required: false)
                 .NotEmpty()
                 .Length(6, 155)
                 .EmailAddress();

@@ -1,6 +1,6 @@
-namespace ECommerceCommon.DTOs;
+namespace ECommerceCommon;
 
-public record CustomExceptionResponse(
+public sealed record CustomExceptionResponse(
     int StatusCode,
     string Error,
     string Message,

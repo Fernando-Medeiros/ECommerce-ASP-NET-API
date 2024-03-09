@@ -1,11 +1,12 @@
-using ECommerceCommon.Abstractions;
-
 namespace ECommerceCommon.Validations;
 
-public sealed record CustomValidation<T> : Validation<T>
+public sealed record CustomValidation<T>(
+    T? Value,
+    string Target,
+    bool Required = true
+)
 {
-    public CustomValidation(
-        T? data,
-        string target,
-        bool required = true) : base(data, target, required) { }
+    public bool IsRequired() => Required || Value is T;
+
+    public static implicit operator T?(CustomValidation<T?> obj) { return obj.Value; }
 }

@@ -1,15 +1,12 @@
-using ECommerceCommon.Abstractions;
+using ECommerceCommon;
 
 namespace ECommerceInfrastructure.Filters.Exceptions;
 
-public sealed class InternalException : CustomException
-{
-    public InternalException(string message, List<string> details)
-        : base(
-            status: 500,
-            error: nameof(InternalException),
-            message: message,
-            details: details)
-    { }
-}
-
+public sealed class InternalException(
+    string message,
+    List<string> details)
+    : CustomException(
+        code: 500,
+        error: nameof(InternalException),
+        message: message,
+        details: details);

@@ -39,44 +39,39 @@ public sealed record CreateCustomerRequest
     public async Task ValidateAsync() => await Task.WhenAll(
     Task.Run(() =>
     {
-        new CustomValidation<string?>(
-                data: Name, target: nameof(Name))
-                .NotNull()
-                .NotEmpty()
-                .Length(3, 20);
+        new CustomValidation<string?>(Name, nameof(Name))
+            .NotNull()
+            .NotEmpty()
+            .Length(3, 20);
     }),
     Task.Run(() =>
     {
-        new CustomValidation<string?>(
-                data: FirstName, target: nameof(FirstName))
-                .NotNull()
-                .NotEmpty()
-                .Length(3, 20);
+        new CustomValidation<string?>(FirstName, nameof(FirstName))
+            .NotNull()
+            .NotEmpty()
+            .Length(3, 20);
     }),
     Task.Run(() =>
     {
-        new CustomValidation<string?>(
-                data: LastName, target: nameof(LastName))
-                .NotNull()
-                .NotEmpty()
-                .Length(3, 20);
+        new CustomValidation<string?>(LastName, nameof(LastName))
+            .NotNull()
+            .NotEmpty()
+            .Length(3, 20);
     }),
     Task.Run(() =>
     {
-        new CustomValidation<string?>(
-                data: Email, target: nameof(Email))
-                .NotNull()
-                .NotEmpty()
-                .Length(6, 155)
-                .EmailAddress();
+        new CustomValidation<string?>(Email, nameof(Email))
+            .NotNull()
+            .NotEmpty()
+            .Length(6, 155)
+            .EmailAddress();
     }),
     Task.Run(() =>
     {
-        new CustomValidation<string?>(
-                data: Password, target: nameof(Password))
-                .NotNull()
-                .NotEmpty()
-                .Length(8, 16)
-                .Password();
+        new CustomValidation<string?>(Password, nameof(Password))
+            .NotNull()
+            .NotEmpty()
+            .Length(8, 16)
+            .Password();
     }));
 }

@@ -1,20 +1,20 @@
 using System.Text.RegularExpressions;
-using ECommerceCommon.Constants;
+using ECommerceCommon.Constant;
 
 namespace ECommerceCommon.Validations;
 
 public static partial class CustomRegexExtension
 {
-    [GeneratedRegex(RegexTypes.Name)]
+    [GeneratedRegex(RegexType.Name)]
     private static partial Regex Name();
 
-    [GeneratedRegex(RegexTypes.Email)]
+    [GeneratedRegex(RegexType.Email)]
     private static partial Regex Email();
 
-    [GeneratedRegex(RegexTypes.Password)]
+    [GeneratedRegex(RegexType.Password)]
     private static partial Regex Password();
 
-    [GeneratedRegex(RegexTypes.PasswordHash)]
+    [GeneratedRegex(RegexType.PasswordHash)]
     private static partial Regex PasswordHash();
 
     public static bool NameIsMatch<T>(T? value) =>

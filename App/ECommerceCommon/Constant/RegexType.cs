@@ -1,6 +1,6 @@
-namespace ECommerceCommon.Constants;
+namespace ECommerceCommon.Constant;
 
-public static class RegexTypes
+public static class RegexType
 {
     public const string Email = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
 
