@@ -1,5 +1,5 @@
-using ECommerceApplication.Contracts;
-using ECommerceDomain.DTOs;
+using ECommerceApplication.Contract;
+using ECommerceDomain.DTO;
 using NSubstitute;
 using Test.Setup.Fixtures;
 using Test.Setup.Mocks;
@@ -18,6 +18,6 @@ public abstract class SharedCustomerTest
 
     public void MakeRepositoryStub(CustomerDTO input, CustomerDTO? output)
     {
-        _repository.FindOne(Arg.Is(input)).Returns(output);
+        _repository.Find(Arg.Is(input)).Returns(output);
     }
 }

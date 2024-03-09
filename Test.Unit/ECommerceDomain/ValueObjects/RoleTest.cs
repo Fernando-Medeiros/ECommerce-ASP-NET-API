@@ -8,16 +8,16 @@ public class RoleTest
 {
     public static IEnumerable<object[]> SuccessData()
     {
-        yield return new object[] { nameof(ERoles.customer) };
-        yield return new object[] { nameof(ERoles.employee) };
-        yield return new object[] { nameof(ERoles.employee) };
+        yield return new object[] { nameof(ERole.customer) };
+        yield return new object[] { nameof(ERole.employee) };
+        yield return new object[] { nameof(ERole.employee) };
     }
 
     public static IEnumerable<object[]> ExceptionData()
     {
         yield return new object[] { "any string" };
         yield return new object[] { "Manager" };
-        yield return new object[] { nameof(ERoles.employee) + "1" };
+        yield return new object[] { nameof(ERole.employee) + "1" };
     }
 
     [Theory]

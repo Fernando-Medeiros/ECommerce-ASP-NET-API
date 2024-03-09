@@ -1,7 +1,7 @@
 using System.Net;
 using ECommerceCommon.Exceptions;
-using ECommerceApplication.Requests;
-using ECommerceDomain.DTOs;
+using ECommerceApplication.Request;
+using ECommerceDomain.DTO;
 using Microsoft.Extensions.DependencyInjection;
 using Test.Setup.Fixtures;
 using Test.Setup.Shared;

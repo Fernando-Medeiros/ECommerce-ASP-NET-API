@@ -1,6 +1,6 @@
 using ECommerceCommon.Exceptions;
-using ECommerceApplication.UseCases.Customer;
-using ECommerceDomain.DTOs;
+using ECommerceApplication.UseCase;
+using ECommerceDomain.DTO;
 using Test.Setup.Shared;
 
 namespace Test.Integration.ECommerceApplication.UseCases.Customer;

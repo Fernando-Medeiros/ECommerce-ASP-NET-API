@@ -1,4 +1,4 @@
-using ECommercePersistence.Contexts;
+using ECommercePersistence.Context;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Test.Setup.Fixtures;

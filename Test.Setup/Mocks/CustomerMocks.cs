@@ -1,8 +1,8 @@
-using ECommerceApplication.Requests;
-using ECommerceDomain.DTOs;
+using ECommerceApplication.Request;
+using ECommerceDomain.DTO;
 using ECommerceDomain.Enums;
-using ECommerceInfrastructure.Presentation.Resources;
-using ECommercePersistence.Models;
+using ECommerceInfrastructure.Api.Resource;
+using ECommercePersistence.Model;
 
 namespace Test.Setup.Mocks;
 
@@ -42,7 +42,7 @@ public class CustomerMocks
             LastName = "developer",
             Email = $"gil_dev{Guid.NewGuid()}@mail.com",
             Password = BCrypt.Net.BCrypt.HashPassword("test5555"),
-            Role = nameof(ERoles.customer),
+            Role = nameof(ERole.customer),
         };
 
 
@@ -75,7 +75,7 @@ public class CustomerMocks
             LastName = _re.LastName,
             Email = _re.Email,
             Password = _re.Password,
-            Role = nameof(ERoles.customer),
+            Role = nameof(ERole.customer),
             CreatedOn = DateTimeOffset.UtcNow,
         };
 
@@ -87,7 +87,7 @@ public class CustomerMocks
             LastName = _re.LastName,
             Email = _re.Email,
             Password = _re.Password,
-            Role = nameof(ERoles.customer),
+            Role = nameof(ERole.customer),
             CreatedOn = DateTimeOffset.UtcNow,
             UpdatedOn = DateTimeOffset.UtcNow,
             VerifiedOn = DateTimeOffset.UtcNow

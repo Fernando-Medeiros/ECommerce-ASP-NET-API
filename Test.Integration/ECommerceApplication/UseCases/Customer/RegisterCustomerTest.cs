@@ -1,18 +1,18 @@
-using ECommerceApplication.Contracts;
+using ECommerceApplication.Contract;
 using ECommerceCommon.Exceptions;
-using ECommerceApplication.Requests;
-using ECommerceApplication.UseCases.Customer;
-using ECommerceCommon.Abstractions;
-using ECommerceDomain.DTOs;
-using ECommerceInfrastructure.Authentication.Encrypt;
+using ECommerceApplication.Request;
+using ECommerceApplication.UseCase;
+using ECommerceDomain.DTO;
+using ECommerceInfrastructure.Auth.Crypt;
 using NSubstitute;
 using Test.Setup.Shared;
+using ECommerceCommon;
 
 namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
 public sealed class RegisterCustomerTest : SharedCustomerTest
 {
-    readonly IUnitTransactionWork _transaction;
+    readonly IUnitTransaction _transaction;
     readonly ICustomerMailEvent _mailEvent;
     readonly ICryptPassword _crypt;
 
@@ -20,7 +20,7 @@ public sealed class RegisterCustomerTest : SharedCustomerTest
 
     public RegisterCustomerTest()
     {
-        _transaction = Substitute.For<IUnitTransactionWork>();
+        _transaction = Substitute.For<IUnitTransaction>();
         _mailEvent = Substitute.For<ICustomerMailEvent>();
         _crypt = new CryptPassword();
         CaseInput = Mock.CreateRequest;

@@ -1,8 +1,7 @@
 using ECommerceApplication;
 using ECommerceApplication.Contract;
-using ECommerceInfrastructure.Authentication.Encrypt;
-using ECommerceInfrastructure.Authentication.Tokens;
-using ECommerceInfrastructure.Authentication.Tokens.Contracts;
+using ECommerceInfrastructure.Auth.Crypt;
+using ECommerceInfrastructure.Auth.Tokens;
 using ECommerceInfrastructure.Queue.LogQueue;
 using ECommerceInfrastructure.Queue.MailQueue;
 using ECommerceInfrastructure.Queue.MailQueue.MailEvents;

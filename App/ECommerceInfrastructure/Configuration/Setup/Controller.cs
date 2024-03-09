@@ -1,4 +1,4 @@
-using ECommerceInfrastructure.Filters;
+using ECommerceInfrastructure.ExceptionFilter;
 
 namespace ECommerceInfrastructure.Configuration.Setup;
 

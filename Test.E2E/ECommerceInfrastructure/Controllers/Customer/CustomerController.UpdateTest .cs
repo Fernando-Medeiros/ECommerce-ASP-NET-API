@@ -1,6 +1,6 @@
 using System.Net;
 using ECommerceCommon.Exceptions;
-using ECommerceApplication.Requests;
+using ECommerceApplication.Request;
 using Test.Setup.Fixtures;
 using Test.Setup.Shared;
 

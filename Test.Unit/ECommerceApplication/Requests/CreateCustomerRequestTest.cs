@@ -1,6 +1,5 @@
-using ECommerceApplication.Requests;
-using ECommerceCommon.Abstractions;
-using ECommerceCommon.Exceptions;
+using ECommerceApplication.Request;
+using ECommerceCommon;
 
 namespace Test.Unit.ECommerceApplication.Requests;
 

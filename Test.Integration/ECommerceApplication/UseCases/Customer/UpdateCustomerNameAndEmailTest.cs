@@ -1,23 +1,23 @@
-using ECommerceApplication.Contracts;
 using ECommerceCommon.Exceptions;
-using ECommerceApplication.Requests;
-using ECommerceApplication.UseCases.Customer;
-using ECommerceCommon.Abstractions;
-using ECommerceDomain.DTOs;
+using ECommerceApplication.Request;
+using ECommerceApplication.UseCase;
+using ECommerceDomain.DTO;
 using NSubstitute;
 using Test.Setup.Shared;
+using ECommerceApplication.Contract;
+using ECommerceCommon;
 
 namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
 public sealed class UpdateCustomerNameAndEmailTest : SharedCustomerTest
 {
-    readonly IUnitTransactionWork _transaction;
+    readonly IUnitTransaction _transaction;
 
     readonly UpdateCustomerRequest CaseInput;
 
     public UpdateCustomerNameAndEmailTest()
     {
-        _transaction = Substitute.For<IUnitTransactionWork>();
+        _transaction = Substitute.For<IUnitTransaction>();
 
         CaseInput = Mock.UpdateRequest;
     }
