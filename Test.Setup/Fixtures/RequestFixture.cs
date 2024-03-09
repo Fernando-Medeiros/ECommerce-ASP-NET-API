@@ -1,25 +1,19 @@
 using System.Text;
-using ECommerceDomain.DTOs;
-using ECommerceInfrastructure.Authentication.Tokens;
-using ECommerceInfrastructure.Authentication.Tokens.Enums;
+using ECommerceDomain.DTO;
+using ECommerceInfrastructure.Auth.Tokens;
+using ECommerceInfrastructure.Auth.Tokens.Enums;
 using Newtonsoft.Json;
 
 namespace Test.Setup.Fixtures;
 
-public sealed class RequestFixture
+public sealed class RequestFixture(
+    string url,
+    string? mediaType = "application/json")
 {
-    public string URL { get; init; }
-    public string MediaType { get; init; }
+    public string URL { get; init; } = url;
+    public string MediaType { get; init; } = mediaType!;
     public StringContent? Payload { get; private set; }
     public List<Tuple<string, string>> Headers { get; private set; } = new();
-
-    public RequestFixture(
-        string url,
-        string? mediaType = "application/json")
-    {
-        URL = url;
-        MediaType = mediaType!;
-    }
 
     public HttpRequestMessage RequestMessage(HttpMethod method)
     {
@@ -49,7 +43,7 @@ public sealed class RequestFixture
     {
         var tokenService = new TokenService();
 
-        string token = tokenService.Generate(customer, ETokenScope.Access).Token;
+        string token = tokenService.Generate(customer, ETokenScope.Access).Value;
 
         Headers.Add(new("Authorization", $"Bearer {token}"));
         return this;

@@ -1,4 +1,4 @@
-using ECommerceApplication.Requests;
+using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 
 namespace Test.Unit.ECommerceApplication.Requests;

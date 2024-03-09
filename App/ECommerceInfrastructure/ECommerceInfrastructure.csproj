@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ECommerceMailService\ECommerceMailService.csproj" />
+    <ProjectReference Include="..\ECommerceMail\ECommerceMail.csproj" />
     <ProjectReference Include="..\ECommercePersistence\ECommercePersistence.csproj" />
   </ItemGroup>
 

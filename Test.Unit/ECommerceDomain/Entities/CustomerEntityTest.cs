@@ -1,4 +1,4 @@
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
 using Test.Setup.Mocks;
 
@@ -24,7 +24,7 @@ public class CustomerEntityTest
     [Fact]
     public void Should_Register_New_Customer()
     {
-        var en = new CustomerEntity().Register(DataToRegister);
+        var en = new Customer().Register(DataToRegister);
 
         Assert.NotNull(en.Id?.Value);
         Assert.Equal(en.Name!.Name, DataToRegister.Name);
@@ -37,7 +37,7 @@ public class CustomerEntityTest
     [Fact]
     public void Should_Load_Current_State()
     {
-        var en = new CustomerEntity(CurrentState);
+        var en = new Customer(CurrentState);
 
         Assert.Equal(en.Id!, CurrentState.Id);
         Assert.Equal(en.Name!.Name, CurrentState.Name);
@@ -51,7 +51,7 @@ public class CustomerEntityTest
     [Fact]
     public void Should_Update_Name()
     {
-        var en = new CustomerEntity(CurrentState).UpdateName(DataToUpdate);
+        var en = new Customer(CurrentState).UpdateName(DataToUpdate);
 
         Assert.Equal(en.Name!.Name, DataToUpdate.Name);
         Assert.Equal(en.Name!.FirstName, DataToUpdate.FirstName);
@@ -62,7 +62,7 @@ public class CustomerEntityTest
     [Fact]
     public void Should_Update_Email()
     {
-        var en = new CustomerEntity(CurrentState).UpdateEmail(DataToUpdate);
+        var en = new Customer(CurrentState).UpdateEmail(DataToUpdate);
 
         Assert.Equal(en.Email!, DataToUpdate.Email);
         Assert.True(en.UpdatedOn! < DateTimeOffset.UtcNow);
@@ -71,7 +71,7 @@ public class CustomerEntityTest
     [Fact]
     public void Should_Update_Password()
     {
-        var en = new CustomerEntity(CurrentState).UpdatePassword(DataToUpdate);
+        var en = new Customer(CurrentState).UpdatePassword(DataToUpdate);
 
         Assert.Equal(en.Password!, DataToUpdate.Password);
         Assert.True(en.UpdatedOn! < DateTimeOffset.UtcNow);
@@ -80,7 +80,7 @@ public class CustomerEntityTest
     [Fact]
     public void Should_Update_Role()
     {
-        var en = new CustomerEntity(CurrentState).UpdateRole(DataToUpdate);
+        var en = new Customer(CurrentState).UpdateRole(DataToUpdate);
 
         Assert.Equal(en.Role!, DataToUpdate.Role);
         Assert.True(en.UpdatedOn! < DateTimeOffset.UtcNow);
@@ -89,7 +89,7 @@ public class CustomerEntityTest
     [Fact]
     public void Should_Assign_Verified()
     {
-        var en = new CustomerEntity(CurrentState).AssignVerified();
+        var en = new Customer(CurrentState).AssignVerified();
 
         Assert.True(en.VerifiedOn! < DateTimeOffset.UtcNow);
         Assert.True(en.UpdatedOn! < DateTimeOffset.UtcNow);

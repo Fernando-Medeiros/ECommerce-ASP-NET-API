@@ -1,14 +1,13 @@
-using ECommercePersistence.Models;
+using ECommercePersistence.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace ECommercePersistence.Cache;
 
-public sealed class CustomerCacheSaveInterceptor : SaveChangesInterceptor
+public sealed class CustomerCacheSaveInterceptor(CustomerCacheRepository cache)
+    : SaveChangesInterceptor
 {
-    private readonly CustomerCacheRepository _cache;
-
-    public CustomerCacheSaveInterceptor(CustomerCacheRepository cache) => _cache = cache;
+    private readonly CustomerCacheRepository _cache = cache;
 
     public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
     {
@@ -57,11 +56,11 @@ public sealed class CustomerCacheSaveInterceptor : SaveChangesInterceptor
         var deleted = Filter(EntityState.Deleted, eventData);
 
         var tasks = deleted.Select((entity) =>
-            _cache.RemoveAsync(new List<string>()
-                {
+            _cache.RemoveAsync(
+                [
                     $"{entity.Id}",
                     $"{entity.Email}"
-                },
+                ],
                 cancellationToken));
 
         return tasks;
@@ -71,7 +70,7 @@ public sealed class CustomerCacheSaveInterceptor : SaveChangesInterceptor
         EntityState state,
         DbContextEventData eventData)
     {
-        List<Customer> entities = new();
+        List<Customer> entities = [];
 
         if (eventData?.Context is DbContext)
         {

@@ -1,18 +1,16 @@
-using ECommerceApplication.Contracts;
-using ECommerceDomain.DTOs;
-using ECommerceInfrastructure.Authentication.Tokens.Contracts;
-using ECommerceInfrastructure.Authentication.Tokens.Enums;
-using ECommerceMailService.Contracts;
-using ECommerceMailService.Services.Customer;
-using ECommerceMailService.Templates;
+using ECommerceApplication.Contract;
+using ECommerceDomain.DTO;
+using ECommerceInfrastructure.Auth.Tokens;
+using ECommerceInfrastructure.Auth.Tokens.Enums;
+using ECommerceMail.Contract;
+using ECommerceMail.Service.Data;
+using ECommerceMail.Template;
 
 namespace ECommerceInfrastructure.Queue.MailQueue.MailEvents;
 
-public sealed class CustomerMailEvent : ICustomerMailEvent
+public sealed class CustomerMailEvent(ITokenService service) : ICustomerMailEvent
 {
-    private readonly ITokenService _tokenService;
-
-    public CustomerMailEvent(ITokenService service) => _tokenService = service;
+    private readonly ITokenService _tokenService = service;
 
     public void OnRegisterCustomer(CustomerDTO customer, CancellationToken cancellationToken)
     {
@@ -20,9 +18,9 @@ public sealed class CustomerMailEvent : ICustomerMailEvent
 
         var payload = _tokenService.Generate(customer, ETokenScope.AuthenticateEmail);
 
-        ITemplate template = new OnRegisterCustomerTemplate(
+        BaseTemplate template = new OnRegisterCustomerTemplate(
             customer.Email!,
-            new AuthenticateEmailVM(payload.Token, customer.Name!));
+            new AuthenticateEmailVM(payload.Value, customer.Name!));
 
         MailQueueHandler.InsertTemplate(template);
     }
@@ -33,9 +31,9 @@ public sealed class CustomerMailEvent : ICustomerMailEvent
 
         var payload = _tokenService.Generate(customer, ETokenScope.RecoverPassword);
 
-        ITemplate template = new OnRecoverPasswordTemplate(
+        BaseTemplate template = new OnRecoverPasswordTemplate(
             customer.Email!,
-            new RecoverPasswordVM(payload.Token, customer.Name!));
+            new RecoverPasswordVM(payload.Value, customer.Name!));
 
         MailQueueHandler.InsertTemplate(template);
     }

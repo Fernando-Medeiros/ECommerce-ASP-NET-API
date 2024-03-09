@@ -1,4 +1,4 @@
-using ECommerceMailService.Contracts;
+using ECommerceMail.Contract;
 
 namespace ECommerceInfrastructure.Queue.MailQueue;
 

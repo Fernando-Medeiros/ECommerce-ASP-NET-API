@@ -1,21 +1,21 @@
-using ECommerceApplication.Contracts;
+using ECommerceApplication.Contract;
 using ECommerceCommon.Exceptions;
-using ECommerceApplication.UseCases.Customer;
-using ECommerceDomain.DTOs;
+using ECommerceApplication.UseCase;
 using NSubstitute;
 using Test.Setup.Shared;
+using ECommerceDomain.DTO;
 
 namespace Test.Integration.ECommerceApplication.UseCases.Customer;
 
 public sealed class RemoveCustomerTest : SharedCustomerTest
 {
-    readonly IUnitTransactionWork _transaction;
+    readonly IUnitTransaction _transaction;
 
     readonly CustomerDTO CaseInput;
 
     public RemoveCustomerTest()
     {
-        _transaction = Substitute.For<IUnitTransactionWork>();
+        _transaction = Substitute.For<IUnitTransaction>();
 
         CaseInput = new() { Id = Mock.UniqueId };
     }

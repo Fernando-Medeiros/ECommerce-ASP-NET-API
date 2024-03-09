@@ -1,5 +1,5 @@
 using ECommerceCommon.Exceptions;
-using ECommerceDomain.Abstractions;
+using ECommerceDomain.Abstraction;
 
 namespace ECommerceDomain.ValueObjects;
 
