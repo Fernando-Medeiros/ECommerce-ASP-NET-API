@@ -2,9 +2,9 @@ using ECommerceApplication.Contract;
 using ECommerceDomain.DTO;
 using ECommerceInfrastructure.Authentication.Tokens.Contracts;
 using ECommerceInfrastructure.Authentication.Tokens.Enums;
-using ECommerceMailService.Contracts;
-using ECommerceMailService.Services.Customer;
-using ECommerceMailService.Templates;
+using ECommerceMail.Contract;
+using ECommerceMail.Service.Data;
+using ECommerceMail.Template;
 
 namespace ECommerceInfrastructure.Queue.MailQueue.MailEvents;
 
@@ -20,7 +20,7 @@ public sealed class CustomerMailEvent : ICustomerMailEvent
 
         var payload = _tokenService.Generate(customer, ETokenScope.AuthenticateEmail);
 
-        ITemplate template = new OnRegisterCustomerTemplate(
+        BaseTemplate template = new OnRegisterCustomerTemplate(
             customer.Email!,
             new AuthenticateEmailVM(payload.Token, customer.Name!));
 
@@ -33,7 +33,7 @@ public sealed class CustomerMailEvent : ICustomerMailEvent
 
         var payload = _tokenService.Generate(customer, ETokenScope.RecoverPassword);
 
-        ITemplate template = new OnRecoverPasswordTemplate(
+        BaseTemplate template = new OnRecoverPasswordTemplate(
             customer.Email!,
             new RecoverPasswordVM(payload.Token, customer.Name!));
 

@@ -1,13 +1,24 @@
 using System.Net;
 using System.Net.Mail;
+using ECommerceMail.Configuration;
+using ECommerceMail.Contract;
+using ECommerceMail.Service;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ECommerceMailService.Configuration;
+namespace ECommerceMail;
 
-public static partial class MailSetup
+public static class MailServiceExtension
 {
-    public static void SmtpClient(IServiceCollection services)
+    public static void Environment(IConfiguration env)
     {
+        MailEnvironment.Configure(env);
+    }
+
+    public static void Configure(IServiceCollection services)
+    {
+        services.AddScoped<IMailService, MailService>();
+
         services
             .AddFluentEmail(
                 MailEnvironment.FromAddress,

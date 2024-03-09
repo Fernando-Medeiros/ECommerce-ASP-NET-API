@@ -1,17 +1,15 @@
-using ECommerceMailService.Contracts;
+using ECommerceMail.Contract;
 using FluentEmail.Core;
 using FluentEmail.Core.Models;
 
-namespace ECommerceMailService.Services;
+namespace ECommerceMail.Service;
 
-public sealed class MailService : IMailService
+public sealed class MailService(IFluentEmail fluentEmail) : IMailService
 {
-    private readonly IFluentEmail _fluentEmail;
-
-    public MailService(IFluentEmail fluentEmail) => _fluentEmail = fluentEmail;
+    private readonly IFluentEmail _fluentEmail = fluentEmail;
 
     public async Task<SendResponse> SendTemplateAsync(
-        ITemplate template,
+        BaseTemplate template,
         CancellationToken cancellationToken)
     {
         return await _fluentEmail
@@ -27,6 +25,6 @@ public sealed class MailService : IMailService
             .GetCurrentDirectory()
             .Split(["ECommerce"], StringSplitOptions.None);
 
-        return split[0] + $"/ECommerce/App/ECommerceMailService/Templates/{temp}.cshtml";
+        return split[0] + $"/ECommerce/App/ECommerceMail/Template/{temp}.cshtml";
     }
 }

@@ -1,7 +1,7 @@
 using ECommerceInfrastructure.Configuration.Environment;
 using ECommerceInfrastructure.Configuration.Setup;
 using ECommerceInfrastructure.Queue.LogQueue;
-using ECommerceMailService.Configuration;
+using ECommerceMail;
 using ECommercePersistence;
 
 namespace ECommerceInfrastructure;
@@ -19,7 +19,7 @@ public class Startup(IConfiguration configuration)
             .Build();
 
         TokenEnvironment.Configure(configuration);
-        MailEnvironment.Configure(configuration);
+        MailServiceExtension.Environment(configuration);
         PersistenceServiceExtension.Environment(configuration);
 
         Setup.AuthenticationSchemes(services);
@@ -30,10 +30,7 @@ public class Startup(IConfiguration configuration)
 
         Setup.Controller(services);
 
-        MailSetup.SmtpClient(services);
-
-        MailSetup.Injectable(services);
-
+        MailServiceExtension.Configure(services);
 
         PersistenceServiceExtension.Configure(services);
 

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceTest.Setup", "Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceTest.Integration", "Test.Integration\ECommerceTest.Integration.csproj", "{3F7E951D-BA5E-4F70-B88E-95A2B3093040}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceMailService", "App\ECommerceMailService\ECommerceMailService.csproj", "{F0495A9C-7303-4DCF-BDAF-359212D1E14F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceMail", "App\ECommerceMail\ECommerceMail.csproj", "{F0495A9C-7303-4DCF-BDAF-359212D1E14F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerceCommon", "App\ECommerceCommon\ECommerceCommon.csproj", "{C0821A78-338B-487C-968D-D89472277ACD}"
 EndProject

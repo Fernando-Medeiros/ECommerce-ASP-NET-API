@@ -1,6 +1,6 @@
-using ECommerceMailService.Configuration;
+using ECommerceMail.Configuration;
 
-namespace ECommerceMailService.Templates;
+namespace ECommerceMail.Template;
 
 public sealed record AuthenticateEmailVM(
     string Token,
