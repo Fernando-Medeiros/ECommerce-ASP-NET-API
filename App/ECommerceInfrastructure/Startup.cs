@@ -6,16 +6,11 @@ using ECommercePersistence;
 
 namespace ECommerceInfrastructure;
 
-public class Startup
+public class Startup(IConfiguration configuration)
 {
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
+    public IConfiguration Configuration { get; } = configuration;
 
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureEnvironment()
+    public void ConfigureServices(IServiceCollection services)
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true)
@@ -23,14 +18,9 @@ public class Startup
             .AddEnvironmentVariables()
             .Build();
 
-        PersistenceEnvironment.Configure(configuration);
         TokenEnvironment.Configure(configuration);
         MailEnvironment.Configure(configuration);
-    }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        ConfigureEnvironment();
+        PersistenceServiceExtension.Environment(configuration);
 
         Setup.AuthenticationSchemes(services);
 
@@ -44,7 +34,8 @@ public class Startup
 
         MailSetup.Injectable(services);
 
-        PersistenceSetup.Configure(services);
+
+        PersistenceServiceExtension.Configure(services);
 
         Setup.Injectable(services);
     }

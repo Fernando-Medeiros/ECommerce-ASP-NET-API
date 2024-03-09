@@ -1,23 +1,17 @@
-using ECommercePersistence.Models;
+using ECommercePersistence.Model;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace ECommercePersistence.Cache;
 
-public sealed class CustomerCacheRepository : CacheRepository<Customer>
+public sealed class CustomerCacheRepository(IDistributedCache distributedCache)
+    : CacheRepository<Customer>
 {
-    private readonly IDistributedCache _cache;
-
-    public CustomerCacheRepository(IDistributedCache distributedCache)
-    {
-        _cache = distributedCache;
-    }
+    private readonly IDistributedCache _cache = distributedCache;
 
     public override async Task<Customer?> FindAsync(
         string key,
         CancellationToken cancellationToken)
     {
-        if (cancellationToken.IsCancellationRequested) return null;
-
         byte[]? result = await _cache.GetAsync(key, cancellationToken);
 
         return result is byte[]? await DeserializeObject<Customer?>(result) : null;
@@ -28,8 +22,6 @@ public sealed class CustomerCacheRepository : CacheRepository<Customer>
         Customer value,
         CancellationToken cancellationToken)
     {
-        if (cancellationToken.IsCancellationRequested) return false;
-
         byte[] serializeValue = await SerializeObject(value);
 
         await _cache.SetAsync(
@@ -56,8 +48,6 @@ public sealed class CustomerCacheRepository : CacheRepository<Customer>
         string key,
         CancellationToken cancellationToken)
     {
-        if (cancellationToken.IsCancellationRequested) return false;
-
         await _cache.RemoveAsync(key, cancellationToken);
 
         return Task.CompletedTask.IsCompletedSuccessfully;

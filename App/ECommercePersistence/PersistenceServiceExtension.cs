@@ -1,33 +1,43 @@
 using ECommerceApplication.Contract;
 using ECommercePersistence.Cache;
-using ECommercePersistence.Contexts;
-using ECommercePersistence.Mappings;
-using ECommercePersistence.Repositories;
+using ECommercePersistence.Context;
+using ECommercePersistence.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommercePersistence;
 
-public static partial class PersistenceSetup
+public static class PersistenceServiceExtension
 {
+    private static string? DefaultConnection { get; set; }
+    private static string? CacheConnection { get; set; }
+
+    public static void Environment(IConfiguration env)
+    {
+        DefaultConnection ??= env["DB_DEFAULT_CONNECTION"];
+
+        CacheConnection ??= env["CACHE_CONNECTION"];
+    }
+
     public static void Configure(IServiceCollection services)
     {
-        ConfigureDatabaseOne(services);
-        ConfigureDatabaseTwo(services);
+        ConfigureCustomerDatabase(services);
+        ConfigureLoggerDatabase(services);
         ConfigureCache(services);
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
-        services.AddScoped<IUnitTransaction, UnitTransactionWork>();
-        services.AddAutoMapper(typeof(DatabaseMappings));
+        services.AddScoped<IUnitTransaction, UnitTransaction>();
+        services.AddAutoMapper(typeof(DatabaseMapping));
     }
 
-    private static void ConfigureDatabaseOne(IServiceCollection services)
+    private static void ConfigureCustomerDatabase(IServiceCollection services)
     {
         services.AddDbContext<DatabaseContext>((provider, opt) =>
         {
             opt.UseNpgsql(
-                PersistenceEnvironment.DefaultConnection,
+                DefaultConnection,
                 b => b.MigrationsAssembly("ECommerceInfrastructure"));
 
             opt.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
@@ -36,12 +46,12 @@ public static partial class PersistenceSetup
         services.AddScoped<ISaveChangesInterceptor, CustomerCacheSaveInterceptor>();
     }
 
-    private static void ConfigureDatabaseTwo(IServiceCollection services)
+    private static void ConfigureLoggerDatabase(IServiceCollection services)
     {
         services.AddDbContext<LoggerContext>(opt =>
         {
             opt.UseNpgsql(
-                PersistenceEnvironment.DefaultConnection,
+                DefaultConnection,
                 b => b.MigrationsAssembly("ECommerceInfrastructure"));
         });
     }
@@ -50,7 +60,7 @@ public static partial class PersistenceSetup
     {
         services.AddStackExchangeRedisCache(opt =>
         {
-            opt.Configuration = PersistenceEnvironment.CacheConnection;
+            opt.Configuration = CacheConnection;
             opt.InstanceName = "ECommerce";
         });
 

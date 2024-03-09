@@ -2,7 +2,7 @@ using ECommerceApplication.UseCase;
 
 namespace ECommerceApplication;
 
-public static class ServiceExtension
+public static class ApplicationServiceExtension
 {
     public static readonly List<Type> UseCases =
     [

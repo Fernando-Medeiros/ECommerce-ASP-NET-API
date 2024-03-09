@@ -3,27 +3,20 @@ using AutoMapper;
 using ECommerceApplication.Contract;
 using ECommerceDomain.DTO;
 using ECommercePersistence.Cache;
-using ECommercePersistence.Contexts;
-using ECommercePersistence.Models;
+using ECommercePersistence.Context;
+using ECommercePersistence.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommercePersistence.Repositories;
+namespace ECommercePersistence.Repository;
 
-public sealed class CustomerRepository : ICustomerRepository
+public sealed class CustomerRepository(
+    CustomerCacheRepository cache,
+    DatabaseContext context,
+    IMapper mapper) : ICustomerRepository
 {
-    private readonly CustomerCacheRepository _cache;
-    private readonly DatabaseContext _context;
-    private readonly IMapper _mapper;
-
-    public CustomerRepository(
-        CustomerCacheRepository cache,
-        DatabaseContext context,
-        IMapper mapper)
-    {
-        _cache = cache;
-        _context = context;
-        _mapper = mapper;
-    }
+    private readonly CustomerCacheRepository _cache = cache;
+    private readonly DatabaseContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<CustomerDTO?> Find(CustomerDTO request, CancellationToken cancellationToken)
     {

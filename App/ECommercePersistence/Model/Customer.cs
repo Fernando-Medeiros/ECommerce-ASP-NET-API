@@ -1,11 +1,21 @@
-using ECommercePersistence.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommercePersistence.ModelsConfiguration;
+namespace ECommercePersistence.Model;
 
-public static class CustomerConfiguration
+public class Customer
 {
-    public static void Builder(ModelBuilder x)
+    public string? Id { get; set; }
+    public string? Name { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? Email { get; set; }
+    public string? Password { get; set; }
+    public string? Role { get; set; }
+    public DateTimeOffset? VerifiedOn { get; set; }
+    public DateTimeOffset? UpdatedOn { get; set; }
+    public DateTimeOffset CreatedOn { get; set; }
+
+    internal static void Builder(ModelBuilder x)
     {
         x.Entity<Customer>().HasKey(c => c.Id);
 

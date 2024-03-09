@@ -14,7 +14,7 @@ public static partial class Setup
     public static void Injectable(IServiceCollection services)
     {
         #region Application
-        ServiceExtension.UseCases
+        ApplicationServiceExtension.UseCases
             .ForEach(x => services.AddScoped(x));
         #endregion
 

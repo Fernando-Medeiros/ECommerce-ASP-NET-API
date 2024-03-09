@@ -1,11 +1,19 @@
-using ECommercePersistence.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommercePersistence.ModelsConfiguration;
+namespace ECommercePersistence.Model;
 
-public static class LogResponseConfiguration
+public class LogResponse
 {
-    public static void Builder(ModelBuilder x)
+    public long? Id { get; set; }
+    public string? Scheme { get; set; }
+    public string? HttpMethod { get; set; }
+    public string? Controller { get; set; }
+    public string? Action { get; set; }
+    public string? Path { get; set; }
+    public int? StatusCode { get; set; }
+    public DateTime CreatedOn { get; set; }
+
+    internal static void Builder(ModelBuilder x)
     {
         x.Entity<LogResponse>().HasKey(e => e.Id);
 
