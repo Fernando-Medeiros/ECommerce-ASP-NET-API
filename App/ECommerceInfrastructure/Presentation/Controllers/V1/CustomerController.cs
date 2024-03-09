@@ -1,5 +1,5 @@
-using ECommerceApplication.Requests;
-using ECommerceApplication.UseCases.Customer;
+using ECommerceApplication.Request;
+using ECommerceApplication.UseCase.Customer;
 using ECommerceInfrastructure.Authentication.Identities;
 using ECommerceInfrastructure.Presentation.Abstractions;
 using ECommerceInfrastructure.Presentation.Resources;

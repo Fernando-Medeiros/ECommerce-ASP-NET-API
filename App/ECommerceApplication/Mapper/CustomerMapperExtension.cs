@@ -1,10 +1,10 @@
-using ECommerceApplication.Requests;
+using ECommerceApplication.Request;
 using ECommerceDomain.DTOs;
 using ECommerceDomain.Entities;
 
 namespace ECommerceApplication;
 
-public static class CustomerMapperExtensions
+public static class CustomerMapperExtension
 {
     public static CustomerDTO Mapper(this CreateCustomerRequest req) =>
         new(

@@ -1,4 +1,4 @@
-using ECommerceApplication.Contracts;
+using ECommerceApplication.Contract;
 
 namespace ECommerceInfrastructure.Authentication.Encrypt;
 

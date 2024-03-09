@@ -1,6 +1,6 @@
 using ECommerceDomain.DTOs;
 
-namespace ECommerceApplication.Contracts;
+namespace ECommerceApplication.Contract;
 
 public interface ICustomerMailEvent
 {

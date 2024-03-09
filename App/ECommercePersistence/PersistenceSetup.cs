@@ -1,4 +1,4 @@
-using ECommerceApplication.Contracts;
+using ECommerceApplication.Contract;
 using ECommercePersistence.Cache;
 using ECommercePersistence.Contexts;
 using ECommercePersistence.Mappings;
@@ -18,7 +18,7 @@ public static partial class PersistenceSetup
         ConfigureCache(services);
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
-        services.AddScoped<IUnitTransactionWork, UnitTransactionWork>();
+        services.AddScoped<IUnitTransaction, UnitTransactionWork>();
         services.AddAutoMapper(typeof(DatabaseMappings));
     }
 

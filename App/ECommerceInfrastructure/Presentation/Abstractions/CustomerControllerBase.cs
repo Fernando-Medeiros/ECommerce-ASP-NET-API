@@ -1,5 +1,5 @@
-using ECommerceApplication.Requests;
-using ECommerceApplication.UseCases.Customer;
+using ECommerceApplication.Request;
+using ECommerceApplication.UseCase.Customer;
 using ECommerceInfrastructure.Configuration.ProducesResponse;
 using ECommerceInfrastructure.Presentation.Resources;
 using Microsoft.AspNetCore.Mvc;

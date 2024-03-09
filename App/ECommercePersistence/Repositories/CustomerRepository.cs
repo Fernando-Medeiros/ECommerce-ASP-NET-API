@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using AutoMapper;
-using ECommerceApplication.Contracts;
+using ECommerceApplication.Contract;
 using ECommerceDomain.DTOs;
 using ECommercePersistence.Cache;
 using ECommercePersistence.Contexts;
@@ -25,7 +25,7 @@ public sealed class CustomerRepository : ICustomerRepository
         _mapper = mapper;
     }
 
-    public async Task<CustomerDTO?> FindOne(CustomerDTO request, CancellationToken cancellationToken)
+    public async Task<CustomerDTO?> Find(CustomerDTO request, CancellationToken cancellationToken)
     {
         return request switch
         {

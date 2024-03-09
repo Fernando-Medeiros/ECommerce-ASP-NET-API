@@ -1,4 +1,4 @@
-namespace ECommerceApplication.Contracts;
+namespace ECommerceApplication.Contract;
 
 public interface IUseCase<TRequest, TResponse>
 {

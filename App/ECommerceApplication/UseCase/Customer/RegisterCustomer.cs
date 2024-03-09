@@ -1,29 +1,22 @@
-using ECommerceApplication.Contracts;
-using ECommerceApplication.Requests;
+using ECommerceApplication.Contract;
+using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTOs;
 using ECommerceDomain.Entities;
 
-namespace ECommerceApplication.UseCases.Customer;
+namespace ECommerceApplication.UseCase.Customer;
 
-public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest, bool>
+public sealed class RegisterCustomer(
+    ICustomerRepository repository,
+    IUnitTransaction transaction,
+    ICustomerMailEvent mailEvent,
+    ICryptPassword crypt)
+    : IUseCase<CreateCustomerRequest, bool>
 {
-    readonly ICustomerRepository _repository;
-    readonly IUnitTransactionWork _transaction;
-    readonly ICustomerMailEvent _mailEvent;
-    readonly ICryptPassword _crypt;
-
-    public RegisterCustomer(
-        ICustomerRepository repository,
-        IUnitTransactionWork transaction,
-        ICustomerMailEvent mailEvent,
-        ICryptPassword crypt)
-    {
-        _repository = repository;
-        _transaction = transaction;
-        _mailEvent = mailEvent;
-        _crypt = crypt;
-    }
+    readonly ICustomerRepository _repository = repository;
+    readonly IUnitTransaction _transaction = transaction;
+    readonly ICustomerMailEvent _mailEvent = mailEvent;
+    readonly ICryptPassword _crypt = crypt;
 
     public async Task<bool> Execute(
         CreateCustomerRequest req,
@@ -31,7 +24,7 @@ public sealed class RegisterCustomer : IUseCase<CreateCustomerRequest, bool>
     {
         await req.ValidateAsync();
 
-        if (await _repository.FindOne(new(Email: req.Email), cancellationToken) is CustomerDTO)
+        if (await _repository.Find(new(Email: req.Email), cancellationToken) is CustomerDTO)
         {
             throw new UniqueEmailConstraintException().Target(nameof(RegisterCustomer));
         }

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using ECommerceCommon.Validations;
 
-namespace ECommerceApplication.Requests;
+namespace ECommerceApplication.Request;
 
 public sealed record UpdateCustomerRequest
 {
@@ -43,7 +43,6 @@ public sealed record UpdateCustomerRequest
                 .NotEmpty()
                 .Length(3, 20);
         }),
-
         Task.Run(() =>
         {
             new CustomValidation<string?>(
@@ -51,7 +50,6 @@ public sealed record UpdateCustomerRequest
                 .NotEmpty()
                 .Length(3, 20);
         }),
-
         Task.Run(() =>
         {
             new CustomValidation<string?>(
@@ -59,7 +57,6 @@ public sealed record UpdateCustomerRequest
                 .NotEmpty()
                 .Length(3, 20);
         }),
-
         Task.Run(() =>
         {
             new CustomValidation<string?>(

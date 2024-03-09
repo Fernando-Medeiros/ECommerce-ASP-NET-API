@@ -1,9 +1,9 @@
-using ECommerceApplication.Contracts;
+using ECommerceApplication.Contract;
 using ECommercePersistence.Contexts;
 
 namespace ECommercePersistence.Repositories;
 
-public sealed class UnitTransactionWork : IUnitTransactionWork
+public sealed class UnitTransactionWork : IUnitTransaction
 {
     private readonly DatabaseContext _context;
 

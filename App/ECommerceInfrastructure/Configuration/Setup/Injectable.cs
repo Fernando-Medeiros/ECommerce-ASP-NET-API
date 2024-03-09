@@ -1,5 +1,5 @@
-using ECommerceApplication.Configuration;
-using ECommerceApplication.Contracts;
+using ECommerceApplication;
+using ECommerceApplication.Contract;
 using ECommerceInfrastructure.Authentication.Encrypt;
 using ECommerceInfrastructure.Authentication.Tokens;
 using ECommerceInfrastructure.Authentication.Tokens.Contracts;
@@ -14,10 +14,8 @@ public static partial class Setup
     public static void Injectable(IServiceCollection services)
     {
         #region Application
-
-        InjectableServiceExtensions.UseCases
+        ServiceExtension.UseCases
             .ForEach(x => services.AddScoped(x));
-
         #endregion
 
         #region  Authorization

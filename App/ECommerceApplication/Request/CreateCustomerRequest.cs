@@ -1,6 +1,6 @@
 using ECommerceCommon.Validations;
 
-namespace ECommerceApplication.Requests;
+namespace ECommerceApplication.Request;
 
 public sealed record CreateCustomerRequest
 {
@@ -45,7 +45,6 @@ public sealed record CreateCustomerRequest
                 .NotEmpty()
                 .Length(3, 20);
     }),
-
     Task.Run(() =>
     {
         new CustomValidation<string?>(
@@ -54,7 +53,6 @@ public sealed record CreateCustomerRequest
                 .NotEmpty()
                 .Length(3, 20);
     }),
-
     Task.Run(() =>
     {
         new CustomValidation<string?>(
@@ -63,7 +61,6 @@ public sealed record CreateCustomerRequest
                 .NotEmpty()
                 .Length(3, 20);
     }),
-
     Task.Run(() =>
     {
         new CustomValidation<string?>(
@@ -73,7 +70,6 @@ public sealed record CreateCustomerRequest
                 .Length(6, 155)
                 .EmailAddress();
     }),
-
     Task.Run(() =>
     {
         new CustomValidation<string?>(
