@@ -1,6 +1,6 @@
 using ECommerceDomain.ValueObjects;
 
-namespace ECommerceDomain.Abstractions;
+namespace ECommerceDomain.Abstraction;
 
 public abstract class Entity
 {

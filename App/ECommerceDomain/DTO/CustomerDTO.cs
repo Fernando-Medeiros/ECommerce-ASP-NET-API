@@ -1,6 +1,6 @@
-namespace ECommerceDomain.DTOs;
+namespace ECommerceDomain.DTO;
 
-public record CustomerDTO(
+public sealed record CustomerDTO(
     string? Id = null,
     string? Name = null,
     string? FirstName = null,

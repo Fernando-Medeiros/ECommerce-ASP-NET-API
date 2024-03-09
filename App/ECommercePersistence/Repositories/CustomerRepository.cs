@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using AutoMapper;
 using ECommerceApplication.Contract;
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 using ECommercePersistence.Cache;
 using ECommercePersistence.Contexts;
 using ECommercePersistence.Models;

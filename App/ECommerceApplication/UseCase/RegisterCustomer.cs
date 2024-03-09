@@ -1,10 +1,10 @@
 using ECommerceApplication.Contract;
 using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
 
-namespace ECommerceApplication.UseCase.Customer;
+namespace ECommerceApplication.UseCase;
 
 public sealed class RegisterCustomer(
     ICustomerRepository repository,
@@ -31,7 +31,7 @@ public sealed class RegisterCustomer(
 
         CustomerDTO request = req.Mapper() with { Password = _crypt.Hash(req.Password) };
 
-        CustomerDTO customer = new CustomerEntity()
+        CustomerDTO customer = new Customer()
             .Register(request)
             .Mapper();
 

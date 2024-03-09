@@ -1,4 +1,4 @@
-using ECommerceApplication.UseCase.Customer;
+using ECommerceApplication.UseCase;
 
 namespace ECommerceApplication;
 

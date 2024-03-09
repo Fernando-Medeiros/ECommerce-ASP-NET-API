@@ -1,5 +1,5 @@
 using AutoMapper;
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 using ECommercePersistence.Models;
 
 namespace ECommercePersistence.Mappings;

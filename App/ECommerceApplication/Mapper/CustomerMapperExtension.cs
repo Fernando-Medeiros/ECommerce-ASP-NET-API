@@ -1,5 +1,5 @@
 using ECommerceApplication.Request;
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
 
 namespace ECommerceApplication;
@@ -22,7 +22,7 @@ public static class CustomerMapperExtension
             FirstName: req?.FirstName,
             LastName: req?.LastName);
 
-    public static CustomerDTO Mapper(this CustomerEntity e) =>
+    public static CustomerDTO Mapper(this Customer e) =>
         new(
             Id: e?.Id?.Value,
             Email: e?.Email?.Value,

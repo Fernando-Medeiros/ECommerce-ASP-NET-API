@@ -1,12 +1,12 @@
-using ECommerceDomain.Abstractions;
+using ECommerceDomain.Abstraction;
 using ECommerceDomain.ClusterObjects;
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 using ECommerceDomain.Enums;
 using ECommerceDomain.ValueObjects;
 
 namespace ECommerceDomain.Entities;
 
-public sealed class CustomerEntity : Entity
+public sealed class Customer : Entity
 {
     public Email? Email { get; private set; }
     public FullName? Name { get; private set; }
@@ -14,9 +14,9 @@ public sealed class CustomerEntity : Entity
     public Role? Role { get; private set; }
     public Date? VerifiedOn { get; private set; }
 
-    public CustomerEntity() { }
+    public Customer() { }
 
-    public CustomerEntity(CustomerDTO x)
+    public Customer(CustomerDTO x)
     {
         Id = new UUID(x.Id);
 
@@ -36,7 +36,7 @@ public sealed class CustomerEntity : Entity
         CreatedOn = new Date(x.CreatedOn);
     }
 
-    public CustomerEntity Register(CustomerDTO x)
+    public Customer Register(CustomerDTO x)
     {
         Id = new UUID(Guid.NewGuid().ToString());
 
@@ -49,13 +49,13 @@ public sealed class CustomerEntity : Entity
 
         Password = new Password(x.Password);
 
-        Role = new Role(nameof(ERoles.customer));
+        Role = new Role(nameof(ERole.customer));
 
         CreatedOn = new Date(DateTimeOffset.UtcNow);
         return this;
     }
 
-    public CustomerEntity UpdateName(CustomerDTO x)
+    public Customer UpdateName(CustomerDTO x)
     {
         Name = new FullName(
             new Name(x.Name, required: false),
@@ -66,7 +66,7 @@ public sealed class CustomerEntity : Entity
         return this;
     }
 
-    public CustomerEntity UpdateEmail(CustomerDTO x)
+    public Customer UpdateEmail(CustomerDTO x)
     {
         Email = new Email(x.Email, required: false);
 
@@ -74,7 +74,7 @@ public sealed class CustomerEntity : Entity
         return this;
     }
 
-    public CustomerEntity UpdatePassword(CustomerDTO x)
+    public Customer UpdatePassword(CustomerDTO x)
     {
         Password = new Password(x.Password, required: false);
 
@@ -82,7 +82,7 @@ public sealed class CustomerEntity : Entity
         return this;
     }
 
-    public CustomerEntity UpdateRole(CustomerDTO x)
+    public Customer UpdateRole(CustomerDTO x)
     {
         Role = new Role(x.Role, required: false);
 
@@ -90,7 +90,7 @@ public sealed class CustomerEntity : Entity
         return this;
     }
 
-    public CustomerEntity AssignVerified()
+    public Customer AssignVerified()
     {
         VerifiedOn = new Date(DateTimeOffset.UtcNow);
         UpdatedOn = new Date(DateTimeOffset.UtcNow);

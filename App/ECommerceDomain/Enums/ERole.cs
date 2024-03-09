@@ -1,6 +1,6 @@
 namespace ECommerceDomain.Enums;
 
-public enum ERoles
+public enum ERole
 {
     customer = 0,
     employee = 1,

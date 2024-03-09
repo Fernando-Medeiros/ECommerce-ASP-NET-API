@@ -1,10 +1,10 @@
 using ECommerceCommon.Exceptions;
-using ECommerceDomain.Abstractions;
+using ECommerceDomain.Abstraction;
 using ECommerceDomain.ValueObjects;
 
 namespace ECommerceDomain.ClusterObjects;
 
-public sealed record FullName : ClusterObject
+public sealed record FullName : Cluster
 {
     public Name Name { get; init; }
     public Name FirstName { get; init; }

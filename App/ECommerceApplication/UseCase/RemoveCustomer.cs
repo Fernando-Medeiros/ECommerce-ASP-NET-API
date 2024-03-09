@@ -1,8 +1,8 @@
 using ECommerceApplication.Contract;
 using ECommerceCommon.Exceptions;
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 
-namespace ECommerceApplication.UseCase.Customer;
+namespace ECommerceApplication.UseCase;
 
 public sealed class RemoveCustomer(
     ICustomerRepository repository,

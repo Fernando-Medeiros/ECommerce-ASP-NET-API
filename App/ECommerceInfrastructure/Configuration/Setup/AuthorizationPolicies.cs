@@ -6,7 +6,7 @@ public static partial class Setup
 {
     public static void AuthorizationPolicies(IServiceCollection services)
     {
-        var roles = Enum.GetNames(typeof(ERoles)).ToList();
+        var roles = Enum.GetNames(typeof(ERole)).ToList();
 
         services.AddAuthorization(opt =>
         {

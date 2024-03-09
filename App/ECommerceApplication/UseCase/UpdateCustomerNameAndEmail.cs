@@ -1,10 +1,10 @@
 using ECommerceApplication.Contract;
 using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
 
-namespace ECommerceApplication.UseCase.Customer;
+namespace ECommerceApplication.UseCase;
 
 public sealed class UpdateCustomerNameAndEmail(
     ICustomerRepository repository,
@@ -31,7 +31,7 @@ public sealed class UpdateCustomerNameAndEmail(
 
         CustomerDTO request = req.Mapper();
 
-        CustomerDTO customer = new CustomerEntity(currentState)
+        CustomerDTO customer = new Customer(currentState)
             .UpdateName(request)
             .UpdateEmail(request)
             .Mapper();

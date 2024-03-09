@@ -1,6 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 using ECommerceInfrastructure.Authentication.Identities.Claims;
 using ECommerceInfrastructure.Authentication.Tokens.Contracts;
 using ECommerceInfrastructure.Authentication.Tokens.DTOs;

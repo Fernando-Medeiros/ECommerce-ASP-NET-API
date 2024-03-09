@@ -1,14 +1,14 @@
-namespace ECommerceDomain.Abstractions;
+namespace ECommerceDomain.Abstraction;
 
 public abstract record ValueObject<T>
 {
     public T? Value { get; private init; }
 
-    public ValueObject(T? data, bool required = true)
+    public ValueObject(T? value, bool required = true)
     {
-        if (required || data is T) Validate(data);
+        if (required || value is T) Validate(value);
 
-        Value = data;
+        Value = value;
     }
 
     public abstract void Validate(T? data);

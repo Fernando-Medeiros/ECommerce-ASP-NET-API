@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 
 namespace ECommerceInfrastructure.Presentation.Resources;
 

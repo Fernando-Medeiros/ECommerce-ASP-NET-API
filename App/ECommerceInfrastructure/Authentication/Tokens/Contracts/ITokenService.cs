@@ -1,4 +1,4 @@
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 using ECommerceInfrastructure.Authentication.Tokens.DTOs;
 using ECommerceInfrastructure.Authentication.Tokens.Enums;
 

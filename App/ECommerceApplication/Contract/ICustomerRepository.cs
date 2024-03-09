@@ -1,4 +1,4 @@
-using ECommerceDomain.DTOs;
+using ECommerceDomain.DTO;
 
 namespace ECommerceApplication.Contract;
 

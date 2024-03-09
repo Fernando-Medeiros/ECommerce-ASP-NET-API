@@ -1,5 +1,5 @@
 using ECommerceCommon.Exceptions;
-using ECommerceDomain.Abstractions;
+using ECommerceDomain.Abstraction;
 using ECommerceDomain.Enums;
 
 namespace ECommerceDomain.ValueObjects;
@@ -10,7 +10,7 @@ public sealed record Role : ValueObject<string?>
 
     public override void Validate(string? role)
     {
-        if (Enum.TryParse<ERoles>($"{role}", out _) is false)
+        if (Enum.TryParse<ERole>($"{role}", out _) is false)
         {
             throw new RoleTypeException().Target(nameof(Role));
         }
