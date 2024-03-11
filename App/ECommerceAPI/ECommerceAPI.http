@@ -1,0 +1,14 @@
+@ECommerceAPI_HostAddress = https://localhost:7096
+
+GET {{ECommerceAPI_HostAddress}}/api/v1/customers
+Accept: application/json
+
+POST {{ECommerceAPI_HostAddress}}/api/v1/customers
+Accept: application/json
+
+PATCH {{ECommerceAPI_HostAddress}}/api/v1/customers
+Accept: application/json
+
+DELETE {{ECommerceAPI_HostAddress}}/api/v1/customers
+Accept: application/json
+

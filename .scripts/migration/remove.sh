@@ -2,6 +2,6 @@
 
 context=$1
 
-cd App/ECommerceInfrastructure
+cd App/ECommerceAPI
 
 dotnet ef migrations remove -c $context

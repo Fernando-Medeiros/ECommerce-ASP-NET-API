@@ -4,9 +4,9 @@ namespace ECommerceInfrastructure.Queue.MailQueue;
 
 public static class MailQueueHandler
 {
-    private static readonly List<BaseTemplate> QueueTemplate = new();
+    private static readonly List<BaseTemplate> QueueTemplate = [];
 
-    public static bool HasTemplate() => QueueTemplate.Any();
+    public static bool HasTemplate() => QueueTemplate.Count != 0;
 
     public static void InsertTemplate(BaseTemplate item) => QueueTemplate.Add(item);
 

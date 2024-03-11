@@ -1,20 +1,17 @@
 using ECommerceMail.Contract;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace ECommerceInfrastructure.Queue.MailQueue;
 
-public sealed class MailQueueDispatch : BackgroundService
+public sealed class MailQueueDispatch(
+    IServiceProvider serviceProvider,
+    ILogger<MailQueueDispatch> logger) : BackgroundService
 {
-    private readonly IServiceProvider _serviceProvider;
+    readonly IServiceProvider _serviceProvider = serviceProvider;
 
-    private readonly ILogger _logger;
-
-    public MailQueueDispatch(
-        IServiceProvider serviceProvider,
-        ILogger<MailQueueDispatch> logger)
-    {
-        _serviceProvider = serviceProvider;
-        _logger = logger;
-    }
+    readonly ILogger _logger = logger;
 
     protected override async Task ExecuteAsync(CancellationToken token)
     {

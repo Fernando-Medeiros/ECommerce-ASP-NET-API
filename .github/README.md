@@ -85,11 +85,11 @@ dotnet tool install --global dotnet-ef
 
 ### Environment
 
-[appsettings.development.Example](../App/ECommerceInfrastructure/appsettings.development.Example)
+[appsettings.development.Example](../App/ECommerceAPI/appsettings.development.Example)
 
 ```sh
   # copy appsettings.development.Example to appsettings.development.json
-  cp App/ECommerceInfrastructure/appsettings.development.Example App/ECommerceInfrastructure/appsettings.development.json
+  cp App/ECommerceAPI/appsettings.development.Example App/ECommerceAPI/appsettings.development.json
 
 ```
 
@@ -158,17 +158,17 @@ dotnet tool install --global dotnet-ef
 
 - Using > Database > Select all
   ```sh
-  .scripts/cmd/select.table.sh < Name >
+  .scripts/cmd/select-table.sh < Name >
   ```
 
 - Using > Database > Count
   ```sh
-  .scripts/cmd/count.table.sh < Name >
+  .scripts/cmd/count-table.sh < Name >
   ```
 
 - Using > Database > Truncate
   ```sh
-  .scripts/cmd/truncate.table.sh < Name >
+  .scripts/cmd/truncate-table.sh < Name >
   ```
 
 #### Tests
@@ -193,8 +193,8 @@ dotnet tool install --global dotnet-ef
 ## Entity Relationship Diagram (ERD)
 
 - See:
-  - Entities -> [Models](../App/ECommerceInfrastructure/Persistence/Models/)
-  - Relationship -> [Database Context](../App/ECommerceInfrastructure/Persistence/Contexts/DatabaseContext.cs)
+  - Entities -> [Models](../App/ECommercePersistence/Model)
+  - Relationship -> [Database Context](../App/ECommercePersistence/Context/DatabaseContext.cs)
 > ERD print 04/09/23
 
 ![ERD](ERD-ECommerce.png)

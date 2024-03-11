@@ -3,7 +3,7 @@ using System.Text;
 using ECommerceDomain.DTO;
 using ECommerceInfrastructure.Auth.Identities.Claims;
 using ECommerceInfrastructure.Auth.Tokens.Enums;
-using ECommerceInfrastructure.Configuration.Environment;
+using ECommerceInfrastructure.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceInfrastructure.Auth.Tokens;

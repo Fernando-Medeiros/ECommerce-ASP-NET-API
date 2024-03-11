@@ -1,9 +1,9 @@
 #!/bin/bash
 
-dotnet build App/ECommerceInfrastructure/ --configuration Release
+dotnet build App/ECommerceAPI/ --configuration Release
 
-dotnet publish App/ECommerceInfrastructure/ -c Release -o dist
+dotnet publish App/ECommerceAPI/ -c Release -o dist
 
-cp App/ECommerceInfrastructure/appsettings.development.json dist/appsettings.development.json
+cp App/ECommerceAPI/appsettings.development.json dist/appsettings.development.json
 
-dotnet dist/ECommerceInfrastructure.dll
+dotnet dist/ECommerceAPI.dll
