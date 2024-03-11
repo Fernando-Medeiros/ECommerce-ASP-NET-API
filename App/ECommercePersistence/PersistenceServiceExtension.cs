@@ -38,7 +38,7 @@ public static class PersistenceServiceExtension
         {
             opt.UseNpgsql(
                 DefaultConnection,
-                b => b.MigrationsAssembly("ECommerceInfrastructure"));
+                b => b.MigrationsAssembly("ECommerceAPI"));
 
             opt.AddInterceptors(provider.GetServices<ISaveChangesInterceptor>());
         });
@@ -52,7 +52,7 @@ public static class PersistenceServiceExtension
         {
             opt.UseNpgsql(
                 DefaultConnection,
-                b => b.MigrationsAssembly("ECommerceInfrastructure"));
+                b => b.MigrationsAssembly("ECommerceAPI"));
         });
     }
 

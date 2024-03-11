@@ -1,0 +1,23 @@
+using ECommerceApplication.Contract;
+using ECommerceDomain.DTO;
+using NSubstitute;
+using TestSetup.Fixtures;
+using TestSetup.Mocks;
+
+namespace TestSetup.Shared;
+
+public abstract class SharedCustomerTest
+{
+    public readonly ICustomerRepository _repository = Substitute.For<ICustomerRepository>();
+
+    public readonly RequestFixture _requestFixture = new("/api/v1/customers");
+
+    public readonly ResponseFixture _responseFixture = new();
+
+    public readonly CustomerMocks Mock = new();
+
+    public void MakeRepositoryStub(CustomerDTO input, CustomerDTO? output)
+    {
+        _repository.Find(Arg.Is(input)).Returns(output);
+    }
+}

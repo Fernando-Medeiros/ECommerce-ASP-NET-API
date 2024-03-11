@@ -1,6 +1,6 @@
-using System.Security.Claims;
 using ECommerceInfrastructure.Auth.Tokens.Enums;
-using ECommerceInfrastructure.ExceptionFilter.Exceptions;
+using ECommerceInfrastructure.Exceptions;
+using System.Security.Claims;
 
 namespace ECommerceInfrastructure.Auth.Identities;
 
@@ -12,7 +12,7 @@ public abstract class BaseIdentity
     {
         return principal.Claims.SingleOrDefault(c => c.Type.Equals(keySelector))
 
-                ?? throw new TokenIncompatibleException().Target("Token Properties");
+                ?? throw new TokenException().Target("Token Properties");
     }
 
     private protected static void CheckTokenScope(
@@ -21,6 +21,6 @@ public abstract class BaseIdentity
     {
         if (scopes.Contains(Enum.Parse<ETokenScope>(scope)) is false)
 
-            throw new TokenIncompatibleException().Target("Token Scope");
+            throw new TokenException().Target("Token Scope");
     }
 }

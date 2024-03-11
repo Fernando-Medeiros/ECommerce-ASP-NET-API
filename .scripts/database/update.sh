@@ -2,6 +2,6 @@
 
 context=$1
 
-cd App/ECommerceInfrastructure
+cd App/ECommerceAPI
 
 dotnet ef database update -c $context
