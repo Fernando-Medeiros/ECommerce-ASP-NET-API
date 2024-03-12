@@ -1,7 +1,6 @@
 using ECommerceApplication.Contract;
 using ECommerceDomain.DTO;
-using ECommerceInfrastructure.Auth.Tokens;
-using ECommerceInfrastructure.Auth.Tokens.Enums;
+using ECommerceDomain.Enums;
 using ECommerceMail.Contract;
 using ECommerceMail.Service.Data;
 using ECommerceMail.Template;

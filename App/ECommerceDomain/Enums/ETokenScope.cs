@@ -1,4 +1,4 @@
-namespace ECommerceInfrastructure.Auth.Tokens.Enums;
+namespace ECommerceDomain.Enums;
 
 public enum ETokenScope
 {

@@ -1,14 +1,14 @@
-using System.Net;
-using ECommerceCommon.Exceptions;
 using ECommerceApplication.Request;
+using ECommerceCommon.Exceptions;
+using ECommerceTestSetup.Shared;
+using System.Net;
 using TestSetup.Fixtures;
-using TestSetup.Shared;
 
-namespace TestE2E.Endpoint;
+namespace ECommerceTestE2E.Endpoint;
 
 public sealed class RegisterCustomerTest : SharedCustomerTest
 {
-    readonly CreateCustomerRequest Payload;
+    readonly RegisterCustomerRequest Payload;
 
     public RegisterCustomerTest()
     {

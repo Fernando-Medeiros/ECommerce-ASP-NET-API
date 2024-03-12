@@ -1,10 +1,10 @@
-using System.Text;
 using ECommerceDomain.DTO;
-using ECommerceInfrastructure.Auth.Tokens;
-using ECommerceInfrastructure.Auth.Tokens.Enums;
+using ECommerceDomain.Enums;
+using ECommerceInfrastructure.Auth;
 using Newtonsoft.Json;
+using System.Text;
 
-namespace TestSetup.Fixtures;
+namespace ECommerceTestSetup.Fixtures;
 
 public sealed class RequestFixture(
     string url,

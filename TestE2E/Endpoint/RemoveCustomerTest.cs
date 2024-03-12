@@ -1,7 +1,7 @@
 using System.Net;
 using ECommerceCommon.Exceptions;
+using ECommerceTestSetup.Shared;
 using TestSetup.Fixtures;
-using TestSetup.Shared;
 
 namespace TestE2E.Endpoint;
 

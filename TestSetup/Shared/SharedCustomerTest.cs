@@ -1,10 +1,11 @@
 using ECommerceApplication.Contract;
 using ECommerceDomain.DTO;
+using ECommerceTestSetup.Fixtures;
+using ECommerceTestSetup.Mocks;
 using NSubstitute;
 using TestSetup.Fixtures;
-using TestSetup.Mocks;
 
-namespace TestSetup.Shared;
+namespace ECommerceTestSetup.Shared;
 
 public abstract class SharedCustomerTest
 {

@@ -1,8 +1,8 @@
 using ECommerceApplication.Contract;
 
-namespace ECommerceInfrastructure.Auth.Crypt;
+namespace ECommerceInfrastructure.Auth;
 
-public class CryptPassword : ICryptPassword
+public sealed class CryptService : ICryptService
 {
     public string Hash(string? password)
     {

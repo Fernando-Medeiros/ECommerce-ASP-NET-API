@@ -2,7 +2,7 @@ using ECommerceCommon.Validations;
 
 namespace ECommerceApplication.Request;
 
-public sealed record CreateCustomerRequest
+public sealed record RegisterCustomerRequest
 {
     private string? _name;
     private string? _firstName;

@@ -4,7 +4,7 @@ using ECommerceDomain.DTO;
 using ECommerceDomain.Enums;
 using ECommercePersistence.Model;
 
-namespace TestSetup.Mocks;
+namespace ECommerceTestSetup.Mocks;
 
 public class CustomerMocks
 {
@@ -18,7 +18,7 @@ public class CustomerMocks
 
     public readonly Customer CustomerEntity;
 
-    public readonly CreateCustomerRequest CreateRequest;
+    public readonly RegisterCustomerRequest CreateRequest;
 
     public readonly UpdateCustomerRequest UpdateRequest;
 

@@ -10,5 +10,7 @@ public static class ApplicationServiceExtension
         typeof(RegisterCustomer),
         typeof(RemoveCustomer),
         typeof(UpdateCustomerNameAndEmail),
+        typeof(RegisterToken),
+        typeof(AuthenticateCustomer)
     ];
 }
