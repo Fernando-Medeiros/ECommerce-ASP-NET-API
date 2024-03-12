@@ -1,20 +1,19 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
+using ECommerceApplication.Contract;
 using ECommerceDomain.DTO;
+using ECommerceDomain.Enums;
 using ECommerceInfrastructure.Auth.Identities.Claims;
-using ECommerceInfrastructure.Auth.Tokens.Enums;
 using ECommerceInfrastructure.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
-namespace ECommerceInfrastructure.Auth.Tokens;
+namespace ECommerceInfrastructure.Auth;
 
 public sealed class TokenService : ITokenService
 {
-    private readonly JwtSecurityTokenHandler _jwtHandler;
+    readonly JwtSecurityTokenHandler _jwtHandler = new();
 
-    public TokenService() => _jwtHandler = new();
-
-    public Token Generate(CustomerDTO customer, ETokenScope scope)
+    public TokenDTO Generate(CustomerDTO customer, ETokenScope scope)
     {
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
@@ -27,11 +26,10 @@ public sealed class TokenService : ITokenService
 
         string token = _jwtHandler.WriteToken(securityToken);
 
-        return new Token(token, ETokenType.Bearer, scope);
+        return new(token, ETokenType.Bearer, scope);
     }
 
     #region Private
-
     private static SigningCredentials Credentials()
     {
         byte[] key = Encoding.ASCII.GetBytes(TokenEnvironment.PrivateKey!);
@@ -53,6 +51,5 @@ public sealed class TokenService : ITokenService
         };
         return DateTime.UtcNow.AddHours(expires);
     }
-
     #endregion
 }

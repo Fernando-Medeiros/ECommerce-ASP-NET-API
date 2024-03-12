@@ -1,8 +1,8 @@
 using ECommerceAPI.Resource;
 using ECommerceCommon.Exceptions;
+using ECommerceTestSetup.Shared;
 using System.Net;
 using TestSetup.Fixtures;
-using TestSetup.Shared;
 
 namespace TestE2E.Endpoint;
 

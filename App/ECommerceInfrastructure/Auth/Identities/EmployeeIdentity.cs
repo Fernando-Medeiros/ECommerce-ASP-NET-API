@@ -1,6 +1,6 @@
-using System.Security.Claims;
+using ECommerceDomain.Enums;
 using ECommerceInfrastructure.Auth.Identities.Claims;
-using ECommerceInfrastructure.Auth.Tokens.Enums;
+using System.Security.Claims;
 
 namespace ECommerceInfrastructure.Auth.Identities;
 

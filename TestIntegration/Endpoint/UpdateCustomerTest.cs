@@ -4,7 +4,7 @@ using ECommerceApplication.Request;
 using ECommerceDomain.DTO;
 using Microsoft.Extensions.DependencyInjection;
 using TestSetup.Fixtures;
-using TestSetup.Shared;
+using ECommerceTestSetup.Shared;
 
 namespace TestIntegration.Endpoint;
 

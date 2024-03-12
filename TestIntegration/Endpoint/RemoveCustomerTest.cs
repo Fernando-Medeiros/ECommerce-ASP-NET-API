@@ -1,9 +1,9 @@
 using System.Net;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
+using ECommerceTestSetup.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using TestSetup.Fixtures;
-using TestSetup.Shared;
 
 namespace TestIntegration.Endpoint;
 

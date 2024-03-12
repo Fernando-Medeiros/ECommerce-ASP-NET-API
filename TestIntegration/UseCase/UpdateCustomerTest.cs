@@ -3,9 +3,9 @@ using ECommerceApplication.Request;
 using ECommerceApplication.UseCase;
 using ECommerceDomain.DTO;
 using NSubstitute;
-using TestSetup.Shared;
 using ECommerceApplication.Contract;
 using ECommerceCommon;
+using ECommerceTestSetup.Shared;
 
 namespace TestIntegration.UseCase;
 

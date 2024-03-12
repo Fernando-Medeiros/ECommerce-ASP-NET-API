@@ -1,5 +1,5 @@
-using ECommerceInfrastructure.Auth.Tokens.Enums;
-using ECommerceInfrastructure.Exceptions;
+using ECommerceCommon.Exceptions;
+using ECommerceDomain.Enums;
 using System.Security.Claims;
 
 namespace ECommerceInfrastructure.Auth.Identities;

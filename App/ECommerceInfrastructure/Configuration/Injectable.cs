@@ -1,7 +1,6 @@
 using ECommerceApplication;
 using ECommerceApplication.Contract;
-using ECommerceInfrastructure.Auth.Crypt;
-using ECommerceInfrastructure.Auth.Tokens;
+using ECommerceInfrastructure.Auth;
 using ECommerceInfrastructure.Queue.LoggerQueue;
 using ECommerceInfrastructure.Queue.MailQueue;
 using ECommerceInfrastructure.Queue.MailQueue.MailEvents;
@@ -19,7 +18,7 @@ public static partial class Setup
         #endregion
 
         #region  Authorization
-        services.AddSingleton<ICryptPassword, CryptPassword>();
+        services.AddSingleton<ICryptService, CryptService>();
         services.AddSingleton<ITokenService, TokenService>();
         #endregion
 

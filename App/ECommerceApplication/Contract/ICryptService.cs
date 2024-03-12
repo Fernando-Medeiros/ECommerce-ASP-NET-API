@@ -1,6 +1,6 @@
 namespace ECommerceApplication.Contract;
 
-public interface ICryptPassword
+public interface ICryptService
 {
     public string Hash(string? password);
 

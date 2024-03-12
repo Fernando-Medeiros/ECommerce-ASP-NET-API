@@ -6,7 +6,7 @@ namespace ECommerceApplication;
 
 public static class CustomerMapperExtension
 {
-    public static CustomerDTO Mapper(this CreateCustomerRequest req) =>
+    public static CustomerDTO Mapper(this RegisterCustomerRequest req) =>
         new(
             Email: req?.Email,
             Password: req?.Password,

@@ -10,30 +10,32 @@ public sealed class RegisterCustomer(
     ICustomerRepository repository,
     IUnitTransaction transaction,
     ICustomerMailEvent mailEvent,
-    ICryptPassword crypt)
-    : IUseCase<CreateCustomerRequest, bool>
+    ICryptService cryptService)
+    : IUseCase<RegisterCustomerRequest, bool>
 {
-    readonly ICustomerRepository _repository = repository;
-    readonly IUnitTransaction _transaction = transaction;
+    readonly ICryptService _cryptService = cryptService;
     readonly ICustomerMailEvent _mailEvent = mailEvent;
-    readonly ICryptPassword _crypt = crypt;
+    readonly IUnitTransaction _transaction = transaction;
+    readonly ICustomerRepository _repository = repository;
 
     public async Task<bool> Execute(
-        CreateCustomerRequest req,
+        RegisterCustomerRequest req,
         CancellationToken cancellationToken = default)
     {
         await req.ValidateAsync();
+
 
         if (await _repository.Find(new(Email: req.Email), cancellationToken) is CustomerDTO)
         {
             throw new UniqueEmailConstraintException().Target(nameof(RegisterCustomer));
         }
 
-        CustomerDTO request = req.Mapper() with { Password = _crypt.Hash(req.Password) };
+        CustomerDTO request = req.Mapper() with { Password = _cryptService.Hash(req.Password) };
 
         CustomerDTO customer = new Customer()
             .Register(request)
             .Mapper();
+
 
         _repository.Register(customer);
 

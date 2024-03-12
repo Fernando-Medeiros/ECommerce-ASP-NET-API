@@ -11,7 +11,7 @@ public class CreateCustomerRequestTest
     public async void Should_Validate_Customer_Create_Request(
         string? name, string? firstName, string? lastName, string? email, string? password)
     {
-        var request = new CreateCustomerRequest()
+        var request = new RegisterCustomerRequest()
         {
             Name = name,
             FirstName = firstName,
@@ -36,31 +36,31 @@ public class CreateCustomerRequestTest
         string? value1, string? value2, string? value3)
     {
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Name = value1 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Name = value1 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Name = value2 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Name = value2 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Name = value3 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Name = value3 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { FirstName = value1 }.ValidateAsync());
+            await new RegisterCustomerRequest() { FirstName = value1 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { FirstName = value2 }.ValidateAsync());
+            await new RegisterCustomerRequest() { FirstName = value2 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { FirstName = value3 }.ValidateAsync());
+            await new RegisterCustomerRequest() { FirstName = value3 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { LastName = value1 }.ValidateAsync());
+            await new RegisterCustomerRequest() { LastName = value1 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { LastName = value2 }.ValidateAsync());
+            await new RegisterCustomerRequest() { LastName = value2 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { LastName = value3 }.ValidateAsync());
+            await new RegisterCustomerRequest() { LastName = value3 }.ValidateAsync());
     }
 
     [Theory]
@@ -70,16 +70,16 @@ public class CreateCustomerRequestTest
         string? value1, string? value2, string? value3, string value4)
     {
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Email = value1 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Email = value1 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Email = value2 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Email = value2 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Email = value3 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Email = value3 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Email = value4 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Email = value4 }.ValidateAsync());
     }
 
     [Theory]
@@ -89,15 +89,15 @@ public class CreateCustomerRequestTest
         string? value1, string? value2, string? value3, string value4)
     {
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Password = value1 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Password = value1 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Password = value2 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Password = value2 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Password = value3 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Password = value3 }.ValidateAsync());
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
-            await new CreateCustomerRequest() { Password = value4 }.ValidateAsync());
+            await new RegisterCustomerRequest() { Password = value4 }.ValidateAsync());
     }
 }

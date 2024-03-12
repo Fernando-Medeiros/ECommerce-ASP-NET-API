@@ -1,8 +1,8 @@
 using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
-using TestSetup.Mocks;
+using ECommerceTestSetup.Mocks;
 
-namespace TestUnit.Domain.Entities;
+namespace ECommerceTestUnit.Domain.Entities;
 
 public class CustomerEntityTest
 {

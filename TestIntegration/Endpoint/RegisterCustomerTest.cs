@@ -1,16 +1,16 @@
-using System.Net;
-using ECommerceCommon.Exceptions;
 using ECommerceApplication.Request;
+using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
+using ECommerceTestSetup.Shared;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net;
 using TestSetup.Fixtures;
-using TestSetup.Shared;
 
-namespace TestIntegration.Endpoint;
+namespace ECommerceTestIntegration.Endpoint;
 
 public sealed class RegisterCustomerTest : SharedCustomerTest
 {
-    readonly CreateCustomerRequest Payload;
+    readonly RegisterCustomerRequest Payload;
 
     public RegisterCustomerTest()
     {

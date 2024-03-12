@@ -1,7 +1,7 @@
 using ECommerceCommon.Exceptions;
 using ECommerceApplication.UseCase;
 using ECommerceDomain.DTO;
-using TestSetup.Shared;
+using ECommerceTestSetup.Shared;
 
 namespace TestIntegration.UseCase;
 

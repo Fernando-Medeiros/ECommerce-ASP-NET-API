@@ -2,8 +2,8 @@ using ECommerceApplication.Contract;
 using ECommerceCommon.Exceptions;
 using ECommerceApplication.UseCase;
 using NSubstitute;
-using TestSetup.Shared;
 using ECommerceDomain.DTO;
+using ECommerceTestSetup.Shared;
 
 namespace TestIntegration.UseCase;
 
