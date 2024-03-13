@@ -1,8 +1,7 @@
 using ECommerceApplication;
 using ECommerceApplication.Contract;
 using ECommerceInfrastructure.Auth;
-using ECommerceInfrastructure.Queue.LoggerQueue;
-using ECommerceInfrastructure.Queue.MailQueue;
+using ECommerceInfrastructure.MailQueue;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerceInfrastructure.Configuration;
@@ -26,7 +25,6 @@ public static partial class Setup
         #endregion
 
         #region  Hosted
-        services.AddHostedService<LoggerQueuePersistence>();
         services.AddHostedService<MailQueueDispatch>();
         #endregion
     }

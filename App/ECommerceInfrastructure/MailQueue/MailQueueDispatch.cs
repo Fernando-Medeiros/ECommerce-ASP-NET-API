@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ECommerceInfrastructure.Queue.MailQueue;
+namespace ECommerceInfrastructure.MailQueue;
 
 public sealed class MailQueueDispatch(
     IServiceProvider serviceProvider,

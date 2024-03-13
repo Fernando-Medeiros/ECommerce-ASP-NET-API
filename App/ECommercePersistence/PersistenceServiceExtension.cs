@@ -24,7 +24,6 @@ public static class PersistenceServiceExtension
     public static void Configure(IServiceCollection services)
     {
         ConfigureCustomerDatabase(services);
-        ConfigureLoggerDatabase(services);
         ConfigureCache(services);
 
         services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -44,16 +43,6 @@ public static class PersistenceServiceExtension
         });
 
         services.AddScoped<ISaveChangesInterceptor, CustomerCacheSaveInterceptor>();
-    }
-
-    private static void ConfigureLoggerDatabase(IServiceCollection services)
-    {
-        services.AddDbContext<LoggerContext>(opt =>
-        {
-            opt.UseNpgsql(
-                DefaultConnection,
-                b => b.MigrationsAssembly("ECommerceAPI"));
-        });
     }
 
     private static void ConfigureCache(IServiceCollection services)

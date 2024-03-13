@@ -4,7 +4,7 @@ using ECommerceDomain.Enums;
 using ECommerceMail.Service;
 using ECommerceMail.Template;
 
-namespace ECommerceInfrastructure.Queue.MailQueue;
+namespace ECommerceInfrastructure.MailQueue;
 
 public sealed class CustomerMailEvent(ITokenService service) : ICustomerMailEvent
 {
