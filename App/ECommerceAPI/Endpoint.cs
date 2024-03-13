@@ -15,10 +15,9 @@ internal static class Endpoint
         #region Authentication
         app.MapPost("/api/v1/access-token", async (
             [FromServices] RegisterToken useCase,
-            [FromBody] RegisterTokenRequest request) =>
+            [FromBody] SignInRequest request) =>
         {
             var tokenDto = await useCase.Execute(request);
-
             return Results.Ok(new TokenResource(tokenDto));
         })
             .WithTags("Auth")
@@ -39,6 +38,47 @@ internal static class Endpoint
             .Produces(201, typeof(TokenResource));
         #endregion
 
+        #region Password
+        app.MapPost("/api/v1/recover-password", async (
+          [FromServices] RecoverPassword useCase,
+          [FromBody] EmailRequest request) =>
+        {
+            await useCase.Execute(request);
+            return Results.Ok();
+        })
+          .WithTags("Auth")
+          .WithOpenApi()
+          .Produces(200);
+
+        app.MapPatch("/api/v1/reset-password", async (
+            [FromServices] UpdatePassword useCase,
+            [FromBody] PasswordRequest request,
+            ClaimsPrincipal user) =>
+        {
+            var customer = new CustomerIdentity(user, [ETokenScope.RecoverPassword]);
+            await useCase.Execute((customer.Id, request));
+            return Results.Ok();
+        })
+            .RequireAuthorization()
+            .WithTags("Auth")
+            .WithOpenApi()
+            .Produces(200);
+
+        app.MapPatch("/api/v1/update-password", async (
+            [FromServices] UpdatePassword useCase,
+            [FromBody] PasswordRequest request,
+            ClaimsPrincipal user) =>
+        {
+            var customer = new CustomerIdentity(user);
+            await useCase.Execute((customer.Id, request));
+            return Results.Ok();
+        })
+            .RequireAuthorization()
+            .WithTags("Auth")
+            .WithOpenApi()
+            .Produces(200);
+        #endregion
+
         #region Customer
         app.MapGet("/api/v1/customers", async (
             [FromServices] FindOneCustomer useCase,
@@ -55,7 +95,7 @@ internal static class Endpoint
 
         app.MapPost("/api/v1/customers", async (
             [FromServices] RegisterCustomer useCase,
-            [FromBody] RegisterCustomerRequest request) =>
+            [FromBody] CustomerRequest request) =>
         {
             await useCase.Execute(request);
             return Results.Created();

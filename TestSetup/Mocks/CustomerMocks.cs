@@ -18,7 +18,7 @@ public class CustomerMocks
 
     public readonly Customer CustomerEntity;
 
-    public readonly RegisterCustomerRequest CreateRequest;
+    public readonly CustomerRequest CreateRequest;
 
     public readonly UpdateCustomerRequest UpdateRequest;
 
