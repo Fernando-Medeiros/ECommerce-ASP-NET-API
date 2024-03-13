@@ -14,6 +14,7 @@ public sealed class FindOneCustomer(ICustomerRepository repository)
         CancellationToken cancellationToken = default)
     {
         return await _repository.Find(new(Id: req.Id), cancellationToken)
+
             ?? throw new CustomerNotFoundException().Target(nameof(FindOneCustomer));
     }
 }
