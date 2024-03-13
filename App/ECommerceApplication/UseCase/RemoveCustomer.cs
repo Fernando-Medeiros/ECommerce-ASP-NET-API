@@ -17,7 +17,9 @@ public sealed class RemoveCustomer(
         CancellationToken cancellationToken = default)
     {
         var customer = await _repository.Find(req, cancellationToken)
+
             ?? throw new CustomerNotFoundException().Target(nameof(RemoveCustomer));
+
 
         _repository.Remove(customer);
 

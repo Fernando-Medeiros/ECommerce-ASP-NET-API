@@ -20,7 +20,9 @@ public sealed class UpdateCustomerNameAndEmail(
     {
         await req.ValidateAsync();
 
-        var currentState = await _repository.Find(new(Id: req.Id), cancellationToken)
+
+        CustomerDTO? currentState = await _repository.Find(new(Id: req.Id), cancellationToken)
+
             ?? throw new CustomerNotFoundException().Target(nameof(UpdateCustomerNameAndEmail));
 
         if (req.Email != currentState.Email &&
@@ -29,12 +31,14 @@ public sealed class UpdateCustomerNameAndEmail(
             throw new UniqueEmailConstraintException().Target(nameof(UpdateCustomerNameAndEmail));
         }
 
+
         CustomerDTO request = req.Mapper();
 
         CustomerDTO customer = new Customer(currentState)
             .UpdateName(request)
             .UpdateEmail(request)
             .Mapper();
+
 
         _repository.Update(customer);
 

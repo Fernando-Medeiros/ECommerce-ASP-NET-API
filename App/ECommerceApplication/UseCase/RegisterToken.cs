@@ -33,7 +33,7 @@ public sealed class RegisterToken(
 
             throw new UnverifiedCustomerException().Target(nameof(RegisterToken));
 
-        if (_cryptService.Verify(req.Password, customer.Email) is false)
+        if (_cryptService.Verify(req.Password, customer.Password) is false)
 
             throw new InvalidPasswordException().Target(nameof(RegisterToken));
 
