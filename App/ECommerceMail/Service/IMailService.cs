@@ -1,10 +1,10 @@
 using FluentEmail.Core.Models;
 
-namespace ECommerceMail.Contract;
+namespace ECommerceMail.Service;
 
 public interface IMailService
 {
     public Task<SendResponse> SendTemplateAsync(
-        BaseTemplate template,
+        MailTemplate template,
         CancellationToken cancellationToken);
 }

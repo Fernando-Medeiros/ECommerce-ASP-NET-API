@@ -1,7 +1,6 @@
 using System.Net;
 using System.Net.Mail;
 using ECommerceMail.Configuration;
-using ECommerceMail.Contract;
 using ECommerceMail.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
