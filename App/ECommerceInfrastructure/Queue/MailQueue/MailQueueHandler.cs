@@ -1,16 +1,16 @@
-using ECommerceMail.Contract;
+using ECommerceMail.Service;
 
 namespace ECommerceInfrastructure.Queue.MailQueue;
 
 public static class MailQueueHandler
 {
-    private static readonly List<BaseTemplate> QueueTemplate = [];
+    private static readonly List<MailTemplate> QueueTemplate = [];
 
     public static bool HasTemplate() => QueueTemplate.Count != 0;
 
-    public static void InsertTemplate(BaseTemplate item) => QueueTemplate.Add(item);
+    public static void InsertTemplate(MailTemplate item) => QueueTemplate.Add(item);
 
-    public static List<BaseTemplate> GetRangeTemplate(int take = 15)
+    public static List<MailTemplate> GetRangeTemplate(int take = 15)
     {
         int limit = Math.Min(take, QueueTemplate.Count);
 

@@ -1,6 +1,6 @@
-namespace ECommerceMail.Contract;
+namespace ECommerceMail.Service;
 
-public abstract record BaseTemplate(
+public sealed record MailTemplate(
     string To,
     string Subject,
     string Template,

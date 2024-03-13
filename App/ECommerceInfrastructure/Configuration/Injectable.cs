@@ -3,7 +3,6 @@ using ECommerceApplication.Contract;
 using ECommerceInfrastructure.Auth;
 using ECommerceInfrastructure.Queue.LoggerQueue;
 using ECommerceInfrastructure.Queue.MailQueue;
-using ECommerceInfrastructure.Queue.MailQueue.MailEvents;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerceInfrastructure.Configuration;

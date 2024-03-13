@@ -51,7 +51,7 @@ static class SwaggerSettings
         {
             Title = "E-Commerce",
             Version = $"v{version}",
-            Description = "Back-end API project for an e-commerce",
+            Description = "Back-end API",
 
             TermsOfService = new Uri(
                 "https://github.com/Fernando-Medeiros/ECommerce-ASP-NET-API/tree/master/Docs"),

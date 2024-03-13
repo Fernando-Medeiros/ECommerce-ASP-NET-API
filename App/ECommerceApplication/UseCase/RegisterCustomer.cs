@@ -3,6 +3,7 @@ using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
+using ECommerceDomain.Enums;
 
 namespace ECommerceApplication.UseCase;
 
@@ -41,7 +42,7 @@ public sealed class RegisterCustomer(
 
         await _transaction.Commit(cancellationToken);
 
-        _mailEvent.OnRegisterCustomer(customer, cancellationToken);
+        _mailEvent.Subscribe(ETokenScope.AuthenticateEmail, customer, cancellationToken);
 
         return Task.CompletedTask.IsCompletedSuccessfully;
     }

@@ -2,6 +2,7 @@
 using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
+using ECommerceDomain.Enums;
 
 namespace ECommerceApplication.UseCase;
 
@@ -14,8 +15,8 @@ public sealed class RecoverPassword(
     readonly ICustomerRepository _repository = repository;
 
     public async Task<bool> Execute(
-         EmailRequest req,
-         CancellationToken cancellationToken = default)
+        EmailRequest req,
+        CancellationToken cancellationToken = default)
     {
         await req.ValidateAsync();
 
@@ -25,7 +26,7 @@ public sealed class RecoverPassword(
             ?? throw new CustomerNotFoundException().Target(nameof(RecoverPassword));
 
 
-        _mailEvent.OnRecoverPassword(customer, cancellationToken);
+        _mailEvent.Subscribe(ETokenScope.RecoverPassword, customer, cancellationToken);
 
         return Task.CompletedTask.IsCompletedSuccessfully;
     }

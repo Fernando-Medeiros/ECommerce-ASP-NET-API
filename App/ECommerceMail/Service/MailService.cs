@@ -1,4 +1,3 @@
-using ECommerceMail.Contract;
 using FluentEmail.Core;
 using FluentEmail.Core.Models;
 
@@ -9,7 +8,7 @@ public sealed class MailService(IFluentEmail fluentEmail) : IMailService
     private readonly IFluentEmail _fluentEmail = fluentEmail;
 
     public async Task<SendResponse> SendTemplateAsync(
-        BaseTemplate template,
+        MailTemplate template,
         CancellationToken cancellationToken)
     {
         return await _fluentEmail
