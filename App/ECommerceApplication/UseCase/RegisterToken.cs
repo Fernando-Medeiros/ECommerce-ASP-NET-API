@@ -11,7 +11,7 @@ public sealed class RegisterToken(
     ITokenService tokenService,
     ICustomerRepository repository,
     IUnitTransaction transaction
-    ) : IUseCase<RegisterTokenRequest, TokenDTO>
+    ) : IUseCase<SignInRequest, TokenDTO>
 {
     readonly ICryptService _cryptService = cryptService;
     readonly ITokenService _tokenService = tokenService;
@@ -19,7 +19,7 @@ public sealed class RegisterToken(
     readonly ICustomerRepository _repository = repository;
 
     public async Task<TokenDTO> Execute(
-        RegisterTokenRequest req,
+        SignInRequest req,
         CancellationToken cancellationToken = default)
     {
         await req.ValidateAsync();

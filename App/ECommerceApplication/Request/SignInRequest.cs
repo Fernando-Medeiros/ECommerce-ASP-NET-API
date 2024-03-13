@@ -2,7 +2,7 @@ using ECommerceCommon.Validations;
 
 namespace ECommerceApplication.Request;
 
-public sealed record RegisterTokenRequest
+public sealed record SignInRequest
 {
     private string? _email;
     private string? _password;
@@ -32,7 +32,6 @@ public sealed record RegisterTokenRequest
         new CustomValidation<string?>(Password, nameof(Password))
             .NotNull()
             .NotEmpty()
-            .Length(8, 16)
             .Password();
     }));
 }

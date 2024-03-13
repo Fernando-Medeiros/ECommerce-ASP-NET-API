@@ -10,7 +10,7 @@ namespace ECommerceTestIntegration.Endpoint;
 
 public sealed class RegisterCustomerTest : SharedCustomerTest
 {
-    readonly RegisterCustomerRequest Payload;
+    readonly CustomerRequest Payload;
 
     public RegisterCustomerTest()
     {

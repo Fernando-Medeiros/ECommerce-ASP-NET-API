@@ -16,7 +16,7 @@ public sealed class RegisterCustomerTest : SharedCustomerTest
     readonly ICustomerMailEvent _mailEvent;
     readonly ICryptService _crypt;
 
-    readonly RegisterCustomerRequest CaseInput;
+    readonly CustomerRequest CaseInput;
 
     public RegisterCustomerTest()
     {

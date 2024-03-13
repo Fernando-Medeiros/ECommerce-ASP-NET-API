@@ -1,5 +1,5 @@
-using System.Collections.ObjectModel;
 using ECommerceCommon.Exceptions;
+using System.Collections.ObjectModel;
 
 namespace ECommerceCommon.Validations;
 

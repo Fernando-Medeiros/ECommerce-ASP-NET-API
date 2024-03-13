@@ -11,7 +11,7 @@ public sealed class RegisterCustomer(
     IUnitTransaction transaction,
     ICustomerMailEvent mailEvent,
     ICryptService cryptService)
-    : IUseCase<RegisterCustomerRequest, bool>
+    : IUseCase<CustomerRequest, bool>
 {
     readonly ICryptService _cryptService = cryptService;
     readonly ICustomerMailEvent _mailEvent = mailEvent;
@@ -19,7 +19,7 @@ public sealed class RegisterCustomer(
     readonly ICustomerRepository _repository = repository;
 
     public async Task<bool> Execute(
-        RegisterCustomerRequest req,
+        CustomerRequest req,
         CancellationToken cancellationToken = default)
     {
         await req.ValidateAsync();
