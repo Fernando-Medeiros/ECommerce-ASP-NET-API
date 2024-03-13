@@ -1,6 +1,5 @@
 using ECommerceInfrastructure.Configuration;
 using ECommerceInfrastructure.Exceptions;
-using ECommerceInfrastructure.Queue.LoggerQueue;
 using ECommerceMail;
 using ECommercePersistence;
 
@@ -53,7 +52,6 @@ public sealed class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseMiddleware<LoggerMiddleware>();
         app.UseMiddleware<ExceptionMiddleware>();
 
         app.UseEndpoints(Endpoint.Configure);

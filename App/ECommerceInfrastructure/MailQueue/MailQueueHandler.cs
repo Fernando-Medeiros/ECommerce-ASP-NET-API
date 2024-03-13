@@ -1,6 +1,6 @@
 using ECommerceMail.Service;
 
-namespace ECommerceInfrastructure.Queue.MailQueue;
+namespace ECommerceInfrastructure.MailQueue;
 
 public static class MailQueueHandler
 {
