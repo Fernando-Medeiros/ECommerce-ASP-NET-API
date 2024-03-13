@@ -9,7 +9,7 @@ namespace ECommerceInfrastructure.Queue.MailQueue.MailEvents;
 
 public sealed class CustomerMailEvent(ITokenService service) : ICustomerMailEvent
 {
-    private readonly ITokenService _tokenService = service;
+    readonly ITokenService _tokenService = service;
 
     public void OnRegisterCustomer(CustomerDTO customer, CancellationToken cancellationToken)
     {

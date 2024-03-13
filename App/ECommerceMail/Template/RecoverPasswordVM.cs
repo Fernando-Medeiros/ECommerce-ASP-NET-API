@@ -4,7 +4,8 @@ namespace ECommerceMail.Template;
 
 public sealed record RecoverPasswordVM(
     string Token,
-    string UserName)
+    string UserName
+    )
 {
-    public string? RedirectURL = MailEnvironment.ResetPasswordURL;
+    public string? RedirectURL => MailEnvironment.ResetPasswordURL + Token;
 }
