@@ -20,7 +20,7 @@ public class CustomerMocks
 
     public readonly CustomerRequest CreateRequest;
 
-    public readonly UpdateCustomerRequest UpdateRequest;
+    public readonly NameRequest UpdateRequest;
 
     public readonly CustomerResource CustomerResource;
 
@@ -104,11 +104,9 @@ public class CustomerMocks
 
         UpdateRequest = new()
         {
-            Id = UniqueId,
             Name = _up.Name,
             FirstName = _up.FirstName,
             LastName = _up.LastName,
-            Email = _up.Email,
         };
 
         CustomerResource = new CustomerResource(CustomerDTO);

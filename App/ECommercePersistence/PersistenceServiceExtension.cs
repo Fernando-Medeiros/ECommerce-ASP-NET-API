@@ -26,8 +26,9 @@ public static class PersistenceServiceExtension
         ConfigureCustomerDatabase(services);
         ConfigureCache(services);
 
+        services.AddScoped<ITransaction, Transaction>();
+        services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
-        services.AddScoped<IUnitTransaction, UnitTransaction>();
         services.AddAutoMapper(typeof(DatabaseMapping));
     }
 

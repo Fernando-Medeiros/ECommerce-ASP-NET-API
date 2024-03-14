@@ -7,8 +7,8 @@ using ECommerceDomain.Enums;
 namespace ECommerceApplication.UseCase;
 
 public sealed class RecoverPassword(
-    ICustomerRepository repository,
-    ICustomerMailEvent mailEvent
+    ICustomerMailEvent mailEvent,
+    ICustomerRepository repository
     ) : IUseCase<EmailRequest, bool>
 {
     readonly ICustomerMailEvent _mailEvent = mailEvent;
@@ -21,7 +21,7 @@ public sealed class RecoverPassword(
         await req.ValidateAsync();
 
 
-        CustomerDTO? customer = await _repository.Find(new() { Email = req.Email }, cancellationToken)
+        CustomerDTO customer = await _repository.Find(new(Email: req.Email), cancellationToken)
 
             ?? throw new CustomerNotFoundException().Target(nameof(RecoverPassword));
 

@@ -2,4 +2,4 @@
 
 table=$1
 
-docker exec -it ecommerce-postgres psql -U root ECommerce -c 'TRUNCATE "'$table'";'
+docker exec -it ecommerce-postgres psql -U root ECommerce -c 'TRUNCATE TABLE "'$table'" CASCADE;'

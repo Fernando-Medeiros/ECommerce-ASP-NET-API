@@ -9,14 +9,14 @@ namespace ECommerceApplication.UseCase;
 
 public sealed class RegisterCustomer(
     ICustomerRepository repository,
-    IUnitTransaction transaction,
+    ITransaction transaction,
     ICustomerMailEvent mailEvent,
     ICryptService cryptService)
     : IUseCase<CustomerRequest, bool>
 {
     readonly ICryptService _cryptService = cryptService;
     readonly ICustomerMailEvent _mailEvent = mailEvent;
-    readonly IUnitTransaction _transaction = transaction;
+    readonly ITransaction _transaction = transaction;
     readonly ICustomerRepository _repository = repository;
 
     public async Task<bool> Execute(

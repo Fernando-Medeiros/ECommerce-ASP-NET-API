@@ -3,9 +3,9 @@ using ECommercePersistence.Context;
 
 namespace ECommercePersistence.Repository;
 
-public sealed class UnitTransaction(DatabaseContext context) : IUnitTransaction
+public sealed class Transaction(DatabaseContext context) : ITransaction
 {
-    private readonly DatabaseContext _context = context;
+    readonly DatabaseContext _context = context;
 
     public async Task Commit(CancellationToken cancellationToken)
     {

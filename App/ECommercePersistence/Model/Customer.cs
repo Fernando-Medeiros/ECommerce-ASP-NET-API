@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommercePersistence.Model;
@@ -14,6 +15,10 @@ public class Customer
     public DateTimeOffset? VerifiedOn { get; set; }
     public DateTimeOffset? UpdatedOn { get; set; }
     public DateTimeOffset CreatedOn { get; set; }
+
+
+    [JsonIgnore]
+    public ICollection<Address>? Addresses { get; set; }
 
     internal static void Builder(ModelBuilder x)
     {

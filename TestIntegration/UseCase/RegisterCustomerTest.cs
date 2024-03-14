@@ -12,7 +12,7 @@ namespace ECommerceTestIntegration.UseCase;
 
 public sealed class RegisterCustomerTest : SharedCustomerTest
 {
-    readonly IUnitTransaction _transaction;
+    readonly ITransaction _transaction;
     readonly ICustomerMailEvent _mailEvent;
     readonly ICryptService _crypt;
 
@@ -20,7 +20,7 @@ public sealed class RegisterCustomerTest : SharedCustomerTest
 
     public RegisterCustomerTest()
     {
-        _transaction = Substitute.For<IUnitTransaction>();
+        _transaction = Substitute.For<ITransaction>();
         _mailEvent = Substitute.For<ICustomerMailEvent>();
         _crypt = new CryptService();
         CaseInput = Mock.CreateRequest;

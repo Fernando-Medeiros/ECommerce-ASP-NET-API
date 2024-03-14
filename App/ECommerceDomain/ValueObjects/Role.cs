@@ -8,7 +8,7 @@ public sealed record Role : ValueObject<string?>
 {
     public Role(string? data, bool required = true) : base(data, required) { }
 
-    public override void Validate(string? role)
+    protected override void Validate(string? role)
     {
         if (Enum.TryParse<ERole>($"{role}", out _) is false)
         {

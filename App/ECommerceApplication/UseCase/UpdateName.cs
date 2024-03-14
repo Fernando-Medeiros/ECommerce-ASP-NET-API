@@ -1,4 +1,4 @@
-﻿using ECommerceApplication.Contract;
+using ECommerceApplication.Contract;
 using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
@@ -6,18 +6,16 @@ using ECommerceDomain.Entities;
 
 namespace ECommerceApplication.UseCase;
 
-public sealed class UpdatePassword(
-    ICryptService cryptService,
+public sealed class UpdateName(
     ITransaction transaction,
     ICustomerRepository repository
-    ) : IUseCase<(IdentityRequest, PasswordRequest), bool>
+    ) : IUseCase<(IdentityRequest, NameRequest), bool>
 {
-    readonly ICryptService _cryptService = cryptService;
     readonly ITransaction _transaction = transaction;
     readonly ICustomerRepository _repository = repository;
 
     public async Task<bool> Execute(
-        (IdentityRequest, PasswordRequest) tuple,
+        (IdentityRequest, NameRequest) tuple,
         CancellationToken cancellationToken = default)
     {
         var (identity, payload) = tuple;
@@ -25,16 +23,16 @@ public sealed class UpdatePassword(
         await identity.ValidateAsync();
         await payload.ValidateAsync();
 
-        var (customerID, password) = (identity.Id, payload.Password);
+
+        CustomerDTO customer = await _repository.Find(new(Id: identity.Id), cancellationToken)
+
+            ?? throw new CustomerNotFoundException().Target(nameof(UpdateName));
 
 
-        CustomerDTO customer = await _repository.Find(new(Id: customerID), cancellationToken)
-
-            ?? throw new CustomerNotFoundException().Target(nameof(RecoverPassword));
-
+        CustomerDTO request = payload.Mapper();
 
         customer = new Customer(customer)
-            .UpdatePassword(new(Password: _cryptService.Hash(password)))
+            .UpdateName(request)
             .Mapper();
 
 

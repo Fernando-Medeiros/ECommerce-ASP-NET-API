@@ -6,32 +6,27 @@ namespace ECommerceApplication;
 
 public static class CustomerMapperExtension
 {
-    public static CustomerDTO Mapper(this CustomerRequest req) =>
-        new(
-            Email: req?.Email,
-            Password: req?.Password,
-            Name: req?.Name,
-            FirstName: req?.FirstName,
-            LastName: req?.LastName);
+    public static CustomerDTO Mapper(this CustomerRequest x) =>
+        new(Email: x.Email,
+            Password: x.Password,
+            Name: x.Name,
+            FirstName: x.FirstName,
+            LastName: x.LastName);
 
-    public static CustomerDTO Mapper(this UpdateCustomerRequest req) =>
-        new(
-            Id: req?.Id,
-            Email: req?.Email,
-            Name: req?.Name,
-            FirstName: req?.FirstName,
-            LastName: req?.LastName);
+    public static CustomerDTO Mapper(this NameRequest x) =>
+        new(Name: x.Name,
+            FirstName: x.FirstName,
+            LastName: x.LastName);
 
-    public static CustomerDTO Mapper(this Customer e) =>
-        new(
-            Id: e?.Id?.Value,
-            Email: e?.Email?.Value,
-            Name: e?.Name?.Name.Value,
-            FirstName: e?.Name?.FirstName.Value,
-            LastName: e?.Name?.LastName.Value,
-            Password: e?.Password?.Value,
-            Role: e?.Role?.Value,
-            CreatedOn: e?.CreatedOn?.Value,
-            UpdatedOn: e?.UpdatedOn?.Value,
-            VerifiedOn: e?.VerifiedOn?.Value);
+    public static CustomerDTO Mapper(this Customer x) =>
+        new(Id: x.Id,
+            Email: x.Email,
+            Name: x.Name?.Name,
+            FirstName: x.Name?.FirstName,
+            LastName: x.Name?.LastName,
+            Password: x.Password,
+            Role: x.Role,
+            CreatedOn: x.CreatedOn,
+            UpdatedOn: x.UpdatedOn,
+            VerifiedOn: x.VerifiedOn);
 }

@@ -6,15 +6,21 @@ public static class ApplicationServiceExtension
 {
     public static readonly List<Type> UseCases =
     [
-        typeof(FindOneCustomer),
+        typeof(FindCustomer),
         typeof(RegisterCustomer),
         typeof(RemoveCustomer),
-        typeof(UpdateCustomerNameAndEmail),
+        typeof(UpdateName),
 
         typeof(RegisterToken),
         typeof(AuthenticateCustomer),
 
         typeof(RecoverPassword),
         typeof(UpdatePassword),
+
+        typeof(FindAddress),
+        typeof(FindAddresses),
+        typeof(RegisterAddress),
+        typeof(RemoveAddress),
+        typeof(UpdateAddress),
     ];
 }

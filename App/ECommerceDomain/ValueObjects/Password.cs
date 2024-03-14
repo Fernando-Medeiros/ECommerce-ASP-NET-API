@@ -8,7 +8,7 @@ public sealed record Password : ValueObject<string?>
 {
     public Password(string? data, bool required = true) : base(data, required) { }
 
-    public override void Validate(string? password)
+    protected override void Validate(string? password)
     {
         if (CustomRegexExtension.PasswordHashIsMatch(password) is false)
         {

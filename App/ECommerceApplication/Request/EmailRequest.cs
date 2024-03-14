@@ -2,15 +2,11 @@ using ECommerceCommon.Validations;
 
 namespace ECommerceApplication.Request;
 
-public record EmailRequest
+public sealed record EmailRequest
 {
     private string? _email;
 
-    public string? Email
-    {
-        get => _email;
-        set => _email = value?.Trim();
-    }
+    public string? Email { get => _email; set => _email = value?.Trim(); }
 
     public async Task ValidateAsync() => await Task.Run(() =>
     {

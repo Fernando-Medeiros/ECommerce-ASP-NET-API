@@ -1,46 +1,44 @@
-using ECommerceApplication.Contract;
 using ECommerceCommon.Exceptions;
 using ECommerceApplication.UseCase;
-using NSubstitute;
 using ECommerceDomain.DTO;
 using ECommerceTestSetup.Shared;
 using ECommerceApplication.Request;
 
 namespace TestIntegration.UseCase;
 
-public sealed class RemoveCustomerTest : SharedCustomerTest
+public sealed class FindCustomerTest : SharedCustomerTest
 {
-    readonly ITransaction _transaction;
     readonly IdentityRequest Identity;
     readonly CustomerDTO Query;
 
-    public RemoveCustomerTest()
+    public FindCustomerTest()
     {
-        _transaction = Substitute.For<ITransaction>();
         Query = new() { Id = Mock.UniqueId };
         Identity = new() { Id = Mock.UniqueId };
     }
 
     [Fact]
-    public async void Should_Remove()
+    public async void Should_Return_One_Customer()
     {
         MakeRepositoryStub(input: Query, output: Mock.CustomerDTO);
 
-        var useCase = new RemoveCustomer(_transaction, _repository);
+        var useCase = new FindCustomer(_repository);
 
-        await useCase.Execute(Identity);
+        var result = await useCase.Execute(Identity);
+
+        Assert.Equivalent(Mock.CustomerDTO, result);
     }
 
     [Fact]
     public async void Should_Throw_Exception()
     {
-        var useCase = new RemoveCustomer(_transaction, _repository);
+        var useCase = new FindCustomer(_repository);
 
         await Assert.ThrowsAnyAsync<CustomerNotFoundException>(async () =>
         {
             MakeRepositoryStub(input: Query, output: null);
 
-            await useCase.Execute(Identity);
+            _ = await useCase.Execute(Identity);
         });
     }
 }

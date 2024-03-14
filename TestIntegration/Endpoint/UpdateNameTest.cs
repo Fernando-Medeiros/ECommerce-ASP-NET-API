@@ -8,24 +8,21 @@ using ECommerceTestSetup.Shared;
 
 namespace TestIntegration.Endpoint;
 
-public sealed class UpdateCustomerTest : SharedCustomerTest
+public sealed class UpdateNameTest : SharedCustomerTest
 {
-    readonly UpdateCustomerRequest Payload;
+    readonly NameRequest Payload;
+    readonly CustomerDTO Query;
 
-    public UpdateCustomerTest()
+    public UpdateNameTest()
     {
         Payload = Mock.UpdateRequest;
+        Query = new() { Id = Mock.UniqueId };
     }
 
     [Fact]
     public async void Should_Update_NameOrEmail()
     {
-        MakeRepositoryStub(
-            input: new CustomerDTO() { Id = Mock.UniqueId },
-            output: Mock.CustomerDTO);
-        MakeRepositoryStub(
-            input: new CustomerDTO() { Email = Payload.Email },
-            output: null);
+        MakeRepositoryStub(input: Query, output: Mock.CustomerDTO);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 
@@ -53,9 +50,7 @@ public sealed class UpdateCustomerTest : SharedCustomerTest
     [Fact]
     public async void Should_Return_NotFound_Response()
     {
-        MakeRepositoryStub(
-            input: new CustomerDTO() { Id = Mock.UniqueId },
-            output: null);
+        MakeRepositoryStub(input: Query, output: null);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 

@@ -8,7 +8,7 @@ using TestSetup.Fixtures;
 
 namespace TestIntegration.Endpoint;
 
-public sealed class FindOneCustomerTest : SharedCustomerTest
+public sealed class FindCustomerTest : SharedCustomerTest
 {
     [Fact]
     public async void Should_Return_CustomerResource()

@@ -8,7 +8,7 @@ public sealed record Email : ValueObject<string?>
 {
     public Email(string? data, bool required = true) : base(data, required) { }
 
-    public override void Validate(string? email)
+    protected override void Validate(string? email)
     {
         if (CustomRegexExtension.EmailIsMatch(email) is false)
         {

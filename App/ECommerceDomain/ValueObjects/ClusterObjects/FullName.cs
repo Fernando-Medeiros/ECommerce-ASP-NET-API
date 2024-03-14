@@ -18,7 +18,7 @@ public sealed record FullName : Cluster
         Validate();
     }
 
-    public override void Validate()
+    protected override void Validate()
     {
         if (Name.Equals(Name, FirstName) ||
             Name.Equals(Name, LastName) ||
