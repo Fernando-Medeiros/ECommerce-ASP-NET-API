@@ -1,6 +1,6 @@
 namespace ECommerceApplication.Contract;
 
-public interface IBaseRepository<T>
+public interface IRepository<T>
 {
     public Task<T?> Find(T dto, CancellationToken cancellationToken = default);
     public void Register(T dto);

@@ -8,7 +8,7 @@ public sealed record Name : ValueObject<string?>
 {
     public Name(string? data, bool required = true) : base(data, required) { }
 
-    public override void Validate(string? name)
+    protected override void Validate(string? name)
     {
         if (CustomRegexExtension.NameIsMatch(name) is false)
         {

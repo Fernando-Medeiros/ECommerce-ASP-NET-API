@@ -1,4 +1,5 @@
 ﻿using ECommerceApplication.Contract;
+using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
@@ -8,19 +9,22 @@ namespace ECommerceApplication.UseCase;
 
 public sealed class AuthenticateCustomer(
     ITokenService tokenService,
-    ICustomerRepository repository,
-    IUnitTransaction transaction
-    ) : IUseCase<string, TokenDTO>
+    ITransaction transaction,
+    ICustomerRepository repository
+    ) : IUseCase<IdentityRequest, TokenDTO>
 {
     readonly ITokenService _tokenService = tokenService;
-    readonly IUnitTransaction _transaction = transaction;
+    readonly ITransaction _transaction = transaction;
     readonly ICustomerRepository _repository = repository;
 
     public async Task<TokenDTO> Execute(
-        string id,
+        IdentityRequest req,
         CancellationToken cancellationToken = default)
     {
-        CustomerDTO? customer = await _repository.Find(new() { Id = id }, cancellationToken)
+        await req.ValidateAsync();
+
+
+        CustomerDTO customer = await _repository.Find(new(Id: req.Id), cancellationToken)
 
             ?? throw new CustomerNotFoundException().Target(nameof(AuthenticateCustomer));
 

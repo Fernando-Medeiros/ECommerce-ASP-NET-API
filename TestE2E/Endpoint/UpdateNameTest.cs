@@ -6,11 +6,11 @@ using ECommerceTestSetup.Shared;
 
 namespace TestE2E.Endpoint;
 
-public sealed class UpdateCustomerTest : SharedCustomerTest
+public sealed class UpdateNameTest : SharedCustomerTest
 {
-    readonly UpdateCustomerRequest Payload;
+    readonly NameRequest Payload;
 
-    public UpdateCustomerTest()
+    public UpdateNameTest()
     {
         Payload = Mock.UpdateRequest;
     }

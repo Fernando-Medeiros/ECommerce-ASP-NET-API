@@ -10,12 +10,12 @@ public sealed class RegisterToken(
     ICryptService cryptService,
     ITokenService tokenService,
     ICustomerRepository repository,
-    IUnitTransaction transaction
+    ITransaction transaction
     ) : IUseCase<SignInRequest, TokenDTO>
 {
     readonly ICryptService _cryptService = cryptService;
     readonly ITokenService _tokenService = tokenService;
-    readonly IUnitTransaction _transaction = transaction;
+    readonly ITransaction _transaction = transaction;
     readonly ICustomerRepository _repository = repository;
 
     public async Task<TokenDTO> Execute(
@@ -25,7 +25,7 @@ public sealed class RegisterToken(
         await req.ValidateAsync();
 
 
-        CustomerDTO? customer = await _repository.Find(new() { Email = req.Email }, cancellationToken)
+        CustomerDTO? customer = await _repository.Find(new(Email: req.Email), cancellationToken)
 
             ?? throw new CustomerNotFoundException().Target(nameof(RegisterToken));
 

@@ -5,13 +5,13 @@ using ECommerceDomain.DTO;
 
 namespace ECommerceApplication.UseCase;
 
-public sealed class RemoveCustomer(
+public sealed class RemoveAddress(
     ITransaction transaction,
-    ICustomerRepository repository
+    IAddressRepository repository
     ) : IUseCase<IdentityRequest, bool>
 {
     readonly ITransaction _transaction = transaction;
-    readonly ICustomerRepository _repository = repository;
+    readonly IAddressRepository _repository = repository;
 
     public async Task<bool> Execute(
         IdentityRequest req,
@@ -20,12 +20,12 @@ public sealed class RemoveCustomer(
         await req.ValidateAsync();
 
 
-        CustomerDTO customer = await _repository.Find(new(Id: req.Id), cancellationToken)
+        AddressDTO address = await _repository.Find(new(Id: req.Id), cancellationToken)
 
-            ?? throw new CustomerNotFoundException().Target(nameof(RemoveCustomer));
+            ?? throw new AddressNotFoundException().Target(nameof(RemoveAddress));
 
 
-        _repository.Remove(customer);
+        _repository.Remove(address);
 
         await _transaction.Commit(cancellationToken);
 

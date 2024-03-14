@@ -3,7 +3,7 @@ using ECommerceCommon;
 
 namespace TestUnit.Application.Requests;
 
-public class CreateCustomerRequestTest
+public sealed class CustomerRequestTest
 {
     [Theory]
     [InlineData("joh", "dee", "foo", "j@mail.com", "12345678")]

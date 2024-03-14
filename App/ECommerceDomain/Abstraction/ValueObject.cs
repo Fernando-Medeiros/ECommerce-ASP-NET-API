@@ -11,7 +11,10 @@ public abstract record ValueObject<T>
         Value = value;
     }
 
-    public abstract void Validate(T? data);
+    protected abstract void Validate(T? data);
 
-    public static implicit operator T?(ValueObject<T?> obj) { return obj.Value; }
+    public static implicit operator T?(ValueObject<T?>? obj)
+    {
+        return obj is not null ? obj.Value : default;
+    }
 }

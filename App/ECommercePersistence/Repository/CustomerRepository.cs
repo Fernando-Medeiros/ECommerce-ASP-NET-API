@@ -12,11 +12,12 @@ namespace ECommercePersistence.Repository;
 public sealed class CustomerRepository(
     CustomerCacheRepository cache,
     DatabaseContext context,
-    IMapper mapper) : ICustomerRepository
+    IMapper mapper
+    ) : ICustomerRepository
 {
-    private readonly CustomerCacheRepository _cache = cache;
-    private readonly DatabaseContext _context = context;
-    private readonly IMapper _mapper = mapper;
+    readonly CustomerCacheRepository _cache = cache;
+    readonly DatabaseContext _context = context;
+    readonly IMapper _mapper = mapper;
 
     public async Task<CustomerDTO?> Find(CustomerDTO request, CancellationToken cancellationToken)
     {

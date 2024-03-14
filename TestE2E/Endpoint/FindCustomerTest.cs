@@ -6,7 +6,7 @@ using TestSetup.Fixtures;
 
 namespace TestE2E.Endpoint;
 
-public sealed class FindOneCustomerTest : SharedCustomerTest
+public sealed class FindCustomerTest : SharedCustomerTest
 {
     [Fact]
     public async void Should_Return_CustomerResource()
