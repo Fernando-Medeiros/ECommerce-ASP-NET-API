@@ -1,21 +1,21 @@
 using ECommerceCommon.Exceptions;
 using ECommerceApplication.Request;
-using ECommerceApplication.UseCase;
 using ECommerceDomain.DTO;
 using NSubstitute;
 using ECommerceApplication.Contract;
 using ECommerceTestSetup.Shared;
+using ECommerceApplication.UseCase.CustomerCases;
 
 namespace TestIntegration.UseCase;
 
-public sealed class UpdateNameTest : SharedCustomerTest
+public sealed class UpdateCustomerNameTest : SharedCustomerTest
 {
     readonly ITransaction _transaction;
     readonly IdentityRequest Identity;
     readonly NameRequest Payload;
     readonly CustomerDTO Query;
 
-    public UpdateNameTest()
+    public UpdateCustomerNameTest()
     {
         _transaction = Substitute.For<ITransaction>();
         Payload = Mock.UpdateRequest;
@@ -28,7 +28,7 @@ public sealed class UpdateNameTest : SharedCustomerTest
     {
         MakeRepositoryStub(input: Query, output: Mock.CustomerDTO);
 
-        var useCase = new UpdateName(_transaction, _repository);
+        var useCase = new UpdateCustomerName(_transaction, _repository);
 
         await useCase.Execute((Identity, Payload));
     }
@@ -36,7 +36,7 @@ public sealed class UpdateNameTest : SharedCustomerTest
     [Fact]
     public async void Should_Throw_Exception()
     {
-        var useCase = new UpdateName(_transaction, _repository);
+        var useCase = new UpdateCustomerName(_transaction, _repository);
 
         await Assert.ThrowsAnyAsync<CustomerNotFoundException>(async () =>
         {

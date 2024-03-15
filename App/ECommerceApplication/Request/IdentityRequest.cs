@@ -6,7 +6,7 @@ public sealed record IdentityRequest
 {
     private string? _id;
 
-    public string? Id { get => _id; set => _id = value?.Trim(); }
+    public string? Id { get => _id; set => _id ??= value?.Trim(); }
 
     public async Task ValidateAsync() => await Task.Run(() =>
     {

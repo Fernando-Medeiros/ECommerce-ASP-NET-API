@@ -1,6 +1,6 @@
 using ECommerceApplication.Contract;
 using ECommerceApplication.Request;
-using ECommerceApplication.UseCase;
+using ECommerceApplication.UseCase.CustomerCases;
 using ECommerceCommon;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
@@ -53,7 +53,7 @@ public sealed class RegisterCustomerTest : SharedCustomerTest
 
         await Assert.ThrowsAnyAsync<CustomException>(async () =>
         {
-            var invalidCaseInput = CaseInput with { Email = "$$$@mail.com" };
+            var invalidCaseInput = new CustomerRequest() { Email = "$$$@mail.com" };
 
             await useCase.Execute(invalidCaseInput);
         });

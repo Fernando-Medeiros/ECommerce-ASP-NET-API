@@ -4,13 +4,13 @@ using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 using ECommerceDomain.Enums;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.AuthCases;
 
-public sealed class RegisterToken(
+public sealed class GetAccessToken(
     ICryptService cryptService,
     ITokenService tokenService,
-    ICustomerRepository repository,
-    ITransaction transaction
+    ITransaction transaction,
+    ICustomerRepository repository
     ) : IUseCase<SignInRequest, TokenDTO>
 {
     readonly ICryptService _cryptService = cryptService;
@@ -27,15 +27,15 @@ public sealed class RegisterToken(
 
         CustomerDTO? customer = await _repository.Find(new(Email: req.Email), cancellationToken)
 
-            ?? throw new CustomerNotFoundException().Target(nameof(RegisterToken));
+            ?? throw new CustomerNotFoundException().Target(nameof(GetAccessToken));
 
-        if (customer.VerifiedOn == null)
+        if (customer.VerifiedOn is null)
 
-            throw new UnverifiedCustomerException().Target(nameof(RegisterToken));
+            throw new UnverifiedCustomerException().Target(nameof(GetAccessToken));
 
         if (_cryptService.Verify(req.Password, customer.Password) is false)
 
-            throw new InvalidPasswordException().Target(nameof(RegisterToken));
+            throw new InvalidPasswordException().Target(nameof(GetAccessToken));
 
 
         _repository.Update(customer);

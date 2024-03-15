@@ -1,15 +1,22 @@
-using ECommerceAPI.Resource;
-using ECommerceCommon.Exceptions;
-using ECommerceTestSetup.Shared;
 using System.Net;
+using ECommerceCommon.Exceptions;
+using ECommerceApplication.Request;
 using TestSetup.Fixtures;
+using ECommerceTestSetup.Shared;
 
 namespace TestE2E.Endpoint;
 
-public sealed class FindCustomerTest : SharedCustomerTest
+public sealed class UpdateCustomerNameTest : SharedCustomerTest
 {
+    readonly NameRequest Payload;
+
+    public UpdateCustomerNameTest()
+    {
+        Payload = Mock.UpdateRequest;
+    }
+
     [Fact]
-    public async void Should_Return_CustomerResource()
+    public async void Should_Update_NameOrEmail()
     {
         using var app = new ServerFixtureE2E();
 
@@ -18,14 +25,10 @@ public sealed class FindCustomerTest : SharedCustomerTest
         var response = await app.Client.SendAsync(
             _requestFixture
             .AuthorizationHeader(Mock.CustomerDTO)
-            .RequestMessage(HttpMethod.Get)
-        );
+            .JsonContent(Payload)
+            .RequestMessage(HttpMethod.Patch));
 
-        var responseContent = await _responseFixture
-            .Deserialize<CustomerResource?>(response);
-
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.Equivalent(Mock.CustomerResource, responseContent);
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
     }
 
     [Fact]
@@ -36,8 +39,8 @@ public sealed class FindCustomerTest : SharedCustomerTest
         var response = await app.Client.SendAsync(
             _requestFixture
             .AuthorizationHeader(Mock.CustomerDTO)
-            .RequestMessage(HttpMethod.Get)
-        );
+            .JsonContent(Payload)
+            .RequestMessage(HttpMethod.Patch));
 
         var responseContent = await _responseFixture
             .Deserialize<CustomerNotFoundException?>(response);

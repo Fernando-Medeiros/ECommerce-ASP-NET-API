@@ -1,4 +1,5 @@
-using ECommerceApplication.UseCase;
+using ECommerceApplication.UseCase.AuthCases;
+using ECommerceApplication.UseCase.CustomerCases;
 
 namespace ECommerceApplication;
 
@@ -6,21 +7,21 @@ public static class ApplicationServiceExtension
 {
     public static readonly List<Type> UseCases =
     [
-        typeof(FindCustomer),
+        typeof(GetCustomer),
         typeof(RegisterCustomer),
         typeof(RemoveCustomer),
-        typeof(UpdateName),
+        typeof(UpdateCustomerName),
 
-        typeof(RegisterToken),
-        typeof(AuthenticateCustomer),
+        typeof(GetAccessToken),
+        typeof(CheckEmail),
 
         typeof(RecoverPassword),
         typeof(UpdatePassword),
 
-        typeof(FindAddress),
-        typeof(FindAddresses),
-        typeof(RegisterAddress),
-        typeof(RemoveAddress),
-        typeof(UpdateAddress),
+        typeof(FindCustomerAddress),
+        typeof(GetCustomerAddresses),
+        typeof(RegisterCustomerAddress),
+        typeof(RemoveCustomerAddress),
+        typeof(UpdateCustomerAddress),
     ];
 }

@@ -4,7 +4,7 @@ using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.CustomerCases;
 
 public sealed class UpdatePassword(
     ICryptService cryptService,
@@ -25,16 +25,14 @@ public sealed class UpdatePassword(
         await identity.ValidateAsync();
         await payload.ValidateAsync();
 
-        var (customerID, password) = (identity.Id, payload.Password);
 
+        CustomerDTO customer = await _repository.Find(new(Id: identity.Id), cancellationToken)
 
-        CustomerDTO customer = await _repository.Find(new(Id: customerID), cancellationToken)
-
-            ?? throw new CustomerNotFoundException().Target(nameof(RecoverPassword));
+            ?? throw new CustomerNotFoundException().Target(nameof(UpdatePassword));
 
 
         customer = new Customer(customer)
-            .UpdatePassword(new(Password: _cryptService.Hash(password)))
+            .UpdatePassword(new(Password: _cryptService.Hash(payload.Password)))
             .Mapper();
 
 

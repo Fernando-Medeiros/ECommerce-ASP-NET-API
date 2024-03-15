@@ -5,9 +5,9 @@ using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
 using ECommerceDomain.Enums;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.AuthCases;
 
-public sealed class AuthenticateCustomer(
+public sealed class CheckEmail(
     ITokenService tokenService,
     ITransaction transaction,
     ICustomerRepository repository
@@ -26,7 +26,7 @@ public sealed class AuthenticateCustomer(
 
         CustomerDTO customer = await _repository.Find(new(Id: req.Id), cancellationToken)
 
-            ?? throw new CustomerNotFoundException().Target(nameof(AuthenticateCustomer));
+            ?? throw new CustomerNotFoundException().Target(nameof(CheckEmail));
 
 
         customer = new Customer(customer)

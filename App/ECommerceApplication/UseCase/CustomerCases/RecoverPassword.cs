@@ -4,7 +4,7 @@ using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 using ECommerceDomain.Enums;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.CustomerCases;
 
 public sealed class RecoverPassword(
     ICustomerMailEvent mailEvent,

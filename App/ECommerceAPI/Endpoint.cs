@@ -1,6 +1,7 @@
 using ECommerceAPI.Resource;
 using ECommerceApplication.Request;
-using ECommerceApplication.UseCase;
+using ECommerceApplication.UseCase.AuthCases;
+using ECommerceApplication.UseCase.CustomerCases;
 using ECommerceDomain.Enums;
 using ECommerceInfrastructure.Auth.Identities;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,9 @@ internal static class Endpoint
     public static void Configure(IEndpointRouteBuilder app)
     {
         #region Authentication
-        app.MapPost("/api/v1/access-token", async (
-            [FromServices] RegisterToken useCase,
-            [FromBody] SignInRequest request) =>
+        app.MapPost("/api/v1/auth/token", async (
+            [FromBody] SignInRequest request,
+            GetAccessToken useCase) =>
         {
             var tokenDto = await useCase.Execute(request);
             return Results.Ok(new TokenResource(tokenDto));
@@ -24,8 +25,8 @@ internal static class Endpoint
             .WithOpenApi()
             .Produces(201, typeof(TokenResource));
 
-        app.MapPost("/api/v1/check-email", async (
-            [FromServices] AuthenticateCustomer useCase,
+        app.MapPost("/api/v1/auth/email", async (
+            CheckEmail useCase,
             ClaimsPrincipal user) =>
         {
             var customer = new CustomerIdentity(user, [ETokenScope.AuthenticateEmail]);
@@ -39,20 +40,20 @@ internal static class Endpoint
         #endregion
 
         #region Password
-        app.MapPost("/api/v1/recover-password", async (
-            [FromServices] RecoverPassword useCase,
-            [FromBody] EmailRequest request) =>
+        app.MapPost("/api/v1/password/recover", async (
+            [FromBody] EmailRequest request,
+            RecoverPassword useCase) =>
         {
             await useCase.Execute(request);
             return Results.Ok();
         })
-            .WithTags("Auth")
+            .WithTags("Password")
             .WithOpenApi()
             .Produces(200);
 
-        app.MapPatch("/api/v1/reset-password", async (
-            [FromServices] UpdatePassword useCase,
+        app.MapPatch("/api/v1/password/reset", async (
             [FromBody] PasswordRequest request,
+            UpdatePassword useCase,
             ClaimsPrincipal user) =>
         {
             var customer = new CustomerIdentity(user, [ETokenScope.RecoverPassword]);
@@ -60,13 +61,13 @@ internal static class Endpoint
             return Results.Ok();
         })
             .RequireAuthorization()
-            .WithTags("Auth")
+            .WithTags("Password")
             .WithOpenApi()
             .Produces(200);
 
-        app.MapPatch("/api/v1/update-password", async (
-            [FromServices] UpdatePassword useCase,
+        app.MapPatch("/api/v1/password", async (
             [FromBody] PasswordRequest request,
+            UpdatePassword useCase,
             ClaimsPrincipal user) =>
         {
             var customer = new CustomerIdentity(user);
@@ -74,14 +75,14 @@ internal static class Endpoint
             return Results.Ok();
         })
             .RequireAuthorization()
-            .WithTags("Auth")
+            .WithTags("Password")
             .WithOpenApi()
             .Produces(200);
         #endregion
 
         #region Customer
-        app.MapGet("/api/v1/customers", async (
-            [FromServices] FindCustomer useCase,
+        app.MapGet("/api/v1/customer", async (
+            GetCustomer useCase,
             ClaimsPrincipal user) =>
         {
             var customer = new CustomerIdentity(user);
@@ -93,9 +94,9 @@ internal static class Endpoint
             .WithOpenApi()
             .Produces(200, typeof(CustomerResource));
 
-        app.MapPost("/api/v1/customers", async (
-            [FromServices] RegisterCustomer useCase,
-            [FromBody] CustomerRequest request) =>
+        app.MapPost("/api/v1/customer", async (
+            [FromBody] CustomerRequest request,
+            RegisterCustomer useCase) =>
         {
             await useCase.Execute(request);
             return Results.Created();
@@ -104,9 +105,9 @@ internal static class Endpoint
             .WithOpenApi()
             .Produces(201);
 
-        app.MapPatch("/api/v1/customers", async (
-            [FromServices] UpdateName useCase,
+        app.MapPatch("/api/v1/customer", async (
             [FromBody] NameRequest request,
+            UpdateCustomerName useCase,
             ClaimsPrincipal user) =>
         {
             var customer = new CustomerIdentity(user);
@@ -118,8 +119,8 @@ internal static class Endpoint
             .WithOpenApi()
             .Produces(204);
 
-        app.MapDelete("/api/v1/customers", async (
-            [FromServices] RemoveCustomer useCase,
+        app.MapDelete("/api/v1/customer", async (
+            RemoveCustomer useCase,
             ClaimsPrincipal user) =>
         {
             var customer = new CustomerIdentity(user);
@@ -134,7 +135,7 @@ internal static class Endpoint
 
         #region Address
         app.MapGet("/api/v1/address/{id:required}", async (
-            [FromServices] FindAddress useCase,
+            FindCustomerAddress useCase,
             ClaimsPrincipal user,
             string? id) =>
         {
@@ -148,7 +149,7 @@ internal static class Endpoint
             .Produces(200, typeof(AddressResource));
 
         app.MapGet("/api/v1/address", async (
-            [FromServices] FindAddresses useCase,
+            GetCustomerAddresses useCase,
             ClaimsPrincipal user) =>
         {
             var customer = new CustomerIdentity(user);
@@ -161,8 +162,8 @@ internal static class Endpoint
             .Produces(200, typeof(IEnumerable<AddressResource>));
 
         app.MapPost("/api/v1/address", async (
-            [FromServices] RegisterAddress useCase,
             [FromBody] AddressRequest request,
+            RegisterCustomerAddress useCase,
             ClaimsPrincipal user) =>
         {
             var customer = new CustomerIdentity(user);
@@ -175,8 +176,8 @@ internal static class Endpoint
             .Produces(201);
 
         app.MapPatch("/api/v1/address/{id:required}", async (
-            [FromServices] UpdateAddress useCase,
             [FromBody] AddressRequest request,
+            UpdateCustomerAddress useCase,
             ClaimsPrincipal user,
             string? id) =>
         {
@@ -190,7 +191,7 @@ internal static class Endpoint
             .Produces(204);
 
         app.MapDelete("/api/v1/address/{id:required}", async (
-            [FromServices] RemoveAddress useCase,
+            RemoveCustomerAddress useCase,
             ClaimsPrincipal user,
             string? id) =>
         {

@@ -3,23 +3,23 @@ using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.CustomerCases;
 
-public sealed class FindAddresses(
+public sealed class FindCustomerAddress(
     IAddressRepository repository
-    ) : IUseCase<IdentityRequest, IEnumerable<AddressDTO>>
+    ) : IUseCase<IdentityRequest, AddressDTO>
 {
     readonly IAddressRepository _repository = repository;
 
-    public async Task<IEnumerable<AddressDTO>> Execute(
+    public async Task<AddressDTO> Execute(
         IdentityRequest req,
         CancellationToken cancellationToken = default)
     {
         await req.ValidateAsync();
 
 
-        return await _repository.FindMany(new(CustomerId: req.Id), cancellationToken)
+        return await _repository.Find(new(Id: req.Id), cancellationToken)
 
-            ?? throw new AddressNotFoundException().Target(nameof(FindAddresses));
+            ?? throw new AddressNotFoundException().Target(nameof(FindCustomerAddress));
     }
 }

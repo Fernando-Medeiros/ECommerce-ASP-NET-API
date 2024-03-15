@@ -9,7 +9,7 @@ public record PasswordRequest
     public string? Password
     {
         get => _password;
-        set => _password = value?.Trim();
+        set => _password ??= value?.Trim();
     }
 
     public async Task ValidateAsync() => await Task.Run(() =>
