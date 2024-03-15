@@ -20,7 +20,7 @@ public sealed class NameRequestTest
             LastName = lastName,
         };
 
-        await request.ValidateAsync();
+        await request.ValidateAsync(false);
 
         Assert.Equal(request.Name, name);
         Assert.Equal(request.FirstName, firstName);
@@ -34,21 +34,21 @@ public sealed class NameRequestTest
         string? value1, string? value2)
     {
         await Assert.ThrowsAnyAsync<NotEmptyException>(async () =>
-            await new NameRequest() { Name = value1 }.ValidateAsync());
+            await new NameRequest() { Name = value1 }.ValidateAsync(false));
 
         await Assert.ThrowsAnyAsync<LengthException>(async () =>
-            await new NameRequest() { Name = value2 }.ValidateAsync());
+            await new NameRequest() { Name = value2 }.ValidateAsync(false));
 
         await Assert.ThrowsAnyAsync<NotEmptyException>(async () =>
-            await new NameRequest() { FirstName = value1 }.ValidateAsync());
+            await new NameRequest() { FirstName = value1 }.ValidateAsync(false));
 
         await Assert.ThrowsAnyAsync<LengthException>(async () =>
-            await new NameRequest() { FirstName = value2 }.ValidateAsync());
+            await new NameRequest() { FirstName = value2 }.ValidateAsync(false));
 
         await Assert.ThrowsAnyAsync<NotEmptyException>(async () =>
-            await new NameRequest() { LastName = value1 }.ValidateAsync());
+            await new NameRequest() { LastName = value1 }.ValidateAsync(false));
 
         await Assert.ThrowsAnyAsync<LengthException>(async () =>
-            await new NameRequest() { LastName = value2 }.ValidateAsync());
+            await new NameRequest() { LastName = value2 }.ValidateAsync(false));
     }
 }

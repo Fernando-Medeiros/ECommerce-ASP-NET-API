@@ -4,9 +4,9 @@ using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.CustomerCases;
 
-public sealed class UpdateName(
+public sealed class UpdateCustomerName(
     ITransaction transaction,
     ICustomerRepository repository
     ) : IUseCase<(IdentityRequest, NameRequest), bool>
@@ -21,12 +21,12 @@ public sealed class UpdateName(
         var (identity, payload) = tuple;
 
         await identity.ValidateAsync();
-        await payload.ValidateAsync();
+        await payload.ValidateAsync(false);
 
 
         CustomerDTO customer = await _repository.Find(new(Id: identity.Id), cancellationToken)
 
-            ?? throw new CustomerNotFoundException().Target(nameof(UpdateName));
+            ?? throw new CustomerNotFoundException().Target(nameof(UpdateCustomerName));
 
 
         CustomerDTO request = payload.Mapper();

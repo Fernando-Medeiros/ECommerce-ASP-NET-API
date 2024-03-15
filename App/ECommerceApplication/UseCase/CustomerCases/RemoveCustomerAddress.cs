@@ -3,9 +3,9 @@ using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.CustomerCases;
 
-public sealed class RemoveAddress(
+public sealed class RemoveCustomerAddress(
     ITransaction transaction,
     IAddressRepository repository
     ) : IUseCase<IdentityRequest, bool>
@@ -22,7 +22,7 @@ public sealed class RemoveAddress(
 
         AddressDTO address = await _repository.Find(new(Id: req.Id), cancellationToken)
 
-            ?? throw new AddressNotFoundException().Target(nameof(RemoveAddress));
+            ?? throw new AddressNotFoundException().Target(nameof(RemoveCustomerAddress));
 
 
         _repository.Remove(address);

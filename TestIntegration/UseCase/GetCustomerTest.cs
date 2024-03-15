@@ -1,17 +1,17 @@
 using ECommerceCommon.Exceptions;
-using ECommerceApplication.UseCase;
 using ECommerceDomain.DTO;
 using ECommerceTestSetup.Shared;
 using ECommerceApplication.Request;
+using ECommerceApplication.UseCase.CustomerCases;
 
 namespace TestIntegration.UseCase;
 
-public sealed class FindCustomerTest : SharedCustomerTest
+public sealed class GetCustomerTest : SharedCustomerTest
 {
     readonly IdentityRequest Identity;
     readonly CustomerDTO Query;
 
-    public FindCustomerTest()
+    public GetCustomerTest()
     {
         Query = new() { Id = Mock.UniqueId };
         Identity = new() { Id = Mock.UniqueId };
@@ -22,7 +22,7 @@ public sealed class FindCustomerTest : SharedCustomerTest
     {
         MakeRepositoryStub(input: Query, output: Mock.CustomerDTO);
 
-        var useCase = new FindCustomer(_repository);
+        var useCase = new GetCustomer(_repository);
 
         var result = await useCase.Execute(Identity);
 
@@ -32,7 +32,7 @@ public sealed class FindCustomerTest : SharedCustomerTest
     [Fact]
     public async void Should_Throw_Exception()
     {
-        var useCase = new FindCustomer(_repository);
+        var useCase = new GetCustomer(_repository);
 
         await Assert.ThrowsAnyAsync<CustomerNotFoundException>(async () =>
         {

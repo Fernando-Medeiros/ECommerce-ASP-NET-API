@@ -1,14 +1,46 @@
 @ECommerceAPI_HostAddress = https://localhost:7096
 
-GET {{ECommerceAPI_HostAddress}}/api/v1/customers
+POST {{ECommerceAPI_HostAddress}}/api/v1/auth/token
 Accept: application/json
 
-POST {{ECommerceAPI_HostAddress}}/api/v1/customers
+POST {{ECommerceAPI_HostAddress}}/api/v1/auth/email
 Accept: application/json
 
-PATCH {{ECommerceAPI_HostAddress}}/api/v1/customers
+
+GET {{ECommerceAPI_HostAddress}}/api/v1/customer
 Accept: application/json
 
-DELETE {{ECommerceAPI_HostAddress}}/api/v1/customers
+POST {{ECommerceAPI_HostAddress}}/api/v1/customer
 Accept: application/json
 
+PATCH {{ECommerceAPI_HostAddress}}/api/v1/customer
+Accept: application/json
+
+DELETE {{ECommerceAPI_HostAddress}}/api/v1/customer
+Accept: application/json
+
+
+GET {{ECommerceAPI_HostAddress}}/api/v1/address
+Accept: application/json
+
+GET {{ECommerceAPI_HostAddress}}/api/v1/address/{id}
+Accept: application/json
+
+POST {{ECommerceAPI_HostAddress}}/api/v1/address
+Accept: application/json
+
+PATCH {{ECommerceAPI_HostAddress}}/api/v1/address/{id}
+Accept: application/json
+
+DELETE {{ECommerceAPI_HostAddress}}/api/v1/address/{id}
+Accept: application/json
+
+
+POST {{ECommerceAPI_HostAddress}}/api/v1/password/recover
+Accept: application/json
+
+PATCH {{ECommerceAPI_HostAddress}}/api/v1/password/reset
+Accept: application/json
+
+PATCH {{ECommerceAPI_HostAddress}}/api/v1/password
+Accept: application/json

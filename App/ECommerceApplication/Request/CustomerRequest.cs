@@ -13,27 +13,27 @@ public sealed record CustomerRequest
     public string? Name
     {
         get => _name;
-        set => _name = value?.Trim().ToLower();
+        set => _name ??= value?.Trim().ToLower();
     }
     public string? FirstName
     {
         get => _firstName;
-        set => _firstName = value?.Trim().ToLower();
+        set => _firstName ??= value?.Trim().ToLower();
     }
     public string? LastName
     {
         get => _lastName;
-        set => _lastName = value?.Trim().ToLower();
+        set => _lastName ??= value?.Trim().ToLower();
     }
     public string? Email
     {
         get => _email;
-        set => _email = value?.Trim();
+        set => _email ??= value?.Trim();
     }
     public string? Password
     {
         get => _password;
-        set => _password = value?.Trim();
+        set => _password ??= value?.Trim();
     }
 
     public async Task ValidateAsync() => await Task.WhenAll(

@@ -10,12 +10,12 @@ public sealed record SignInRequest
     public string? Email
     {
         get => _email;
-        set => _email = value?.Trim();
+        set => _email ??= value?.Trim();
     }
     public string? Password
     {
         get => _password;
-        set => _password = value?.Trim();
+        set => _password ??= value?.Trim();
     }
 
     public async Task ValidateAsync() => await Task.WhenAll(

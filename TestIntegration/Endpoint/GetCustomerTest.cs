@@ -1,38 +1,35 @@
-using System.Net;
+using ECommerceAPI.Resource;
 using ECommerceCommon.Exceptions;
-using ECommerceApplication.Request;
 using ECommerceDomain.DTO;
-using Microsoft.Extensions.DependencyInjection;
-using TestSetup.Fixtures;
 using ECommerceTestSetup.Shared;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net;
+using TestSetup.Fixtures;
 
 namespace TestIntegration.Endpoint;
 
-public sealed class UpdateNameTest : SharedCustomerTest
+public sealed class GetCustomerTest : SharedCustomerTest
 {
-    readonly NameRequest Payload;
-    readonly CustomerDTO Query;
-
-    public UpdateNameTest()
-    {
-        Payload = Mock.UpdateRequest;
-        Query = new() { Id = Mock.UniqueId };
-    }
-
     [Fact]
-    public async void Should_Update_NameOrEmail()
+    public async void Should_Return_CustomerResource()
     {
-        MakeRepositoryStub(input: Query, output: Mock.CustomerDTO);
+        MakeRepositoryStub(
+            input: new CustomerDTO() { Id = Mock.UniqueId },
+            output: Mock.CustomerDTO);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 
         var response = await app.Client.SendAsync(
             _requestFixture
             .AuthorizationHeader(Mock.CustomerDTO)
-            .JsonContent(Payload)
-            .RequestMessage(HttpMethod.Patch));
+            .RequestMessage(HttpMethod.Get)
+        );
 
-        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        var responseContent = await _responseFixture
+            .Deserialize<CustomerResource?>(response);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equivalent(Mock.CustomerResource, responseContent);
     }
 
     [Fact]
@@ -42,7 +39,8 @@ public sealed class UpdateNameTest : SharedCustomerTest
 
         var response = await app.Client.SendAsync(
             _requestFixture
-            .RequestMessage(HttpMethod.Patch));
+            .RequestMessage(HttpMethod.Get)
+        );
 
         Assert.Equal(HttpStatusCode.Unauthorized, response?.StatusCode);
     }
@@ -50,15 +48,17 @@ public sealed class UpdateNameTest : SharedCustomerTest
     [Fact]
     public async void Should_Return_NotFound_Response()
     {
-        MakeRepositoryStub(input: Query, output: null);
+        MakeRepositoryStub(
+            input: new CustomerDTO() { Id = Mock.UniqueId },
+            output: null);
 
         using var app = new ServerFixture(x => { x.AddSingleton(_repository); });
 
         var response = await app.Client.SendAsync(
             _requestFixture
             .AuthorizationHeader(Mock.CustomerDTO)
-            .JsonContent(Payload)
-            .RequestMessage(HttpMethod.Patch));
+            .RequestMessage(HttpMethod.Get)
+        );
 
         var responseContent = await _responseFixture
             .Deserialize<CustomerNotFoundException?>(response);

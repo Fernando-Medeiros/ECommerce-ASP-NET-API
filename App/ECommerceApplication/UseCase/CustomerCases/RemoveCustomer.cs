@@ -3,7 +3,7 @@ using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.CustomerCases;
 
 public sealed class RemoveCustomer(
     ITransaction transaction,

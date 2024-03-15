@@ -1,11 +1,12 @@
 using ECommerceApplication.Contract;
 using ECommerceApplication.Request;
+using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.CustomerCases;
 
-public sealed class RegisterAddress(
+public sealed class UpdateCustomerAddress(
     ITransaction transaction,
     IAddressRepository repository
     ) : IUseCase<(IdentityRequest, AddressRequest), bool>
@@ -23,14 +24,22 @@ public sealed class RegisterAddress(
         await payload.ValidateAsync(required: false);
 
 
-        AddressDTO request = payload.Mapper() with { CustomerId = identity.Id };
+        AddressDTO address = await _repository.Find(new(Id: identity.Id), cancellationToken)
 
-        AddressDTO address = new Address()
-            .Register(request)
+            ?? throw new AddressNotFoundException().Target(nameof(UpdateCustomerAddress));
+
+
+        AddressDTO request = payload.Mapper();
+
+        address = new Address(address)
+            .UpdateCode(request)
+            .UpdateCity(request)
+            .UpdateState(request)
+            .UpdateStreet(request)
             .Mapper();
 
 
-        _repository.Register(address);
+        _repository.Update(address);
 
         await _transaction.Commit(cancellationToken);
 

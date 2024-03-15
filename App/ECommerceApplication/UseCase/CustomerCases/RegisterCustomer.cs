@@ -5,7 +5,7 @@ using ECommerceDomain.DTO;
 using ECommerceDomain.Entities;
 using ECommerceDomain.Enums;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.CustomerCases;
 
 public sealed class RegisterCustomer(
     ICustomerRepository repository,

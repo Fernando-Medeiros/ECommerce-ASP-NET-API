@@ -11,7 +11,7 @@ public abstract class SharedCustomerTest
 {
     public readonly ICustomerRepository _repository = Substitute.For<ICustomerRepository>();
 
-    public readonly RequestFixture _requestFixture = new("/api/v1/customers");
+    public readonly RequestFixture _requestFixture = new("/api/v1/customer");
 
     public readonly ResponseFixture _responseFixture = new();
 

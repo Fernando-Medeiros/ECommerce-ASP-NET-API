@@ -3,9 +3,9 @@ using ECommerceApplication.Request;
 using ECommerceCommon.Exceptions;
 using ECommerceDomain.DTO;
 
-namespace ECommerceApplication.UseCase;
+namespace ECommerceApplication.UseCase.CustomerCases;
 
-public sealed class FindCustomer(
+public sealed class GetCustomer(
     ICustomerRepository repository
     ) : IUseCase<IdentityRequest, CustomerDTO>
 {
@@ -20,6 +20,6 @@ public sealed class FindCustomer(
 
         return await _repository.Find(new(Id: req.Id), cancellationToken)
 
-            ?? throw new CustomerNotFoundException().Target(nameof(FindCustomer));
+            ?? throw new CustomerNotFoundException().Target(nameof(GetCustomer));
     }
 }
