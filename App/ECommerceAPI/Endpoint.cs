@@ -133,8 +133,8 @@ internal static class Endpoint
             .Produces(204);
         #endregion
 
-        #region Address
-        app.MapGet("/api/v1/address/{id:required}", async (
+        #region Customer Address
+        app.MapGet("/api/v1/customer/address/{id:required}", async (
             FindCustomerAddress useCase,
             ClaimsPrincipal user,
             string? id) =>
@@ -148,7 +148,7 @@ internal static class Endpoint
             .WithOpenApi()
             .Produces(200, typeof(AddressResource));
 
-        app.MapGet("/api/v1/address", async (
+        app.MapGet("/api/v1/customer/address", async (
             GetCustomerAddresses useCase,
             ClaimsPrincipal user) =>
         {
@@ -161,7 +161,7 @@ internal static class Endpoint
             .WithOpenApi()
             .Produces(200, typeof(IEnumerable<AddressResource>));
 
-        app.MapPost("/api/v1/address", async (
+        app.MapPost("/api/v1/customer/address", async (
             [FromBody] AddressRequest request,
             RegisterCustomerAddress useCase,
             ClaimsPrincipal user) =>
@@ -175,7 +175,7 @@ internal static class Endpoint
             .WithOpenApi()
             .Produces(201);
 
-        app.MapPatch("/api/v1/address/{id:required}", async (
+        app.MapPatch("/api/v1/customer/address/{id:required}", async (
             [FromBody] AddressRequest request,
             UpdateCustomerAddress useCase,
             ClaimsPrincipal user,
@@ -190,7 +190,7 @@ internal static class Endpoint
             .WithOpenApi()
             .Produces(204);
 
-        app.MapDelete("/api/v1/address/{id:required}", async (
+        app.MapDelete("/api/v1/customer/address/{id:required}", async (
             RemoveCustomerAddress useCase,
             ClaimsPrincipal user,
             string? id) =>
